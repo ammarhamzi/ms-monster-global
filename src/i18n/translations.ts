@@ -96,7 +96,7 @@ export const translations = {
       viewMore: "View Details",
     },
     profile: {
-      title: "Company Profile & Downloads",
+      title: "Company Profile",
       subtitle:
         "Download the source company profiles and product brochure used to shape this corporate website.",
       documents: [
@@ -238,7 +238,7 @@ export const translations = {
       viewMore: "Lihat Butiran",
     },
     profile: {
-      title: "Profil Syarikat & Muat Turun",
+      title: "Profil Syarikat",
       subtitle:
         "Muat turun profil syarikat dan brosur produk yang digunakan sebagai rujukan untuk laman korporat ini.",
       documents: [

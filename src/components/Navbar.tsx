@@ -34,12 +34,12 @@ export default function Navbar({ activePage, setActivePage }: NavbarProps) {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-medium whitespace-nowrap transition-colors ${
                   activePage === item.id ? 'text-green-600' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -66,7 +66,7 @@ export default function Navbar({ activePage, setActivePage }: NavbarProps) {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="lg:hidden flex items-center gap-4">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setLanguage('en')}
@@ -99,7 +99,7 @@ export default function Navbar({ activePage, setActivePage }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-gray-100"
+            className="lg:hidden bg-white border-b border-gray-100"
           >
             <div className="px-4 pt-2 pb-6 space-y-1">
               {navItems.map((item) => (

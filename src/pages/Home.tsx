@@ -1,7 +1,16 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 import { ArrowRight, Building2, CloudCog, Droplet, MapPin, ShieldCheck, Sparkles, Wrench } from 'lucide-react';
 import HeroBackgroundPaths from '../components/HeroBackgroundPaths';
+
+const heroEase = [0.22, 1, 0.36, 1] as const;
+
+const heroReveal = (delay: number) => ({
+  initial: { opacity: 0, y: 28, filter: 'blur(6px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  transition: { duration: 1.1, delay, ease: heroEase },
+});
 
 type HomeProps = {
   setActivePage: (page: string) => void;
@@ -36,14 +45,19 @@ export default function Home({ setActivePage }: HomeProps) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <p className="text-sm font-bold tracking-widest uppercase text-green-600 mb-5">{t.hero.eyebrow}</p>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight mb-8 leading-tight">
+            <motion.p {...heroReveal(0.1)} className="text-sm font-bold tracking-widest uppercase text-green-600 mb-5">
+              {t.hero.eyebrow}
+            </motion.p>
+            <motion.h1
+              {...heroReveal(0.25)}
+              className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight mb-8 leading-tight"
+            >
               {t.hero.title}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl leading-relaxed">
+            </motion.h1>
+            <motion.p {...heroReveal(0.45)} className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl leading-relaxed">
               {t.hero.subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            </motion.p>
+            <motion.div {...heroReveal(0.65)} className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setActivePage('products')}
                 className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-blue-900 border border-transparent rounded-lg hover:bg-blue-800 transition-colors shadow-lg hover:shadow-xl"
@@ -51,7 +65,7 @@ export default function Home({ setActivePage }: HomeProps) {
                 {t.hero.primaryCta}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

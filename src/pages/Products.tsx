@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'motion/react';
-import { Activity, ArrowRight, CloudCog, DatabaseBackup, Droplet, ExternalLink, HardDrive, Headset, Network, Server, Shield, SoapDispenserDroplet, TestTube, Wind, Wrench } from 'lucide-react';
+import { Activity, ArrowRight, ChevronDown, CloudCog, DatabaseBackup, Droplet, ExternalLink, HardDrive, Headset, Network, Server, Shield, SoapDispenserDroplet, TestTube, Wind, Wrench } from 'lucide-react';
 import { diffusers, essentialOils, extracts } from '../data/products';
 
 export default function Products() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'it' | 'perfume' | 'ameco'>('ameco');
+  const [openGroups, setOpenGroups] = useState<string[]>([]);
 
   const itServices = [
     { icon: Activity, title: 'Predictive Maintenance', desc: 'Improve reliability, lower maintenance costs, and extend asset life for IT and AI systems.' },
@@ -68,7 +69,10 @@ export default function Products() {
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                   activeTab === tab.id ? tab.activeClass : tab.inactiveClass
                 }`}
@@ -218,21 +222,40 @@ export default function Products() {
 
         <section>
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 md:mb-8">{t.products.catalogTitle}</h3>
-          <div className="space-y-10 md:space-y-12">
-            {catalogGroups.map((group) => (
-              <div key={group.title}>
-                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-5">
-                  <h4 className="text-xl font-bold text-slate-900">{group.title}</h4>
-                  <span className="text-sm font-semibold text-slate-500">{group.range}</span>
-                </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="space-y-4">
+            {catalogGroups.map((group) => {
+              const isOpen = openGroups.includes(group.title);
+              return (
+              <div key={group.title} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenGroups((prev) =>
+                      prev.includes(group.title) ? prev.filter((g) => g !== group.title) : [...prev, group.title]
+                    )
+                  }
+                  aria-expanded={isOpen}
+                  className="w-full flex items-center justify-between gap-3 px-5 md:px-8 py-5 md:py-6 text-left hover:bg-slate-50 transition-colors"
+                >
+                  <div>
+                    <h4 className="text-lg md:text-xl font-bold text-slate-900">{group.title}</h4>
+                    <p className="text-sm font-semibold text-slate-500 mt-0.5">
+                      {group.range} · {group.models.length} models
+                    </p>
+                  </div>
+                  <ChevronDown
+                    className={`w-5 h-5 text-slate-500 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {isOpen && (
+                <div className="px-5 md:px-8 pb-6 md:pb-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {group.models.map((diffuser) => (
                     <motion.div
                       key={diffuser.model}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-green-300 transition-colors shadow-sm"
+                      className="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:border-green-300 transition-colors"
                     >
                       <div className="flex justify-between items-start mb-4">
                         <h4 className="text-lg font-bold text-slate-900">{diffuser.model}</h4>
@@ -259,8 +282,10 @@ export default function Products() {
                     </motion.div>
                   ))}
                 </div>
+                )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
         </>

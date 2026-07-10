@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,6 +10,10 @@ import InvestorRelations from './pages/InvestorRelations';
 
 function App() {
   const [activePage, setActivePage] = useState('home');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [activePage]);
 
   const renderPage = () => {
     switch (activePage) {
