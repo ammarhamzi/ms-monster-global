@@ -43,10 +43,13 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .hero-orb-a,
   .hero-orb-b,
   .hero-orb-c {
     animation: none;
   }
 }
-
