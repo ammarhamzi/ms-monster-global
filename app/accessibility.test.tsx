@@ -147,6 +147,29 @@ describe('shell accessible names and states', () => {
     }
   });
 
+  it('keeps desktop navigation targets without cumulative inline padding', () => {
+    renderAt('/', <Navbar />);
+    const navigation = screen.getByRole('navigation', {
+      name: 'Primary navigation',
+    });
+    const desktopLabels = [
+      'Home',
+      'About',
+      'Commercial aroma solutions',
+      'IT maintenance',
+      'Downloads',
+      'Contact',
+    ];
+
+    for (const label of desktopLabels) {
+      const link = within(navigation).getByRole('link', { name: label });
+
+      expect(link).toHaveClass('min-h-11');
+      expect(link).toHaveClass('min-w-11');
+      expect(link).not.toHaveClass('px-2');
+    }
+  });
+
   it('keeps visible labels in the accessible names of social and download links', () => {
     const document = getContent('en').downloads.documents[0];
     renderAt(

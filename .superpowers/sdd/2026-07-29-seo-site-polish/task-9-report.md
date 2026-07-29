@@ -205,3 +205,44 @@ GREEN:
 ### Concerns
 
 - No new implementation concern. The original in-app Browser availability limitation remains unchanged.
+
+## Fix Round 2
+
+### Finding addressed
+
+- The six desktop primary-navigation links no longer add `px-2` at the `lg` breakpoint.
+- Their `min-h-11`, `min-w-11`, centered alignment, and non-wrapping labels remain intact, preserving the two-dimensional target contract without the cumulative 96px inline-padding pressure that overflowed the header near 1024px.
+
+### RED and GREEN evidence
+
+RED:
+
+- Command: `npm test -- app/accessibility.test.tsx`
+- Result: 21 tests ran; 20 passed and 1 failed.
+- Expected failure: the new rendered-DOM contract found `px-2` on a desktop primary-navigation link.
+
+GREEN:
+
+- Command: `npm test -- app/accessibility.test.tsx app/components/layout/localized-shell.test.tsx`
+- Result: 2 files and 25 tests passed.
+- The behavior/layout contract renders the real navbar, checks all six desktop links retain `min-h-11` and `min-w-11`, and rejects cumulative `px-2`; it does not grep source text.
+
+### Verification
+
+- `npm test`: 17 files, 109 tests passed.
+- `npm run typecheck`: exit 0.
+- `npm run build`: exit 0; all 17 prerendered routes plus the SPA fallback generated.
+- Production Lighthouse final-render artifacts inspected at 1024 by 800, 1128 by 800, and 1350 by 900 CSS pixels.
+- At every inspected width the full logo, all six route links, globe, EN, separator, and BM remain visible with no clipping or horizontal overflow.
+- Lighthouse `target-size`: 1 at 1024px, 1128px, and 1350px.
+- Focused static server stopped after responsive QA.
+
+### Self-review
+
+- Production scope is limited to removing desktop-nav inline padding; no breakpoint, route, content, media, or unrelated styling changed.
+- The target minimums and centered layout remain systematic across all six links.
+- The test records the rendered layout-class contract that prevents the reviewed regression.
+
+### Concerns
+
+- No new concern. The original in-app Browser backend availability limitation remains unchanged.
