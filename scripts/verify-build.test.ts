@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -38,7 +38,12 @@ afterEach(async () => {
 
 function routeHtml(
   route: (typeof ROUTES)[number],
-  overrides: { description?: string | null; title?: string } = {},
+  overrides: {
+    description?: string | null;
+    ogImage?: string;
+    title?: string;
+    twitterImage?: string;
+  } = {},
 ): string {
   const counterpart = getCounterpart(route);
   const englishRoute = route.locale === 'en' ? route : counterpart;
@@ -47,6 +52,8 @@ function routeHtml(
   const description =
     overrides.description === undefined ? route.description : overrides.description;
   const socialImage = absoluteUrl(`/assets/social/${route.socialCard === 'it' ? 'it-maintenance' : route.socialCard === 'aroma' ? 'aroma-solutions' : 'corporate'}.jpg`);
+  const ogImage = overrides.ogImage ?? socialImage;
+  const twitterImage = overrides.twitterImage ?? socialImage;
 
   return `<!doctype html>
 <html lang="${route.locale}">
@@ -57,8 +64,8 @@ function routeHtml(
     <link rel="alternate" hreflang="en" href="${absoluteUrl(englishRoute.path)}">
     <link rel="alternate" hreflang="ms" href="${absoluteUrl(malayRoute.path)}">
     <link rel="alternate" hreflang="x-default" href="${absoluteUrl(englishRoute.path)}">
-    <meta property="og:image" content="${socialImage}">
-    <meta name="twitter:image" content="${socialImage}">
+    <meta property="og:image" content="${ogImage}">
+    <meta name="twitter:image" content="${twitterImage}">
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"${title}"}]}</script>
   </head>
   <body>
@@ -68,7 +75,17 @@ function routeHtml(
 }
 
 async function writeFixture(
-  overrides: Partial<Record<string, { description?: string | null; title?: string }>> = {},
+  overrides: Partial<
+    Record<
+      string,
+      {
+        description?: string | null;
+        ogImage?: string;
+        title?: string;
+        twitterImage?: string;
+      }
+    >
+  > = {},
 ): Promise<string> {
   const root = await mkdtemp(join(tmpdir(), 'ms-monster-verify-build-'));
   temporaryDirectories.push(root);
@@ -121,5 +138,51 @@ describe('generated build verification', () => {
     await expect(verifyBuild(root)).resolves.toMatchObject({
       routes: 16,
     });
+  });
+
+  it('rejects a route-like internal link that resolves only to an empty directory', async () => {
+    const root = await writeFixture();
+    const homePath = join(root, 'index.html');
+    const home = await readFile(homePath, 'utf8');
+    await mkdir(join(root, 'empty-route'));
+    await writeFile(
+      homePath,
+      home.replace(
+        '</main>',
+        '<a href="/empty-route">Empty route</a></main>',
+      ),
+      'utf8',
+    );
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/: internal route "/empty-route" is missing generated HTML',
+    );
+  });
+
+  it('rejects whitespace-only Open Graph and Twitter image values', async () => {
+    const root = await writeFixture({
+      '/about': { ogImage: '   ' },
+      '/it-maintenance': { twitterImage: ' \t ' },
+    });
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/about: missing Open Graph image',
+    );
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/it-maintenance: missing Twitter image',
+    );
+  });
+
+  it('requires noindex as an exact robots directive on the 404 page', async () => {
+    const root = await writeFixture();
+    await writeFile(
+      join(root, '404.html'),
+      '<!doctype html><html lang="en"><head><meta name="robots" content="xnoindexx,nofollow"></head><body><h1>Page not found</h1></body></html>',
+      'utf8',
+    );
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/404.html: 404 page is indexable (missing noindex)',
+    );
   });
 });

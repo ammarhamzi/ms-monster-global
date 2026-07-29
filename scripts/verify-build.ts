@@ -1,5 +1,5 @@
 import { access, readFile } from 'node:fs/promises';
-import { dirname, relative, resolve, sep } from 'node:path';
+import { dirname, extname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 import {
@@ -162,9 +162,11 @@ async function verifyLocalReferences(
     if (!urlPath) continue;
 
     const normalizedPath = urlPath === '/' ? '/' : urlPath.replace(/\/+$/, '');
-    if (routePaths.has(normalizedPath)) {
+    if (routePaths.has(normalizedPath) || extname(normalizedPath) === '') {
       if (!(await exists(routeHtmlPath(root, normalizedPath)))) {
-        diagnostics.push(`${route.path}: internal route "${normalizedPath}" is missing`);
+        diagnostics.push(
+          `${route.path}: internal route "${normalizedPath}" is missing generated HTML`,
+        );
       }
       continue;
     }
@@ -287,10 +289,18 @@ async function inspectRoute(
 
   verifyAlternates(route, document, diagnostics);
 
-  if (!document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content) {
+  if (
+    !document
+      .querySelector<HTMLMetaElement>('meta[property="og:image"]')
+      ?.content.trim()
+  ) {
     diagnostics.push(`${route.path}: missing Open Graph image`);
   }
-  if (!document.querySelector<HTMLMetaElement>('meta[name="twitter:image"]')?.content) {
+  if (
+    !document
+      .querySelector<HTMLMetaElement>('meta[name="twitter:image"]')
+      ?.content.trim()
+  ) {
     diagnostics.push(`${route.path}: missing Twitter image`);
   }
 
@@ -385,7 +395,8 @@ async function verifyNotFound(root: string, diagnostics: string[]): Promise<void
   const robots = document
     .querySelector<HTMLMetaElement>('meta[name="robots"]')
     ?.content.toLowerCase();
-  if (!robots?.includes('noindex')) {
+  const directives = new Set(robots?.split(/[,\s]+/).filter(Boolean) ?? []);
+  if (!directives.has('noindex')) {
     diagnostics.push('/404.html: 404 page is indexable (missing noindex)');
   }
 }
