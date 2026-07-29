@@ -1,6 +1,6 @@
 # MS Monster Global Corporate Portal
 
-Corporate website for MS Monster Global Sdn Bhd, covering unified Perfume & Aroma solutions, IT and AI maintenance services, company profile downloads, and contact information.
+Corporate website for MS Monster Global Sdn Bhd, covering unified Perfume & Aroma solutions, IT and AI maintenance services, a documented product brochure, and contact information.
 
 Canonical bilingual service routes include `/perfume` and `/ms/perfume`.
 Former split aroma, diffuser, and custom-fragrance URLs redirect permanently
@@ -37,6 +37,6 @@ npm run preview
 - `npm run typecheck` generates route types and checks TypeScript.
 - `npm run build` generates brand assets, pre-renders the site, creates crawl files, and verifies the production output.
 - `npm run verify:build` verifies an existing `build/client` output.
-- `npm run preview` previews the production build.
+- `npm run preview` serves the generated static output with deployment-style clean paths and gzip compression.
 
 Netlify publishes the generated static site from `build/client`.

@@ -11,8 +11,8 @@ describe.each([
   ['ms', HomePage, /Penyelesaian aroma dan penyelenggaraan teknologi/i],
   ['en', AboutPage, /About MS Monster Global/i],
   ['ms', AboutPage, /Tentang MS Monster Global/i],
-  ['en', DownloadsPage, /Company profiles and brochures/i],
-  ['ms', DownloadsPage, /Profil syarikat dan brosur/i],
+  ['en', DownloadsPage, /Product brochure and downloads/i],
+  ['ms', DownloadsPage, /Brosur produk dan muat turun/i],
   ['en', ContactPage, /Contact MS Monster Global/i],
   ['ms', ContactPage, /Hubungi MS Monster Global/i],
 ] as const)('%s corporate page', (locale, Page, heading) => {
@@ -25,18 +25,16 @@ describe.each([
 });
 
 describe.each(['en', 'ms'] as const)('downloads in %s', (locale) => {
-  it('exposes every source PDF as an open and download link', () => {
+  it('publishes only the claim-safe product brochure', () => {
     const { container } = render(<DownloadsPage locale={locale} />);
-    const expectedDocuments = [
-      '/downloads/ms-monster-it-maintenance-profile.pdf',
-      '/downloads/ms-monster-perfume-profile.pdf',
-      '/downloads/ms-monster-product-brochure.pdf',
-    ];
+    const publishedDocuments = [
+      ...container.querySelectorAll<HTMLAnchorElement>('a[href$=".pdf"]'),
+    ].map((link) => link.getAttribute('href'));
 
-    for (const href of expectedDocuments) {
-      expect(container.querySelector(`a[href="${href}"]:not([download])`)).toBeInTheDocument();
-      expect(container.querySelector(`a[href="${href}"][download]`)).toBeInTheDocument();
-    }
+    expect(publishedDocuments).toEqual([
+      '/downloads/ms-monster-product-brochure.pdf',
+      '/downloads/ms-monster-product-brochure.pdf',
+    ]);
   });
 });
 

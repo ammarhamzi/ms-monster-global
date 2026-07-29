@@ -2,6 +2,7 @@ import type { MetaArgs, MetaDescriptor } from 'react-router';
 import {
   absoluteUrl,
   getCounterpart,
+  getLocaleForPath,
   getRouteByPath,
   type Locale,
   type RouteRecord,
@@ -86,11 +87,18 @@ export function routeMeta({ location }: MetaArgs): MetaDescriptor[] {
   return buildMeta(getRouteByPath(location.pathname));
 }
 
-export function notFoundMeta(): MetaDescriptor[] {
-  const title = `Page Not Found | ${SITE.name}`;
-  const description = 'The page you requested is not available.';
+export function notFoundMeta({ location }: MetaArgs): MetaDescriptor[] {
+  const locale = getLocaleForPath(location.pathname);
+  const title =
+    locale === 'ms'
+      ? `Halaman Tidak Ditemukan | ${SITE.name}`
+      : `Page Not Found | ${SITE.name}`;
+  const description =
+    locale === 'ms'
+      ? 'Halaman yang anda minta tidak tersedia.'
+      : 'The page you requested is not available.';
   const imageUrl = absoluteUrl(SOCIAL_CARD_PATHS.corporate);
-  const imageAlt = SOCIAL_CARD_ALT.en.corporate;
+  const imageAlt = SOCIAL_CARD_ALT[locale].corporate;
 
   return [
     { title },

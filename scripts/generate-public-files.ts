@@ -26,12 +26,17 @@ ${urls}
 
 export async function generatePublicFiles(clientDirectory: string): Promise<void> {
   await mkdir(clientDirectory, { recursive: true });
+  await mkdir(resolve(clientDirectory, 'ms'), { recursive: true });
   await Promise.all([
     writeFile(resolve(clientDirectory, 'robots.txt'), ROBOTS, 'utf8'),
     writeFile(resolve(clientDirectory, 'sitemap.xml'), buildSitemap(), 'utf8'),
     copyFile(
       resolve(clientDirectory, '404', 'index.html'),
       resolve(clientDirectory, '404.html'),
+    ),
+    copyFile(
+      resolve(clientDirectory, 'ms', '404', 'index.html'),
+      resolve(clientDirectory, 'ms', '404.html'),
     ),
   ]);
 }

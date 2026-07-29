@@ -25,7 +25,7 @@ const unsupportedClaimRules: UnsupportedClaimRule[] = [
   {
     label: 'cosmetics licence',
     pattern:
-      /\bcosmetics manufacturing licen[cs]e\b|\blesen (?:pembuatan|pengilangan) kosmetik\b/i,
+      /\bcosmetics manufacturing\b.{0,60}\blicen[cs]e\b|\blesen (?:pembuatan|pengilangan) kosmetik\b/i,
   },
   {
     label: 'client count',

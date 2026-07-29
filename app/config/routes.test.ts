@@ -66,7 +66,7 @@ describe('localized route registry', () => {
 
   it('exposes every indexable path to prerendering', () => {
     expect(INDEXABLE_PATHS).toEqual(ROUTES.map((route) => route.path));
-    expect(PRERENDER_PATHS).toEqual([...INDEXABLE_PATHS, '/404']);
+    expect(PRERENDER_PATHS).toEqual([...INDEXABLE_PATHS, '/404', '/ms/404']);
   });
 
   it('resolves normalized paths and absolute URLs', () => {

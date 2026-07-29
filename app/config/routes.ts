@@ -106,9 +106,9 @@ export const ROUTES: RouteRecord[] = [
     key: 'downloads',
     locale: 'en',
     path: '/downloads',
-    title: 'Company Profiles & Brochures | MS Monster Global',
+    title: 'Product Brochure & Downloads | MS Monster Global',
     description:
-      'Download MS Monster Global company profiles and brochures for an overview of IT maintenance, Perfume & Aroma, diffuser systems, and fragrance services.',
+      'Download the MS Monster Global product brochure for documented diffuser models, coverage, capacity, mounting options, and fragrance oil information.',
     socialCard: 'corporate',
   },
   {
@@ -116,9 +116,9 @@ export const ROUTES: RouteRecord[] = [
     key: 'downloads',
     locale: 'ms',
     path: '/ms/muat-turun',
-    title: 'Profil Syarikat & Brosur | MS Monster Global',
+    title: 'Brosur Produk & Muat Turun | MS Monster Global',
     description:
-      'Muat turun profil syarikat dan brosur MS Monster Global untuk maklumat penyelenggaraan IT, Perfume & Aroma, sistem diffuser dan pembangunan wangian.',
+      'Muat turun brosur produk MS Monster Global untuk model diffuser terdokumen, liputan, kapasiti, pilihan pemasangan dan maklumat minyak wangian.',
     socialCard: 'corporate',
   },
   {
@@ -144,7 +144,7 @@ export const ROUTES: RouteRecord[] = [
 ];
 
 export const INDEXABLE_PATHS = ROUTES.map((route) => route.path);
-export const PRERENDER_PATHS = [...INDEXABLE_PATHS, '/404'];
+export const PRERENDER_PATHS = [...INDEXABLE_PATHS, '/404', '/ms/404'];
 
 function normalizePath(pathname: string): string {
   return pathname === '/' ? pathname : pathname.replace(/\/+$/, '');

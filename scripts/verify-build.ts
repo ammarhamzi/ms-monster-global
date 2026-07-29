@@ -1,7 +1,8 @@
-import { access, readFile } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { dirname, extname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import {
   ROUTES,
   absoluteUrl,
@@ -9,6 +10,7 @@ import {
   type RouteRecord,
 } from '../app/config/routes';
 import { SITE } from '../app/config/site';
+import { findUnsupportedClaims } from '../app/content/policy';
 import { diffusers } from '../app/data/products';
 
 const LEGACY_PATHS = new Set([
@@ -25,6 +27,7 @@ const LEGACY_PATHS = new Set([
 
 const REQUIRED_STATIC_FILES = [
   '404.html',
+  'ms/404.html',
   'robots.txt',
   'sitemap.xml',
   'site.webmanifest',
@@ -40,8 +43,6 @@ const REQUIRED_STATIC_FILES = [
   'assets/social/aroma-solutions.jpg',
   'assets/social/corporate.jpg',
   'assets/social/it-maintenance.jpg',
-  'downloads/ms-monster-it-maintenance-profile.pdf',
-  'downloads/ms-monster-perfume-profile.pdf',
   'downloads/ms-monster-product-brochure.pdf',
 ] as const;
 
@@ -392,6 +393,64 @@ async function verifyRequiredStaticFiles(
   );
 }
 
+async function listFiles(directory: string): Promise<string[]> {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nestedFiles = await Promise.all(
+    entries.map((entry) => {
+      const path = resolve(directory, entry.name);
+      return entry.isDirectory() ? listFiles(path) : [path];
+    }),
+  );
+
+  return nestedFiles.flat();
+}
+
+async function extractPdfText(path: string): Promise<string> {
+  const bytes = await readFile(path);
+  const loadingTask = getDocument({
+    data: new Uint8Array(bytes),
+    useSystemFonts: true,
+    useWorkerFetch: false,
+  });
+  const document = await loadingTask.promise;
+
+  try {
+    const pages: string[] = [];
+    for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
+      const page = await document.getPage(pageNumber);
+      const content = await page.getTextContent();
+      pages.push(
+        content.items
+          .map((item) => ('str' in item ? item.str : ''))
+          .filter(Boolean)
+          .join(' '),
+      );
+    }
+    return pages.join('\n');
+  } finally {
+    await loadingTask.destroy();
+  }
+}
+
+async function verifyPdfClaims(root: string, diagnostics: string[]): Promise<void> {
+  const pdfPaths = (await listFiles(root)).filter(
+    (path) => extname(path).toLowerCase() === '.pdf',
+  );
+
+  for (const path of pdfPaths) {
+    const label = `/${relative(root, path).split(sep).join('/')}`;
+    try {
+      const text = await extractPdfText(path);
+      for (const claim of findUnsupportedClaims(text)) {
+        diagnostics.push(`${label}: contains unsupported claim "${claim}"`);
+      }
+    } catch (error) {
+      const reason = error instanceof Error ? `: ${error.message}` : '';
+      diagnostics.push(`${label}: PDF text could not be extracted${reason}`);
+    }
+  }
+}
+
 async function verifySitemap(root: string, diagnostics: string[]): Promise<void> {
   let sitemap: string;
   try {
@@ -423,20 +482,52 @@ async function verifySitemap(root: string, diagnostics: string[]): Promise<void>
 }
 
 async function verifyNotFound(root: string, diagnostics: string[]): Promise<void> {
-  let html: string;
-  try {
-    html = await readFile(resolve(root, '404.html'), 'utf8');
-  } catch {
-    return;
-  }
+  const documents = [
+    {
+      file: '404.html',
+      heading: 'This page is not available',
+      locale: 'en',
+      title: `Page Not Found | ${SITE.name}`,
+    },
+    {
+      file: 'ms/404.html',
+      heading: 'Halaman ini tidak tersedia',
+      locale: 'ms',
+      title: `Halaman Tidak Ditemukan | ${SITE.name}`,
+    },
+  ] as const;
 
-  const document = new JSDOM(html, { url: absoluteUrl('/404') }).window.document;
-  const robots = document
-    .querySelector<HTMLMetaElement>('meta[name="robots"]')
-    ?.content.toLowerCase();
-  const directives = new Set(robots?.split(/[,\s]+/).filter(Boolean) ?? []);
-  if (!directives.has('noindex')) {
-    diagnostics.push('/404.html: 404 page is indexable (missing noindex)');
+  for (const policy of documents) {
+    let html: string;
+    try {
+      html = await readFile(resolve(root, policy.file), 'utf8');
+    } catch {
+      continue;
+    }
+
+    const label = `/${policy.file}`;
+    const document = new JSDOM(html, {
+      url: absoluteUrl(policy.locale === 'ms' ? '/ms/404' : '/404'),
+    }).window.document;
+    if (document.documentElement.lang !== policy.locale) {
+      diagnostics.push(
+        `${label}: expected html lang "${policy.locale}", found "${document.documentElement.lang}"`,
+      );
+    }
+    if (document.title.trim() !== policy.title) {
+      diagnostics.push(`${label}: missing localized title "${policy.title}"`);
+    }
+    if (document.querySelector('h1')?.textContent?.trim() !== policy.heading) {
+      diagnostics.push(`${label}: missing localized H1 "${policy.heading}"`);
+    }
+
+    const robots = document
+      .querySelector<HTMLMetaElement>('meta[name="robots"]')
+      ?.content.toLowerCase();
+    const directives = new Set(robots?.split(/[,\s]+/).filter(Boolean) ?? []);
+    if (!directives.has('noindex')) {
+      diagnostics.push(`${label}: 404 page is indexable (missing noindex)`);
+    }
   }
 }
 
@@ -451,6 +542,7 @@ export async function verifyBuild(root = 'build/client'): Promise<BuildVerificat
 
   verifyUniqueMetadata(documents, diagnostics);
   await verifyRequiredStaticFiles(resolvedRoot, diagnostics);
+  await verifyPdfClaims(resolvedRoot, diagnostics);
   await verifySitemap(resolvedRoot, diagnostics);
   await verifyNotFound(resolvedRoot, diagnostics);
 

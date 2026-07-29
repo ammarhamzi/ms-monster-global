@@ -17,6 +17,10 @@ describe('public copy policy', () => {
       ['MS Monster Global owns AMECO', 'ameco ownership'],
       ['MS Monster Global memiliki AMECO', 'ameco ownership'],
       ['Cosmetics manufacturing licence', 'cosmetics licence'],
+      [
+        'Acquired cosmetics manufacturing and sales business license',
+        'cosmetics licence',
+      ],
       ['Lesen pembuatan kosmetik', 'cosmetics licence'],
       ['Trusted by 1,000 clients', 'client count'],
       ['Serving hundreds of customers', 'client count'],

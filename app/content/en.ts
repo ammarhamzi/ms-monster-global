@@ -66,12 +66,12 @@ export const enContent = {
     operationsEyebrow: 'Clear corporate foundation',
     operationsTitle: 'Built around practical operating needs.',
     operationsDescription:
-      'The company brings two specialist service areas together with clear scopes, direct contact paths, and downloadable source profiles.',
+      'The company brings two specialist service areas together with clear scopes, direct contact paths, and downloadable product information.',
     operationsItems: [
       `${SITE.legalName}, registered as ${SITE.registrationNumber}`,
       `Based in ${SITE.address.addressLocality}, ${SITE.address.addressRegion}`,
       'Dedicated paths for technology and Perfume & Aroma requirements',
-      'Company profiles and product information available as PDF downloads',
+      'Documented diffuser product information available as a PDF brochure',
     ],
     contactCta: {
       eyebrow: 'Start with your requirement',
@@ -364,26 +364,12 @@ export const enContent = {
   downloads: {
     breadcrumb: 'Downloads',
     eyebrow: SITE.legalName,
-    title: 'Company profiles and brochures',
+    title: 'Product brochure and downloads',
     introduction:
-      'Open or download the source PDFs for an overview of the company, IT maintenance services, aroma work, and documented diffuser products.',
-    documentsEyebrow: 'Source documents',
-    documentsTitle: 'Choose the profile that matches your requirement.',
+      'Open or download the published product brochure for documented diffuser models, specifications, and fragrance oil information.',
+    documentsEyebrow: 'Published document',
+    documentsTitle: 'Review the documented diffuser product range.',
     documents: [
-      {
-        title: 'IT Maintenance Service Company Profile',
-        description:
-          'An overview of the IT and AI maintenance scope, company values, and service context.',
-        href: '/downloads/ms-monster-it-maintenance-profile.pdf',
-        meta: '8-page PDF',
-      },
-      {
-        title: 'Perfume & Aroma Company Profile',
-        description:
-          'Company background and information about aroma work, fragrance ingredients, products, and projects.',
-        href: '/downloads/ms-monster-perfume-profile.pdf',
-        meta: '17-page PDF',
-      },
       {
         title: 'MS Monster Global Product Brochure',
         description:
@@ -406,7 +392,7 @@ export const enContent = {
     ],
     contactCta: {
       eyebrow: 'Document enquiry',
-      title: 'Need help choosing the right profile?',
+      title: 'Need help with the product brochure?',
       description:
         'Contact the team with the service, product, or company information you are looking for.',
       link: { label: 'Ask about company documents' },

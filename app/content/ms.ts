@@ -66,12 +66,12 @@ export const msContent = {
     operationsEyebrow: 'Asas korporat yang jelas',
     operationsTitle: 'Dibina mengikut keperluan operasi praktikal.',
     operationsDescription:
-      'Syarikat ini menggabungkan dua bidang perkhidmatan khusus dengan skop yang jelas, saluran hubungan terus, dan profil sumber yang boleh dimuat turun.',
+      'Syarikat ini menggabungkan dua bidang perkhidmatan khusus dengan skop yang jelas, saluran hubungan terus, dan maklumat produk yang boleh dimuat turun.',
     operationsItems: [
       `${SITE.legalName}, berdaftar sebagai ${SITE.registrationNumber}`,
       `Berpangkalan di ${SITE.address.addressLocality}, ${SITE.address.addressRegion}`,
       'Laluan khusus untuk keperluan teknologi dan Perfume & Aroma',
-      'Profil syarikat dan maklumat produk tersedia sebagai muat turun PDF',
+      'Maklumat produk diffuser terdokumen tersedia sebagai brosur PDF',
     ],
     contactCta: {
       eyebrow: 'Mulakan dengan keperluan anda',
@@ -365,26 +365,12 @@ export const msContent = {
   downloads: {
     breadcrumb: 'Muat turun',
     eyebrow: SITE.legalName,
-    title: 'Profil syarikat dan brosur',
+    title: 'Brosur produk dan muat turun',
     introduction:
-      'Buka atau muat turun PDF sumber untuk gambaran syarikat, servis penyelenggaraan IT, kerja aroma, dan produk diffuser terdokumen.',
-    documentsEyebrow: 'Dokumen sumber',
-    documentsTitle: 'Pilih profil yang sepadan dengan keperluan anda.',
+      'Buka atau muat turun brosur produk yang diterbitkan untuk model diffuser, spesifikasi, dan maklumat minyak wangian terdokumen.',
+    documentsEyebrow: 'Dokumen diterbitkan',
+    documentsTitle: 'Semak rangkaian produk diffuser terdokumen.',
     documents: [
-      {
-        title: 'Profil Syarikat Servis Penyelenggaraan IT',
-        description:
-          'Gambaran skop penyelenggaraan IT dan AI, nilai syarikat, dan konteks perkhidmatan.',
-        href: '/downloads/ms-monster-it-maintenance-profile.pdf',
-        meta: 'PDF 8 halaman',
-      },
-      {
-        title: 'Profil Syarikat Minyak Wangi & Aroma',
-        description:
-          'Latar syarikat dan maklumat tentang kerja aroma, bahan wangian, produk, dan projek.',
-        href: '/downloads/ms-monster-perfume-profile.pdf',
-        meta: 'PDF 17 halaman',
-      },
       {
         title: 'Brosur Produk MS Monster Global',
         description:
@@ -407,7 +393,7 @@ export const msContent = {
     ],
     contactCta: {
       eyebrow: 'Pertanyaan dokumen',
-      title: 'Perlukan bantuan memilih profil yang sesuai?',
+      title: 'Perlukan bantuan dengan brosur produk?',
       description:
         'Hubungi pasukan kami dengan maklumat perkhidmatan, produk, atau syarikat yang anda cari.',
       link: { label: 'Tanya tentang dokumen syarikat' },

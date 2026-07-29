@@ -154,7 +154,9 @@ describe('route metadata', () => {
   });
 
   it('emits the complete not-found descriptor policy without canonical or JSON-LD', () => {
-    expect(notFoundMeta()).toEqual([
+    expect(
+      notFoundMeta({ location: { pathname: '/404' } } as never),
+    ).toEqual([
       { title: 'Page Not Found | MS Monster Global' },
       {
         name: 'description',
@@ -199,5 +201,23 @@ describe('route metadata', () => {
         content: 'MS Monster Global IT maintenance and Perfume & Aroma solutions',
       },
     ]);
+  });
+
+  it('localizes not-found metadata from the requested Malay path', () => {
+    const meta = notFoundMeta({
+      location: { pathname: '/ms/halaman-tiada' },
+    } as never);
+
+    expect(meta).toContainEqual({
+      title: 'Halaman Tidak Ditemukan | MS Monster Global',
+    });
+    expect(meta).toContainEqual({
+      name: 'description',
+      content: 'Halaman yang anda minta tidak tersedia.',
+    });
+    expect(meta).toContainEqual({
+      property: 'og:image:alt',
+      content: 'MS Monster Global penyelenggaraan IT dan Perfume & Aroma',
+    });
   });
 });

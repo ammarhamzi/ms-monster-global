@@ -10,6 +10,7 @@ const temporaryDirectories: string[] = [];
 
 const requiredStaticFiles = [
   '404.html',
+  'ms/404.html',
   'robots.txt',
   'site.webmanifest',
   'favicon.ico',
@@ -24,10 +25,37 @@ const requiredStaticFiles = [
   'assets/social/aroma-solutions.jpg',
   'assets/social/corporate.jpg',
   'assets/social/it-maintenance.jpg',
-  'downloads/ms-monster-it-maintenance-profile.pdf',
-  'downloads/ms-monster-perfume-profile.pdf',
   'downloads/ms-monster-product-brochure.pdf',
 ] as const;
+
+function pdfWithText(text: string): Buffer {
+  const escapedText = text.replaceAll('\\', '\\\\').replaceAll('(', '\\(').replaceAll(')', '\\)');
+  const stream = `BT /F1 12 Tf 72 720 Td (${escapedText}) Tj ET`;
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>',
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+    `<< /Length ${Buffer.byteLength(stream)} >>\nstream\n${stream}\nendstream`,
+  ];
+
+  let body = '%PDF-1.4\n';
+  const offsets = [0];
+  for (const [index, object] of objects.entries()) {
+    offsets.push(Buffer.byteLength(body));
+    body += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  }
+  const xrefOffset = Buffer.byteLength(body);
+  body += `xref\n0 ${objects.length + 1}\n`;
+  body += '0000000000 65535 f \n';
+  body += offsets
+    .slice(1)
+    .map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`)
+    .join('');
+  body += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
+
+  return Buffer.from(body);
+}
 
 afterEach(async () => {
   await Promise.all(
@@ -112,7 +140,11 @@ async function writeFixture(
       await mkdir(dirname(output), { recursive: true });
       const contents =
         file === '404.html'
-          ? '<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"></head><body><h1>Page not found</h1></body></html>'
+          ? '<!doctype html><html lang="en"><head><title>Page Not Found | MS Monster Global</title><meta name="robots" content="noindex,nofollow"></head><body><h1>This page is not available</h1></body></html>'
+          : file === 'ms/404.html'
+            ? '<!doctype html><html lang="ms"><head><title>Halaman Tidak Ditemukan | MS Monster Global</title><meta name="robots" content="noindex,nofollow"></head><body><h1>Halaman ini tidak tersedia</h1></body></html>'
+          : file.endsWith('.pdf')
+            ? pdfWithText('Documented diffuser product brochure')
           : `fixture for ${file}`;
       await writeFile(output, contents);
     }),
@@ -146,6 +178,19 @@ describe('generated build verification', () => {
     await expect(verifyBuild(root)).resolves.toMatchObject({
       routes: 12,
     });
+  });
+
+  it('rejects a prohibited claim extracted from any published PDF', async () => {
+    const root = await writeFixture();
+    const unsafePdf = join(root, 'downloads', 'unsupported-claim.pdf');
+    await writeFile(
+      unsafePdf,
+      pdfWithText('Proactive monitoring with 24/7 support'),
+    );
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/downloads/unsupported-claim.pdf: contains unsupported claim "always available"',
+    );
   });
 
   it('rejects a unified perfume page that omits a documented model from HTML', async () => {
@@ -233,6 +278,19 @@ describe('generated build verification', () => {
 
     await expect(verifyBuild(root)).rejects.toThrow(
       '/404.html: 404 page is indexable (missing noindex)',
+    );
+  });
+
+  it('requires the deployed Malay 404 document to remain localized', async () => {
+    const root = await writeFixture();
+    await writeFile(
+      join(root, 'ms', '404.html'),
+      '<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"></head><body><h1>Page not found</h1></body></html>',
+      'utf8',
+    );
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/ms/404.html: expected html lang "ms", found "en"',
     );
   });
 });
