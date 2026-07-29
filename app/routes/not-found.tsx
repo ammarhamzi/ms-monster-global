@@ -1,5 +1,7 @@
 import { Link } from 'react-router';
 
+export { notFoundMeta as meta } from '../seo/meta';
+
 export default function NotFoundRoute() {
   return (
     <section className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-start justify-center px-5 pt-20 sm:px-6">
