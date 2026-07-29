@@ -1,0 +1,58 @@
+[build]
+command = "npm run build"
+publish = "build/client"
+
+[[redirects]]
+from = "/it"
+to = "/it-maintenance"
+status = 301
+
+[[redirects]]
+from = "/profile"
+to = "/downloads"
+status = 301
+
+[[redirects]]
+from = "/products"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/commercial-aroma-solutions"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/aroma-diffusers"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/custom-fragrance-development"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/penyelesaian-aroma-komersial"
+to = "/ms/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/diffuser-aroma"
+to = "/ms/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/pembangunan-wangian-tersuai"
+to = "/ms/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/*"
+to = "/ms/404.html"
+status = 404
+
+[[redirects]]
+from = "/*"
+to = "/404.html"
+status = 404

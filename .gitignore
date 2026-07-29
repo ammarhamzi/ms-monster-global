@@ -1,7 +1,9 @@
 node_modules/
 build/
+.react-router/
 dist/
 coverage/
+.worktrees/
 .DS_Store
 *.log
 .env*

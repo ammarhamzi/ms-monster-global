@@ -1,10 +1,14 @@
 # MS Monster Global Corporate Portal
 
-Corporate website for MS Monster Global Sdn Bhd, covering AMECO consumer products, perfume and aroma solutions, IT and AI maintenance services, company profile downloads, and contact information.
+Corporate website for MS Monster Global Sdn Bhd, covering unified Perfume & Aroma solutions, IT and AI maintenance services, a documented product brochure, and contact information.
+
+Canonical bilingual service routes include `/perfume` and `/ms/perfume`.
+Former split aroma, diffuser, and custom-fragrance URLs redirect permanently
+to the matching unified page.
 
 ## Run Locally
 
-Prerequisite: Node.js
+Prerequisite: Node.js 22.22.2 or newer.
 
 ```bash
 npm install
@@ -19,7 +23,20 @@ http://localhost:3000/
 
 ## Scripts
 
-- `npm run dev` starts the Vite development server.
-- `npm run build` creates a production build.
-- `npm run preview` previews the production build.
-- `npm run lint` runs TypeScript checks.
+```bash
+npm install
+npm run dev
+npm test
+npm run typecheck
+npm run build
+npm run preview
+```
+
+- `npm run dev` starts the local development server.
+- `npm test` runs the Vitest suite.
+- `npm run typecheck` generates route types and checks TypeScript.
+- `npm run build` generates brand assets, pre-renders the site, creates crawl files, and verifies the production output.
+- `npm run verify:build` verifies an existing `build/client` output.
+- `npm run preview` serves the generated static output with deployment-style clean paths and gzip compression.
+
+Netlify publishes the generated static site from `build/client`.
