@@ -47,7 +47,10 @@ export default function ItMaintenancePage({ locale }: ItMaintenancePageProps) {
             <img
               src="/assets/it-infrastructure-hero.jpg"
               alt={it.heroImageAlt}
+              width={1727}
+              height={911}
               fetchPriority="high"
+              decoding="async"
               sizes="100vw"
               className="h-full w-full object-cover"
             />

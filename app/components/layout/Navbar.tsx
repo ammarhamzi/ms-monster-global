@@ -7,6 +7,7 @@ import {
   getRoute,
   type PageKey,
 } from '../../config/routes';
+import { SITE } from '../../config/site';
 import { getContent } from '../../content';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -53,20 +54,20 @@ export default function Navbar() {
         onKeyDown={handleKeyDown}
         className="fixed left-0 right-0 top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md"
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             <NavLink
               to={getRoute(locale, 'home').path}
               end
               className="flex flex-shrink-0 items-center rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700"
-              aria-label={`MS Monster Global — ${nav.home}`}
+              aria-label={`${SITE.name}: ${nav.home}`}
             >
               <img
                 src="/assets/brand/logo-dark.webp"
                 alt="MS Monster Global"
                 width={640}
                 height={111}
-                className="h-14 max-h-16 w-auto object-contain"
+                className="h-auto w-[clamp(7.5rem,42vw,11rem)] object-contain sm:w-64 lg:w-56 xl:w-64"
               />
             </NavLink>
 
@@ -77,7 +78,7 @@ export default function Navbar() {
                   to={item.to}
                   end={item.key === 'home'}
                   className={({ isActive }) =>
-                    `rounded-sm whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700 ${
+                    `inline-flex min-h-11 items-center rounded-sm whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700 ${
                       isActive
                         ? 'text-emerald-700'
                         : 'text-slate-600 hover:text-slate-950'

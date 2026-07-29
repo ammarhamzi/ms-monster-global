@@ -11,6 +11,8 @@ const directionAssets = [
   {
     image: '/assets/scent-fresh.jpg',
     mobileImage: '/assets/scent-fresh-mobile.jpg',
+    width: 1814,
+    height: 867,
     ingredients: {
       en: ['Grapefruit', 'Lemon', 'Peppermint Oil'],
       ms: ['Limau gedang', 'Limau lemon', 'Minyak Pudina'],
@@ -19,6 +21,8 @@ const directionAssets = [
   {
     image: '/assets/scent-floral.jpg',
     mobileImage: '/assets/scent-floral-mobile.jpg',
+    width: 1718,
+    height: 916,
     ingredients: {
       en: ['Jasmine Absolute Oil', 'Rose Absolute Oil', 'Bois De Rose Oil'],
       ms: ['Minyak Absolut Melur', 'Minyak Absolut Mawar', 'Minyak Bois de Rose'],
@@ -27,6 +31,8 @@ const directionAssets = [
   {
     image: '/assets/scent-woody.jpg',
     mobileImage: '/assets/scent-woody-mobile.jpg',
+    width: 1717,
+    height: 916,
     ingredients: {
       en: ['Cedarwood Virginian Oil', 'Cypress Oil', 'Sandalwood Oil'],
       ms: ['Minyak Kayu Cedar Virginia', 'Minyak Sipres', 'Minyak Kayu Cendana'],
@@ -51,7 +57,11 @@ export default function CustomFragrancePage({ locale }: CustomFragrancePageProps
               <img
                 src="/assets/perfume-development.jpg"
                 alt={fragrance.heroImageAlt}
+                width={1755}
+                height={896}
                 fetchPriority="high"
+                decoding="async"
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="h-80 w-full object-cover lg:h-full lg:min-h-[38rem]"
               />
             </picture>
@@ -105,7 +115,11 @@ export default function CustomFragrancePage({ locale }: CustomFragrancePageProps
                       <img
                         src={assets.image}
                         alt={direction.imageAlt}
+                        width={assets.width}
+                        height={assets.height}
                         loading="lazy"
+                        decoding="async"
+                        sizes="(min-width: 1024px) 33vw, 100vw"
                         className="h-56 w-full object-cover"
                       />
                     </picture>

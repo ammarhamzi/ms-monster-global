@@ -19,10 +19,14 @@ const divisionImages = {
   aroma: {
     image: '/assets/perfume-aroma-hero.jpg',
     mobileImage: '/assets/perfume-aroma-hero-mobile.jpg',
+    width: 1695,
+    height: 928,
   },
   it: {
     image: '/assets/it-infrastructure-hero.jpg',
     mobileImage: '/assets/it-infrastructure-hero-mobile.jpg',
+    width: 1727,
+    height: 911,
   },
 } as const;
 
@@ -108,7 +112,11 @@ export default function HomePage({ locale }: HomePageProps) {
                       <img
                         src={images.image}
                         alt={division.imageAlt}
+                        width={images.width}
+                        height={images.height}
                         loading="lazy"
+                        decoding="async"
+                        sizes="(min-width: 1024px) 50vw, 100vw"
                         className="h-56 w-full object-cover sm:h-64"
                       />
                     </picture>

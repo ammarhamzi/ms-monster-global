@@ -69,6 +69,8 @@ export interface AboutContent {
   title: string;
   introduction: string;
   incorporation: string;
+  incorporationEyebrow: string;
+  incorporationTitle: string;
   companyEyebrow: string;
   companyTitle: string;
   registrationLabel: string;

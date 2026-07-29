@@ -46,7 +46,10 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
             <img
               src="/assets/perfume-aroma-hero.jpg"
               alt={aroma.heroImageAlt}
+              width={1695}
+              height={928}
               fetchPriority="high"
+              decoding="async"
               sizes="100vw"
               className="h-full w-full object-cover"
             />
@@ -112,7 +115,11 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
                       <img
                         src={image.image}
                         alt={space.imageAlt}
+                        width={1536}
+                        height={1024}
                         loading="lazy"
+                        decoding="async"
+                        sizes="(min-width: 768px) 33vw, 100vw"
                         className="h-full w-full object-cover"
                       />
                     </picture>
@@ -169,7 +176,11 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
               <img
                 src="/assets/perfume-service-refill.jpg"
                 alt={aroma.programmeImageAlt}
+                width={1536}
+                height={1024}
                 loading="lazy"
+                decoding="async"
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="h-full min-h-72 w-full object-cover"
               />
             </picture>

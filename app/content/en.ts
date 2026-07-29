@@ -91,6 +91,8 @@ export const enContent = {
       `${SITE.legalName} is a Malaysia-based company with two business divisions: practical IT and AI maintenance services, and commercial aroma solutions for business environments.`,
     incorporation:
       `${SITE.legalName} was incorporated on 16 November 2022. Earlier activity belongs to the business roots that preceded the Sdn Bhd.`,
+    incorporationEyebrow: 'Current legal entity',
+    incorporationTitle: 'Incorporated in November 2022',
     companyEyebrow: 'Registered company',
     companyTitle: 'Company information',
     registrationLabel: 'SSM registration number',

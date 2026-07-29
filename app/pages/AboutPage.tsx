@@ -78,10 +78,10 @@ export default function AboutPage({ locale }: AboutPageProps) {
             </div>
             <div className="flex flex-col justify-center">
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-blue-700">
-                {about.historyEyebrow}
+                {about.incorporationEyebrow}
               </p>
               <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-slate-950 sm:text-4xl">
-                {about.historyTitle}
+                {about.incorporationTitle}
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-slate-600">
                 {about.incorporation}

@@ -18,8 +18,8 @@ export default function Breadcrumbs({
   const homeRoute = getRoute(locale, 'home');
   const homeClassName =
     tone === 'dark'
-      ? 'rounded-sm hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
-      : 'rounded-sm hover:text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700';
+      ? 'inline-flex min-h-11 items-center rounded-sm hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
+      : 'inline-flex min-h-11 items-center rounded-sm hover:text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700';
   const currentClassName =
     tone === 'dark' ? 'font-semibold text-white' : 'font-semibold text-slate-800';
 

@@ -91,6 +91,8 @@ export const msContent = {
       `${SITE.legalName} ialah syarikat berpangkalan di Malaysia dengan dua bahagian perniagaan: servis penyelenggaraan IT dan AI yang praktikal, serta penyelesaian aroma komersial untuk persekitaran perniagaan.`,
     incorporation:
       `${SITE.legalName} diperbadankan pada 16 November 2022. Aktiviti terdahulu merupakan akar perniagaan sebelum penubuhan Sdn Bhd.`,
+    incorporationEyebrow: 'Entiti undang-undang semasa',
+    incorporationTitle: 'Diperbadankan pada November 2022',
     companyEyebrow: 'Syarikat berdaftar',
     companyTitle: 'Maklumat syarikat',
     registrationLabel: 'Nombor pendaftaran SSM',

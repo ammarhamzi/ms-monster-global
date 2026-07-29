@@ -36,10 +36,11 @@ export default function LanguageSwitcher() {
   const { nav } = getContent(locale);
   const { currentRoute, englishRoute, malayRoute } = languageRoutes(pathname);
   const linkClassName =
-    'inline-flex min-h-11 min-w-10 items-center justify-center rounded-md px-1 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+    'inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-1 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
 
   return (
     <div
+      role="group"
       aria-label={nav.languageSelectionLabel}
       className="flex items-center gap-0.5"
     >
@@ -49,7 +50,7 @@ export default function LanguageSwitcher() {
         lang="en"
         aria-current={currentRoute?.locale === 'en' ? 'page' : undefined}
         className={`${linkClassName} ${
-          locale === 'en' ? 'text-slate-950' : 'text-slate-400 hover:text-slate-800'
+          locale === 'en' ? 'text-slate-950' : 'text-slate-600 hover:text-slate-950'
         }`}
       >
         EN
@@ -63,7 +64,7 @@ export default function LanguageSwitcher() {
         lang="ms"
         aria-current={currentRoute?.locale === 'ms' ? 'page' : undefined}
         className={`${linkClassName} ${
-          locale === 'ms' ? 'text-slate-950' : 'text-slate-400 hover:text-slate-800'
+          locale === 'ms' ? 'text-slate-950' : 'text-slate-600 hover:text-slate-950'
         }`}
       >
         BM

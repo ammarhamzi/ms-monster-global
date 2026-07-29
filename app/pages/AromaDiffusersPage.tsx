@@ -107,7 +107,11 @@ export default function AromaDiffusersPage({ locale }: AromaDiffusersPageProps) 
             <img
               src="/assets/perfume-diffuser-feature.jpg"
               alt={featureImageAlt[locale]}
+              width={1122}
+              height={1402}
               loading="lazy"
+              decoding="async"
+              sizes="(min-width: 768px) 55vw, 100vw"
               className="min-h-72 w-full object-cover"
             />
           </picture>

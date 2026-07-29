@@ -1,5 +1,5 @@
 import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
-import { Link, useLocation } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
 import {
   getLocaleForPath,
   getRoute,
@@ -27,13 +27,18 @@ export default function Footer() {
       const route = getRoute(locale, key);
 
       return (
-        <Link
+        <NavLink
           key={route.id}
           to={route.path}
-          className="flex min-h-11 items-center rounded-sm text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          end={key === 'home'}
+          className={({ isActive }) =>
+            `flex min-h-11 items-center rounded-sm text-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+              isActive ? 'font-semibold text-white' : 'text-slate-400'
+            }`
+          }
         >
           {nav[key]}
-        </Link>
+        </NavLink>
       );
     });
   }
@@ -48,6 +53,8 @@ export default function Footer() {
               alt="MS Monster Global"
               width={640}
               height={111}
+              loading="lazy"
+              decoding="async"
               className="mb-6 h-12 w-auto"
             />
             <p className="max-w-sm text-base leading-relaxed text-slate-400 md:text-sm">
@@ -82,7 +89,7 @@ export default function Footer() {
                 <Phone className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
                 <a
                   href={`tel:${SITE.telephone}`}
-                  className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex min-h-11 items-center rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {SITE.displayTelephone}
                 </a>
@@ -91,7 +98,7 @@ export default function Footer() {
                 <Mail className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="break-all rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex min-h-11 items-center break-all rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {SITE.email}
                 </a>
@@ -115,8 +122,8 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-slate-800 pt-8 md:flex-row md:items-center">
-          <p className="text-sm text-slate-500">{footer.copyright}</p>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-400">{footer.copyright}</p>
+          <p className="text-sm text-slate-400">
             {footer.registrationLabel}: {SITE.registrationNumber}
           </p>
         </div>
