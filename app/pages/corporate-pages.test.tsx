@@ -40,6 +40,30 @@ describe.each(['en', 'ms'] as const)('downloads in %s', (locale) => {
   });
 });
 
+describe.each([
+  [
+    'en',
+    'Commercial aroma solutions',
+    '/commercial-aroma-solutions',
+    'IT maintenance',
+    '/it-maintenance',
+  ],
+  [
+    'ms',
+    'Penyelesaian aroma komersial',
+    '/ms/penyelesaian-aroma-komersial',
+    'Penyelenggaraan IT',
+    '/ms/penyelenggaraan-it',
+  ],
+] as const)('downloads division paths in %s', (locale, aromaLabel, aromaPath, itLabel, itPath) => {
+  it('links visibly to both localized service divisions', () => {
+    render(<DownloadsPage locale={locale} />);
+
+    expect(screen.getByRole('link', { name: aromaLabel })).toHaveAttribute('href', aromaPath);
+    expect(screen.getByRole('link', { name: itLabel })).toHaveAttribute('href', itPath);
+  });
+});
+
 describe.each(['en', 'ms'] as const)('contact page in %s', (locale) => {
   it('exposes every direct contact channel as a native link', () => {
     const { container } = render(<ContactPage locale={locale} />);

@@ -12,6 +12,8 @@ export function getContent(locale: Locale): SiteContent {
   return content[locale];
 }
 
+export { findUnsupportedClaims } from './policy';
+
 export type {
   AboutContent,
   AromaContent,

@@ -1,4 +1,4 @@
-import { CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import ContactCta from '../components/content/ContactCta';
 import SectionHeading from '../components/content/SectionHeading';
 import DownloadCard from '../components/downloads/DownloadCard';
@@ -73,17 +73,35 @@ export default function DownloadsPage({ locale }: DownloadsPageProps) {
             title={downloads.guidanceTitle}
             description={downloads.guidanceDescription}
           />
-          <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-1">
-            {downloads.guidanceItems.map((item) => (
-              <li
-                key={item}
-                className="flex min-h-14 items-center gap-3 border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800"
+          <div>
+            <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-1">
+              {downloads.guidanceItems.map((item) => (
+                <li
+                  key={item}
+                  className="flex min-h-14 items-center gap-3 border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800"
+                >
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-1">
+              <a
+                href={getRoute(locale, 'aroma').path}
+                className="inline-flex min-h-12 items-center justify-between gap-3 rounded-lg bg-emerald-800 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700"
               >
-                <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
+                {nav.aroma}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a
+                href={getRoute(locale, 'it').path}
+                className="inline-flex min-h-12 items-center justify-between gap-3 rounded-lg bg-blue-950 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700"
+              >
+                {nav.it}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

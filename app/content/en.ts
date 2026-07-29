@@ -84,7 +84,7 @@ export const enContent = {
     eyebrow: SITE.legalName,
     title: 'About MS Monster Global',
     introduction:
-      'MS Monster Global Sdn Bhd is a Malaysia-based company with two business divisions: practical IT and AI maintenance services, and commercial aroma solutions for business environments.',
+      `${SITE.legalName} is a Malaysia-based company with two business divisions: practical IT and AI maintenance services, and commercial aroma solutions for business environments.`,
     incorporation:
       `${SITE.legalName} was incorporated on 16 November 2022. Earlier activity belongs to the business roots that preceded the Sdn Bhd.`,
     companyEyebrow: 'Registered company',

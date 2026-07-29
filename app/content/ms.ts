@@ -84,7 +84,7 @@ export const msContent = {
     eyebrow: SITE.legalName,
     title: 'Tentang MS Monster Global',
     introduction:
-      'MS Monster Global Sdn Bhd ialah syarikat berpangkalan di Malaysia dengan dua bahagian perniagaan: servis penyelenggaraan IT dan AI yang praktikal, serta penyelesaian aroma komersial untuk persekitaran perniagaan.',
+      `${SITE.legalName} ialah syarikat berpangkalan di Malaysia dengan dua bahagian perniagaan: servis penyelenggaraan IT dan AI yang praktikal, serta penyelesaian aroma komersial untuk persekitaran perniagaan.`,
     incorporation:
       `${SITE.legalName} diperbadankan pada 16 November 2022. Aktiviti terdahulu merupakan akar perniagaan sebelum penubuhan Sdn Bhd.`,
     companyEyebrow: 'Syarikat berdaftar',
