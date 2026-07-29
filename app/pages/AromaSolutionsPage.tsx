@@ -1,6 +1,7 @@
 import { Check, FlaskConical, MapPinned, Settings2, Sparkles } from 'lucide-react';
 import { MotionConfig, motion } from 'motion/react';
 import ContactCta from '../components/content/ContactCta';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
 import type { Locale } from '../config/routes';
 import { getRoute } from '../config/routes';
@@ -34,7 +35,7 @@ interface AromaSolutionsPageProps {
 }
 
 export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) {
-  const { aroma, nav } = getContent(locale);
+  const { aroma } = getContent(locale);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -52,22 +53,12 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
           </picture>
           <div className="absolute inset-0 -z-10 bg-gradient-to-r from-emerald-950 via-emerald-950/90 to-emerald-950/35" />
           <div className="mx-auto flex min-h-[31rem] max-w-7xl flex-col px-5 py-10 sm:min-h-[34rem] sm:px-6 sm:py-12 lg:px-8">
-            <nav aria-label={nav.breadcrumbLabel} className="text-sm text-emerald-100">
-              <ol className="flex flex-wrap items-center gap-2">
-                <li>
-                  <a
-                    href={getRoute(locale, 'home').path}
-                    className="rounded-sm hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                  >
-                    {nav.home}
-                  </a>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li aria-current="page" className="font-semibold text-white">
-                  {aroma.breadcrumb}
-                </li>
-              </ol>
-            </nav>
+            <Breadcrumbs
+              locale={locale}
+              current={aroma.breadcrumb}
+              className="text-sm text-emerald-100"
+              tone="dark"
+            />
             <div className="mt-auto max-w-3xl pt-16">
               <motion.p {...heroReveal(0.04)} className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-200">
                 {aroma.eyebrow}

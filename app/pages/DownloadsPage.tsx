@@ -1,5 +1,6 @@
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import ContactCta from '../components/content/ContactCta';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
 import DownloadCard from '../components/downloads/DownloadCard';
 import type { Locale } from '../config/routes';
@@ -17,22 +18,12 @@ export default function DownloadsPage({ locale }: DownloadsPageProps) {
     <div className="min-h-screen bg-slate-50 pt-20">
       <header className="bg-blue-950 text-white">
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 sm:py-16 md:py-20 lg:px-8">
-          <nav aria-label={nav.breadcrumbLabel} className="mb-7 text-sm text-blue-200">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <a
-                  href={getRoute(locale, 'home').path}
-                  className="rounded-sm hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                >
-                  {nav.home}
-                </a>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li aria-current="page" className="font-semibold text-white">
-                {downloads.breadcrumb}
-              </li>
-            </ol>
-          </nav>
+          <Breadcrumbs
+            locale={locale}
+            current={downloads.breadcrumb}
+            className="mb-7 text-sm text-blue-200"
+            tone="dark"
+          />
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-200">
             {downloads.eyebrow}
           </p>

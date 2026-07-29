@@ -7,23 +7,16 @@ import {
   ScrollRestoration,
   useLocation,
 } from 'react-router';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
-import { getRouteByPath, type Locale } from './config/routes';
-import { LanguageProvider } from './context/LanguageContext';
+import Footer from './components/layout/Footer';
+import Navbar from './components/layout/Navbar';
+import { getLocaleForPath } from './config/routes';
 import './styles/index.css';
-
-function localeForPath(pathname: string): Locale {
-  try {
-    return getRouteByPath(pathname).locale;
-  } catch {
-    return 'en';
-  }
-}
 
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
-  const locale = localeForPath(pathname);
+  const locale = getLocaleForPath(pathname);
+  const skipLabel =
+    locale === 'ms' ? 'Langkau ke kandungan utama' : 'Skip to main content';
 
   return (
     <html lang={locale}>
@@ -38,17 +31,15 @@ export function Layout({ children }: { children: ReactNode }) {
           href="#main-content"
           className="fixed left-4 top-4 z-[100] -translate-y-24 bg-white px-4 py-3 font-semibold text-slate-950 shadow-lg transition-transform focus:translate-y-0"
         >
-          Skip to main content
+          {skipLabel}
         </a>
-        <LanguageProvider initialLanguage={locale}>
-          <div className="flex min-h-screen flex-col font-sans">
-            <Navbar />
-            <main id="main-content" className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </LanguageProvider>
+        <div className="flex min-h-screen flex-col font-sans">
+          <Navbar />
+          <main id="main-content" className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -5,6 +5,7 @@ import {
   ROUTES,
   absoluteUrl,
   getCounterpart,
+  getLocaleForPath,
   getRoute,
   getRouteByPath,
 } from './routes';
@@ -44,5 +45,11 @@ describe('localized route registry', () => {
   it('resolves normalized paths and absolute URLs', () => {
     expect(getRouteByPath('/ms/hubungi/')).toEqual(getRoute('ms', 'contact'));
     expect(absoluteUrl('/contact')).toBe('https://msmonsterglobal.com/contact');
+  });
+
+  it('derives the locale from both registered and missing paths', () => {
+    expect(getLocaleForPath('/ms/diffuser-aroma')).toBe('ms');
+    expect(getLocaleForPath('/ms/halaman-tiada')).toBe('ms');
+    expect(getLocaleForPath('/missing')).toBe('en');
   });
 });

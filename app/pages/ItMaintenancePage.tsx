@@ -9,6 +9,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import ContactCta from '../components/content/ContactCta';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
 import type { Locale } from '../config/routes';
 import { getRoute } from '../config/routes';
@@ -52,36 +53,44 @@ export default function ItMaintenancePage({ locale }: ItMaintenancePageProps) {
             />
           </picture>
           <div className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-950 via-blue-950/85 to-blue-950/25" />
-          <div className="mx-auto grid min-h-[31rem] max-w-7xl gap-8 px-5 py-12 sm:min-h-[34rem] sm:px-6 sm:py-16 md:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:px-8">
-            <div className="max-w-3xl">
-              <motion.p {...heroReveal(0.04)} className="mb-5 text-sm font-bold uppercase tracking-[0.18em] text-blue-200">
-                {it.eyebrow}
-              </motion.p>
-              <motion.h1 {...heroReveal(0.14)} className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
-                {it.title}
-              </motion.h1>
-              <motion.p {...heroReveal(0.24)} className="mt-5 max-w-2xl text-lg leading-relaxed text-blue-100 md:mt-6 md:text-xl">
-                {it.introduction}
-              </motion.p>
-              <motion.div {...heroReveal(0.34)}>
-                <a
-                  href={getRoute(locale, 'contact').path}
-                  className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-bold text-blue-950 transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] motion-safe:hover:-translate-y-0.5 hover:bg-blue-100 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:mt-9 sm:w-auto"
-                >
-                  {it.primaryLink.label}
-                </a>
+          <div className="mx-auto flex min-h-[31rem] max-w-7xl flex-col px-5 py-10 sm:min-h-[34rem] sm:px-6 sm:py-12 lg:px-8">
+            <Breadcrumbs
+              locale={locale}
+              current={it.breadcrumb}
+              className="text-sm text-blue-100"
+              tone="dark"
+            />
+            <div className="mt-auto grid gap-8 pt-16 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+              <div className="max-w-3xl">
+                <motion.p {...heroReveal(0.04)} className="mb-5 text-sm font-bold uppercase tracking-[0.18em] text-blue-200">
+                  {it.eyebrow}
+                </motion.p>
+                <motion.h1 {...heroReveal(0.14)} className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+                  {it.title}
+                </motion.h1>
+                <motion.p {...heroReveal(0.24)} className="mt-5 max-w-2xl text-lg leading-relaxed text-blue-100 md:mt-6 md:text-xl">
+                  {it.introduction}
+                </motion.p>
+                <motion.div {...heroReveal(0.34)}>
+                  <a
+                    href={getRoute(locale, 'contact').path}
+                    className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-bold text-blue-950 transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] motion-safe:hover:-translate-y-0.5 hover:bg-blue-100 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:mt-9 sm:w-auto"
+                  >
+                    {it.primaryLink.label}
+                  </a>
+                </motion.div>
+              </div>
+              <motion.div {...heroReveal(0.28)} className="border border-blue-200/30 bg-blue-950/85 p-6 sm:p-8">
+                <CloudCog className="mb-4 h-8 w-8 text-blue-200 sm:mb-6 sm:h-10 sm:w-10" aria-hidden="true" />
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-blue-200">
+                  {it.infrastructureEyebrow}
+                </p>
+                <h2 className="mt-3 text-xl font-bold sm:text-2xl">{it.infrastructureTitle}</h2>
+                <p className="mt-2 text-base leading-relaxed text-blue-100 md:mt-3">
+                  {it.infrastructureDescription}
+                </p>
               </motion.div>
             </div>
-            <motion.div {...heroReveal(0.28)} className="border border-blue-200/30 bg-blue-950/85 p-6 sm:p-8">
-              <CloudCog className="mb-4 h-8 w-8 text-blue-200 sm:mb-6 sm:h-10 sm:w-10" aria-hidden="true" />
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-blue-200">
-                {it.infrastructureEyebrow}
-              </p>
-              <h2 className="mt-3 text-xl font-bold sm:text-2xl">{it.infrastructureTitle}</h2>
-              <p className="mt-2 text-base leading-relaxed text-blue-100 md:mt-3">
-                {it.infrastructureDescription}
-              </p>
-            </motion.div>
           </div>
         </section>
 

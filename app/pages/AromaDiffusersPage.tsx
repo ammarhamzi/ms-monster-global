@@ -1,4 +1,5 @@
 import { ArrowRight, ExternalLink } from 'lucide-react';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
 import type { Locale } from '../config/routes';
 import { getRoute } from '../config/routes';
@@ -61,28 +62,18 @@ interface AromaDiffusersPageProps {
 }
 
 export default function AromaDiffusersPage({ locale }: AromaDiffusersPageProps) {
-  const { diffusers: page, nav } = getContent(locale);
+  const { diffusers: page } = getContent(locale);
 
   return (
     <div className="min-h-screen bg-stone-50 pt-20">
       <header className="bg-emerald-950 text-white">
         <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 sm:py-14 md:py-20 lg:px-8">
-          <nav aria-label={nav.breadcrumbLabel} className="text-sm text-emerald-100">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <a
-                  href={getRoute(locale, 'home').path}
-                  className="rounded-sm hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                >
-                  {nav.home}
-                </a>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li aria-current="page" className="font-semibold text-white">
-                {page.breadcrumb}
-              </li>
-            </ol>
-          </nav>
+          <Breadcrumbs
+            locale={locale}
+            current={page.breadcrumb}
+            className="text-sm text-emerald-100"
+            tone="dark"
+          />
           <div className="mt-14 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-200">

@@ -213,6 +213,17 @@ export function getRouteByPath(pathname: string): RouteRecord {
   return route;
 }
 
+export function getLocaleForPath(pathname: string): Locale {
+  try {
+    return getRouteByPath(pathname).locale;
+  } catch {
+    return normalizePath(pathname).startsWith('/ms/') ||
+      normalizePath(pathname) === '/ms'
+      ? 'ms'
+      : 'en';
+  }
+}
+
 export function getCounterpart(route: RouteRecord): RouteRecord {
   const counterpartLocale: Locale = route.locale === 'en' ? 'ms' : 'en';
   return getRoute(counterpartLocale, route.key);

@@ -1,5 +1,6 @@
 import { ArrowRight, ChevronDown, Droplet, TestTube } from 'lucide-react';
 import { MotionConfig, motion } from 'motion/react';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
 import type { Locale } from '../config/routes';
 import { getRoute } from '../config/routes';
@@ -38,7 +39,7 @@ interface CustomFragrancePageProps {
 }
 
 export default function CustomFragrancePage({ locale }: CustomFragrancePageProps) {
-  const { fragrance, nav } = getContent(locale);
+  const { fragrance } = getContent(locale);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -55,22 +56,11 @@ export default function CustomFragrancePage({ locale }: CustomFragrancePageProps
               />
             </picture>
             <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-14">
-              <nav aria-label={nav.breadcrumbLabel} className="mb-10 text-sm text-slate-500">
-                <ol className="flex flex-wrap items-center gap-2">
-                  <li>
-                    <a
-                      href={getRoute(locale, 'home').path}
-                      className="rounded-sm hover:text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700"
-                    >
-                      {nav.home}
-                    </a>
-                  </li>
-                  <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="font-semibold text-slate-800">
-                    {fragrance.breadcrumb}
-                  </li>
-                </ol>
-              </nav>
+              <Breadcrumbs
+                locale={locale}
+                current={fragrance.breadcrumb}
+                className="mb-10 text-sm text-slate-500"
+              />
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">
                 {fragrance.eyebrow}
               </p>

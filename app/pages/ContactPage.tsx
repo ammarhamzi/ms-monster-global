@@ -8,6 +8,7 @@ import {
   Phone,
 } from 'lucide-react';
 import { MotionConfig, motion } from 'motion/react';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
 import type { Locale } from '../config/routes';
 import { getRoute } from '../config/routes';
@@ -83,22 +84,11 @@ export default function ContactPage({ locale }: ContactPageProps) {
       <div className="min-h-screen bg-white pt-20">
         <header className="border-b border-slate-200 bg-slate-50">
           <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 sm:py-16 md:py-20 lg:px-8">
-            <nav aria-label={nav.breadcrumbLabel} className="mb-7 text-sm text-slate-500">
-              <ol className="flex flex-wrap items-center gap-2">
-                <li>
-                  <a
-                    href={getRoute(locale, 'home').path}
-                    className="rounded-sm hover:text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700"
-                  >
-                    {nav.home}
-                  </a>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li aria-current="page" className="font-semibold text-slate-800">
-                  {contact.breadcrumb}
-                </li>
-              </ol>
-            </nav>
+            <Breadcrumbs
+              locale={locale}
+              current={contact.breadcrumb}
+              className="mb-7 text-sm text-slate-500"
+            />
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700">
               {contact.eyebrow}
             </p>

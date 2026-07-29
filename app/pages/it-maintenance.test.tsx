@@ -6,6 +6,8 @@ import ItRoute from '../routes/it';
 describe.each([
   {
     path: '/it-maintenance',
+    breadcrumbLabel: 'Breadcrumb',
+    breadcrumb: 'IT maintenance',
     heading: 'IT & AI Maintenance Services',
     services: [
       'Predictive maintenance',
@@ -23,6 +25,8 @@ describe.each([
   },
   {
     path: '/ms/penyelenggaraan-it',
+    breadcrumbLabel: 'Jejak navigasi',
+    breadcrumb: 'Penyelenggaraan IT',
     heading: 'Servis Penyelenggaraan IT & AI',
     services: [
       'Penyelenggaraan ramalan',
@@ -38,7 +42,14 @@ describe.each([
       ['Tanya tentang penyelenggaraan IT', '/ms/hubungi'],
     ],
   },
-] as const)('IT route at $path', ({ path, heading, services, contacts }) => {
+] as const)('IT route at $path', ({
+  path,
+  breadcrumbLabel,
+  breadcrumb,
+  heading,
+  services,
+  contacts,
+}) => {
   it('renders the exact service inventory and localized contact paths without unsupported promises', () => {
     render(
       <MemoryRouter initialEntries={[path]}>
@@ -47,6 +58,11 @@ describe.each([
     );
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(heading);
+    const breadcrumbNavigation = screen.getByRole('navigation', {
+      name: breadcrumbLabel,
+    });
+    expect(breadcrumbNavigation).toHaveTextContent(breadcrumb);
+    expect(breadcrumbNavigation.querySelectorAll('[aria-current="page"]')).toHaveLength(1);
     const serviceHeadings = screen.getAllByRole('heading', { level: 3 });
     expect(serviceHeadings).toHaveLength(7);
     expect(serviceHeadings.map((service) => service.textContent)).toEqual(services);
