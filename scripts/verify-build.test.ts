@@ -1,6 +1,6 @@
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ROUTES, absoluteUrl, getCounterpart } from '../app/config/routes';
 import { verifyBuild } from './verify-build';
@@ -156,6 +156,33 @@ describe('generated build verification', () => {
 
     await expect(verifyBuild(root)).rejects.toThrow(
       '/: internal route "/empty-route" is missing generated HTML',
+    );
+  });
+
+  it('rejects encoded separator traversal even when an out-of-root index exists', async () => {
+    const root = await writeFixture();
+    const outsideRoute = `outside-${basename(root)}`;
+    const outsideDirectory = join(dirname(root), outsideRoute);
+    const homePath = join(root, 'index.html');
+    const home = await readFile(homePath, 'utf8');
+    temporaryDirectories.push(outsideDirectory);
+    await mkdir(outsideDirectory);
+    await writeFile(
+      join(outsideDirectory, 'index.html'),
+      '<!doctype html><title>Outside build root</title>',
+      'utf8',
+    );
+    await writeFile(
+      homePath,
+      home.replace(
+        '</main>',
+        `<a href="/..%2F${outsideRoute}">Outside route</a></main>`,
+      ),
+      'utf8',
+    );
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      new RegExp(`internal route "/../${outsideRoute}" is missing generated HTML`),
     );
   });
 

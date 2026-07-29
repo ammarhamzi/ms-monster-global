@@ -73,10 +73,11 @@ interface RouteDocument {
   title: string;
 }
 
-function routeHtmlPath(root: string, routePath: string): string {
-  return routePath === '/'
-    ? resolve(root, 'index.html')
-    : resolve(root, routePath.slice(1), 'index.html');
+function routeHtmlPath(root: string, routePath: string): string | undefined {
+  const routeDirectory = safeBuildPath(root, routePath);
+  if (!routeDirectory) return undefined;
+
+  return resolve(routeDirectory, 'index.html');
 }
 
 async function exists(pathname: string): Promise<boolean> {
@@ -163,7 +164,8 @@ async function verifyLocalReferences(
 
     const normalizedPath = urlPath === '/' ? '/' : urlPath.replace(/\/+$/, '');
     if (routePaths.has(normalizedPath) || extname(normalizedPath) === '') {
-      if (!(await exists(routeHtmlPath(root, normalizedPath)))) {
+      const htmlPath = routeHtmlPath(root, normalizedPath);
+      if (!htmlPath || !(await exists(htmlPath))) {
         diagnostics.push(
           `${route.path}: internal route "${normalizedPath}" is missing generated HTML`,
         );
@@ -248,6 +250,11 @@ async function inspectRoute(
   diagnostics: string[],
 ): Promise<RouteDocument | undefined> {
   const htmlPath = routeHtmlPath(root, route.path);
+  if (!htmlPath) {
+    diagnostics.push(`${route.path}: canonical route HTML is outside the build root`);
+    return undefined;
+  }
+
   let html: string;
 
   try {
