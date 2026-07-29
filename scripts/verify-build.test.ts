@@ -1,0 +1,125 @@
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { dirname, join } from 'node:path';
+import { afterEach, describe, expect, it } from 'vitest';
+import { ROUTES, absoluteUrl, getCounterpart } from '../app/config/routes';
+import { verifyBuild } from './verify-build';
+
+const temporaryDirectories: string[] = [];
+
+const requiredStaticFiles = [
+  '404.html',
+  'robots.txt',
+  'site.webmanifest',
+  'favicon.ico',
+  'favicon.svg',
+  'assets/brand/apple-touch-icon.png',
+  'assets/brand/icon-192.png',
+  'assets/brand/icon-512.png',
+  'assets/brand/logo-dark.webp',
+  'assets/brand/logo-light.webp',
+  'assets/brand/logo-mark-16.png',
+  'assets/brand/logo-mark-32.png',
+  'assets/social/aroma-solutions.jpg',
+  'assets/social/corporate.jpg',
+  'assets/social/it-maintenance.jpg',
+  'downloads/ms-monster-it-maintenance-profile.pdf',
+  'downloads/ms-monster-perfume-profile.pdf',
+  'downloads/ms-monster-product-brochure.pdf',
+] as const;
+
+afterEach(async () => {
+  await Promise.all(
+    temporaryDirectories.splice(0).map((directory) =>
+      rm(directory, { force: true, recursive: true }),
+    ),
+  );
+});
+
+function routeHtml(
+  route: (typeof ROUTES)[number],
+  overrides: { description?: string | null; title?: string } = {},
+): string {
+  const counterpart = getCounterpart(route);
+  const englishRoute = route.locale === 'en' ? route : counterpart;
+  const malayRoute = route.locale === 'ms' ? route : counterpart;
+  const title = overrides.title ?? route.title;
+  const description =
+    overrides.description === undefined ? route.description : overrides.description;
+  const socialImage = absoluteUrl(`/assets/social/${route.socialCard === 'it' ? 'it-maintenance' : route.socialCard === 'aroma' ? 'aroma-solutions' : 'corporate'}.jpg`);
+
+  return `<!doctype html>
+<html lang="${route.locale}">
+  <head>
+    <title>${title}</title>
+    ${description === null ? '' : `<meta name="description" content="${description}">`}
+    <link rel="canonical" href="${absoluteUrl(route.path)}">
+    <link rel="alternate" hreflang="en" href="${absoluteUrl(englishRoute.path)}">
+    <link rel="alternate" hreflang="ms" href="${absoluteUrl(malayRoute.path)}">
+    <link rel="alternate" hreflang="x-default" href="${absoluteUrl(englishRoute.path)}">
+    <meta property="og:image" content="${socialImage}">
+    <meta name="twitter:image" content="${socialImage}">
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"${title}"}]}</script>
+  </head>
+  <body>
+    <main><h1>${title}</h1><p>Visible page content for ${route.path}.</p></main>
+  </body>
+</html>`;
+}
+
+async function writeFixture(
+  overrides: Partial<Record<string, { description?: string | null; title?: string }>> = {},
+): Promise<string> {
+  const root = await mkdtemp(join(tmpdir(), 'ms-monster-verify-build-'));
+  temporaryDirectories.push(root);
+
+  await Promise.all(
+    ROUTES.map(async (route) => {
+      const output = join(root, route.path === '/' ? 'index.html' : `${route.path.slice(1)}/index.html`);
+      await mkdir(dirname(output), { recursive: true });
+      await writeFile(output, routeHtml(route, overrides[route.path]), 'utf8');
+    }),
+  );
+
+  await Promise.all(
+    requiredStaticFiles.map(async (file) => {
+      const output = join(root, file);
+      await mkdir(dirname(output), { recursive: true });
+      const contents =
+        file === '404.html'
+          ? '<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"></head><body><h1>Page not found</h1></body></html>'
+          : `fixture for ${file}`;
+      await writeFile(output, contents);
+    }),
+  );
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${ROUTES.map((route) => `  <url><loc>${absoluteUrl(route.path)}</loc></url>`).join('\n')}
+</urlset>`;
+  await writeFile(join(root, 'sitemap.xml'), sitemap, 'utf8');
+
+  return root;
+}
+
+describe('generated build verification', () => {
+  it('reports a missing description and duplicate title with their routes', async () => {
+    const root = await writeFixture({
+      '/about': { description: null },
+      '/it-maintenance': { title: ROUTES.find((route) => route.path === '/about')?.title },
+    });
+
+    await expect(verifyBuild(root)).rejects.toThrow(/\/about: missing meta description/);
+    await expect(verifyBuild(root)).rejects.toThrow(
+      /\/it-maintenance: duplicate title .*\/about/,
+    );
+  });
+
+  it('accepts a complete fixture with canonical metadata, schema, and visible content', async () => {
+    const root = await writeFixture();
+
+    await expect(verifyBuild(root)).resolves.toMatchObject({
+      routes: 16,
+    });
+  });
+});

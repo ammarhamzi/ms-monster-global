@@ -8,10 +8,11 @@
   },
   "scripts": {
     "dev": "react-router dev --port=3000 --host=0.0.0.0",
-    "build": "react-router build && tsx scripts/generate-public-files.ts",
+    "build": "npm run generate:assets && react-router build && tsx scripts/generate-public-files.ts && npm run verify:build",
     "preview": "vite preview --outDir build/client",
     "clean": "rm -rf dist server.js",
     "generate:assets": "tsx scripts/generate-brand-assets.ts",
+    "verify:build": "tsx scripts/verify-build.ts",
     "typecheck": "react-router typegen && tsc --noEmit",
     "lint": "npm run typecheck",
     "test": "vitest run",
