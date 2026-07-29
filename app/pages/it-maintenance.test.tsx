@@ -1,29 +1,60 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import ItMaintenancePage from './ItMaintenancePage';
+import ItRoute from '../routes/it';
 
 describe.each([
-  [
-    'en',
-    'IT & AI Maintenance Services',
-    'Predictive maintenance',
-    'Support for LAN, Wi-Fi, and 5G network maintenance and connectivity.',
-    'Data backup and recovery readiness',
-  ],
-  [
-    'ms',
-    'Servis Penyelenggaraan IT & AI',
-    'Penyelenggaraan ramalan',
-    'Sokongan untuk penyelenggaraan dan sambungan rangkaian LAN, Wi-Fi, dan 5G.',
-    'Kesiapsiagaan sandaran dan pemulihan data',
-  ],
-] as const)('IT page in %s', (locale, heading, service, networkService, backupService) => {
-  it('renders the service scope without unsupported promises', () => {
-    render(<ItMaintenancePage locale={locale} />);
+  {
+    path: '/it-maintenance',
+    heading: 'IT & AI Maintenance Services',
+    services: [
+      'Predictive maintenance',
+      'Hardware and software support',
+      'Network monitoring',
+      'System troubleshooting and repair',
+      'Data backup and recovery readiness',
+      'Cloud infrastructure support',
+      'On-site and remote support options',
+    ],
+    contacts: [
+      ['Discuss your support needs', '/contact'],
+      ['Enquire about IT maintenance', '/contact'],
+    ],
+  },
+  {
+    path: '/ms/penyelenggaraan-it',
+    heading: 'Servis Penyelenggaraan IT & AI',
+    services: [
+      'Penyelenggaraan ramalan',
+      'Sokongan perkakasan dan perisian',
+      'Pemantauan rangkaian',
+      'Penyelesaian masalah dan pembaikan sistem',
+      'Kesiapsiagaan sandaran dan pemulihan data',
+      'Sokongan infrastruktur awan',
+      'Pilihan sokongan di lokasi dan jarak jauh',
+    ],
+    contacts: [
+      ['Bincangkan keperluan sokongan', '/ms/hubungi'],
+      ['Tanya tentang penyelenggaraan IT', '/ms/hubungi'],
+    ],
+  },
+] as const)('IT route at $path', ({ path, heading, services, contacts }) => {
+  it('renders the exact service inventory and localized contact paths without unsupported promises', () => {
+    render(
+      <MemoryRouter initialEntries={[path]}>
+        <ItRoute />
+      </MemoryRouter>,
+    );
+
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(heading);
-    expect(screen.getByText(service)).toBeVisible();
-    expect(screen.getByText(networkService)).toBeVisible();
-    expect(screen.getByText(backupService)).toBeVisible();
+    const serviceHeadings = screen.getAllByRole('heading', { level: 3 });
+    expect(serviceHeadings).toHaveLength(7);
+    expect(serviceHeadings.map((service) => service.textContent)).toEqual(services);
+
+    for (const [label, href] of contacts) {
+      expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', href);
+    }
+
     expect(screen.queryByText(/24\/7|guaranteed|nationwide/i)).not.toBeInTheDocument();
   });
 });
