@@ -1,6 +1,33 @@
 import { describe, expect, it } from 'vitest';
-import { getRoute } from '../config/routes';
+import { getRoute, ROUTES } from '../config/routes';
 import { buildSchema } from './schema';
+
+const PROHIBITED_SCHEMA_TERMS = [
+  'LocalBusiness',
+  '"@type":"Product"',
+  'aggregateRating',
+  'ratingValue',
+  'review',
+  'openingHours',
+  'geo',
+  'latitude',
+  'longitude',
+  'price',
+  'priceCurrency',
+  'areaServed',
+  'national coverage',
+  'nationwide',
+  'AMECO',
+  'licence',
+  'license',
+  '24/7',
+  'guarantee',
+  'clientCount',
+  'client count',
+  'clients served',
+  'accreditation',
+  'testimonial',
+];
 
 describe('structured data policy', () => {
   it('publishes the verified corporation identity', () => {
@@ -35,17 +62,15 @@ describe('structured data policy', () => {
     expect(corporation?.hasOfferCatalog).toHaveLength(2);
   });
 
-  it('never emits unverified rich-result fields', () => {
-    const serialized = JSON.stringify(buildSchema(getRoute('en', 'it')));
-    for (const field of [
-      'LocalBusiness',
-      'aggregateRating',
-      'openingHours',
-      'geo',
-      'price',
-      'areaServed',
-    ]) {
-      expect(serialized).not.toContain(field);
+  it('never emits prohibited schema types, fields, or claims on any route', () => {
+    for (const route of ROUTES) {
+      const serialized = JSON.stringify(buildSchema(route)).toLowerCase();
+
+      for (const term of PROHIBITED_SCHEMA_TERMS) {
+        expect(serialized, `${route.path} emitted prohibited term "${term}"`).not.toContain(
+          term.toLowerCase(),
+        );
+      }
     }
   });
 
@@ -76,11 +101,13 @@ describe('structured data policy', () => {
     expect(breadcrumb).toMatchObject({
       itemListElement: [
         {
+          '@type': 'ListItem',
           position: 1,
           name: 'Utama',
           item: 'https://msmonsterglobal.com/ms',
         },
         {
+          '@type': 'ListItem',
           position: 2,
           name: 'Hubungi MS Monster Global | Nilai, Negeri Sembilan',
           item: 'https://msmonsterglobal.com/ms/hubungi',

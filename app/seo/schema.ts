@@ -101,11 +101,13 @@ function breadcrumbNodeFor(route: RouteRecord): LdNode {
     '@id': `${url}#breadcrumb`,
     itemListElement: [
       {
+        '@type': 'ListItem',
         position: 1,
         name: route.locale === 'ms' ? 'Utama' : 'Home',
         item: absoluteUrl(home.path),
       },
       {
+        '@type': 'ListItem',
         position: 2,
         name: route.title,
         item: url,
