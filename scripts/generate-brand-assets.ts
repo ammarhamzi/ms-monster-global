@@ -1,12 +1,17 @@
-import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { create as createFont, type Font } from 'fontkit';
 import pngToIco from 'png-to-ico';
 import sharp from 'sharp';
 
 const projectRoot = path.resolve(import.meta.dirname, '..');
 const sourceDirectory = path.join(projectRoot, 'public/assets');
 const defaultOutputDirectory = path.join(projectRoot, 'public');
+const defaultCardFontPath = createRequire(import.meta.url).resolve(
+  '@fontsource/inter/files/inter-latin-700-normal.woff2',
+);
 
 const MANIFEST = {
   name: 'MS Monster Global',
@@ -49,6 +54,10 @@ type SocialCard = {
   titleLines?: [string, string];
   subtitle?: string;
   image: 'it' | 'aroma';
+};
+
+type GenerateBrandAssetsOptions = {
+  cardFontPath?: string;
 };
 
 async function discoverSourceAssets(): Promise<SourceAssets> {
@@ -249,26 +258,50 @@ async function iconBuffer(mark: Buffer, size: number): Promise<Buffer> {
     .toBuffer();
 }
 
-function cardTextSvg(card: SocialCard): Buffer {
+function formatSvgNumber(value: number): string {
+  return Number(value.toFixed(6)).toString();
+}
+
+function embeddedTextPath(
+  font: Font,
+  text: string,
+  x: number,
+  baseline: number,
+  fontSize: number,
+  letterSpacing = 0,
+): string {
+  const run = font.layout(text);
+  const scale = fontSize / font.unitsPerEm;
+  let cursor = x;
+
+  const paths = run.glyphs.map((glyph, index) => {
+    const position = run.positions[index];
+    const markup = `<path d="${glyph.path.toSVG()}" transform="translate(${formatSvgNumber(cursor)} ${formatSvgNumber(baseline)}) scale(${formatSvgNumber(scale)} ${formatSvgNumber(-scale)}) translate(${formatSvgNumber(position.xOffset)} ${formatSvgNumber(position.yOffset)})"/>`;
+
+    cursor += position.xAdvance * scale;
+    if (index + 1 < run.glyphs.length) cursor += letterSpacing;
+
+    return markup;
+  });
+
+  return paths.join('');
+}
+
+function cardTextSvg(card: SocialCard, font: Font): Buffer {
   const titleMarkup = card.titleLines
-    ? `<text x="72" y="296" class="title">${card.titleLines[0]}</text>
-      <text x="72" y="376" class="title">${card.titleLines[1]}</text>`
-    : `<text x="72" y="334" class="title">${card.title}</text>`;
+    ? `<g fill="#ffffff">${embeddedTextPath(font, card.titleLines[0], 72, 296, 68, -1)}</g>
+      <g fill="#ffffff">${embeddedTextPath(font, card.titleLines[1], 72, 376, 68, -1)}</g>`
+    : `<g fill="#ffffff">${embeddedTextPath(font, card.title, 72, 334, 68, -1)}</g>`;
   const subtitleMarkup = card.subtitle
-    ? `<text x="72" y="402" class="subtitle">${card.subtitle}</text>`
+    ? `<g fill="#ffffff">${embeddedTextPath(font, card.subtitle, 72, 402, 32)}</g>`
     : '';
 
   return Buffer.from(`<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-    <style>
-      .title { fill: #ffffff; font: 700 68px Arial, Helvetica, sans-serif; letter-spacing: -1px; }
-      .subtitle { fill: #ffffff; font: 500 32px Arial, Helvetica, sans-serif; }
-      .domain { fill: #ffffff; font: 600 27px Arial, Helvetica, sans-serif; letter-spacing: 0.5px; }
-    </style>
     <rect width="1200" height="630" fill="#020617" fill-opacity="0.64"/>
     ${titleMarkup}
     ${subtitleMarkup}
     <rect x="72" y="542" width="56" height="5" rx="2.5" fill="#39b500"/>
-    <text x="144" y="558" class="domain">msmonsterglobal.com</text>
+    <g fill="#ffffff">${embeddedTextPath(font, 'msmonsterglobal.com', 144, 558, 27, 0.5)}</g>
   </svg>`);
 }
 
@@ -293,13 +326,14 @@ async function socialCard(
   card: SocialCard,
   sources: SourceAssets,
   cardMark: Buffer,
+  cardFont: Font,
 ): Promise<Buffer> {
   const photoSource = card.image === 'it' ? sources.itHero : sources.aromaHero;
   const photo = await coverPhoto(photoSource, 1200, 630);
 
   return sharp(photo)
     .composite([
-      { input: cardTextSvg(card), left: 0, top: 0 },
+      { input: cardTextSvg(card, cardFont), left: 0, top: 0 },
       { input: cardMark, left: 72, top: 58 },
     ])
     .jpeg({
@@ -314,6 +348,7 @@ async function socialCard(
 async function corporateCard(
   sources: SourceAssets,
   cardMark: Buffer,
+  cardFont: Font,
 ): Promise<Buffer> {
   const [itPhoto, aromaPhoto] = await Promise.all([
     coverPhoto(sources.itHero, 600, 630),
@@ -334,11 +369,14 @@ async function corporateCard(
     .jpeg({ quality: 88, chromaSubsampling: '4:4:4' })
     .toBuffer();
 
-  const text = cardTextSvg({
-    title: 'MS Monster Global',
-    subtitle: 'IT Maintenance • Commercial Aroma Solutions',
-    image: 'it',
-  });
+  const text = cardTextSvg(
+    {
+      title: 'MS Monster Global',
+      subtitle: 'IT Maintenance • Commercial Aroma Solutions',
+      image: 'it',
+    },
+    cardFont,
+  );
   const divider = Buffer.from(
     '<svg width="4" height="630" xmlns="http://www.w3.org/2000/svg"><rect width="4" height="630" fill="#ffffff" fill-opacity="0.28"/></svg>',
   );
@@ -360,21 +398,31 @@ async function corporateCard(
 
 function parseOutputDirectory(argv: string[]): string {
   const outputIndex = argv.indexOf('--output');
-  const inlineOutput = argv.find((argument) => argument.startsWith('--output='));
+  const inlineOutputArgument = argv.find((argument) =>
+    argument.startsWith('--output='),
+  );
   const requested =
-    outputIndex >= 0 ? argv[outputIndex + 1] : inlineOutput?.slice('--output='.length);
+    outputIndex >= 0
+      ? argv[outputIndex + 1]
+      : inlineOutputArgument?.slice('--output='.length);
 
-  if (outputIndex >= 0 && !requested) {
+  if ((outputIndex >= 0 || inlineOutputArgument !== undefined) && !requested) {
     throw new Error('--output requires a directory path.');
   }
 
   return requested ? path.resolve(requested) : defaultOutputDirectory;
 }
 
-export async function generateBrandAssets(outputDirectory: string): Promise<void> {
+export async function generateBrandAssets(
+  outputDirectory: string,
+  options: GenerateBrandAssetsOptions = {},
+): Promise<void> {
   sharp.concurrency(1);
 
   const sources = await discoverSourceAssets();
+  const cardFont = createFont(
+    await readFile(options.cardFontPath ?? defaultCardFontPath),
+  ) as Font;
   const brandDirectory = path.join(outputDirectory, 'assets/brand');
   const socialDirectory = path.join(outputDirectory, 'assets/social');
   await Promise.all([
@@ -404,15 +452,16 @@ export async function generateBrandAssets(outputDirectory: string): Promise<void
 `;
 
   const [corporate, itMaintenance, aromaSolutions] = await Promise.all([
-    corporateCard(sources, cardMark),
+    corporateCard(sources, cardMark, cardFont),
     socialCard(
       {
-        title: 'IT &amp; AI Maintenance Services',
-        titleLines: ['IT &amp; AI Maintenance', 'Services'],
+        title: 'IT & AI Maintenance Services',
+        titleLines: ['IT & AI Maintenance', 'Services'],
         image: 'it',
       },
       sources,
       cardMark,
+      cardFont,
     ),
     socialCard(
       {
@@ -421,6 +470,7 @@ export async function generateBrandAssets(outputDirectory: string): Promise<void
       },
       sources,
       cardMark,
+      cardFont,
     ),
   ]);
 

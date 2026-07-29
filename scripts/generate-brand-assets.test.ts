@@ -1,10 +1,11 @@
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import sharp from 'sharp';
+import { generateBrandAssets } from './generate-brand-assets';
 
 const execFileAsync = promisify(execFile);
 const projectRoot = path.resolve(import.meta.dirname, '..');
@@ -30,10 +31,18 @@ const expectedFiles = [
 let firstOutput: string;
 let secondOutput: string;
 
-async function runGenerator(outputDirectory: string) {
-  await execFileAsync(tsxPath, [generatorPath, '--output', outputDirectory], {
+async function runGeneratorWithArguments(
+  arguments_: string[],
+  environment: NodeJS.ProcessEnv = {},
+) {
+  await execFileAsync(tsxPath, [generatorPath, ...arguments_], {
     cwd: projectRoot,
+    env: { ...process.env, ...environment },
   });
+}
+
+async function runGenerator(outputDirectory: string) {
+  await runGeneratorWithArguments(['--output', outputDirectory]);
 }
 
 async function expectImage(
@@ -144,6 +153,124 @@ test('manifest exposes the required app identity and icons', async () => {
     ],
   });
 });
+
+test('an inline output path generates only inside the requested directory', async () => {
+  const inlineOutput = await mkdtemp(
+    path.join(tmpdir(), 'msmonster-brand-assets-inline-'),
+  );
+
+  try {
+    await runGeneratorWithArguments([`--output=${inlineOutput}`]);
+
+    const manifest = JSON.parse(
+      await readFile(path.join(inlineOutput, 'site.webmanifest'), 'utf8'),
+    );
+    expect(manifest.name).toBe('MS Monster Global');
+  } finally {
+    await rm(inlineOutput, { recursive: true, force: true });
+  }
+}, 30_000);
+
+test('an empty inline output value is rejected instead of using public', async () => {
+  await expect(runGeneratorWithArguments(['--output='])).rejects.toThrow(
+    '--output requires a directory path.',
+  );
+}, 30_000);
+
+test('bundled typography produces identical cards without host fonts', async () => {
+  const isolationRoot = await mkdtemp(
+    path.join(tmpdir(), 'msmonster-font-isolation-'),
+  );
+  const emptyFonts = path.join(isolationRoot, 'empty-fonts');
+  const cacheDirectory = path.join(isolationRoot, 'font-cache');
+  const isolatedOutput = path.join(isolationRoot, 'output');
+  const fontConfig = path.join(isolationRoot, 'fonts.conf');
+
+  try {
+    await Promise.all([
+      mkdir(emptyFonts),
+      mkdir(cacheDirectory),
+      writeFile(
+        fontConfig,
+        `<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+<fontconfig>
+  <dir>${emptyFonts}</dir>
+  <cachedir>${cacheDirectory}</cachedir>
+</fontconfig>
+`,
+        'utf8',
+      ),
+    ]);
+    await runGeneratorWithArguments(['--output', isolatedOutput], {
+      FONTCONFIG_FILE: fontConfig,
+      FONTCONFIG_PATH: isolationRoot,
+    });
+
+    for (const file of [
+      'assets/social/corporate.jpg',
+      'assets/social/it-maintenance.jpg',
+      'assets/social/aroma-solutions.jpg',
+    ]) {
+      const [normal, isolated] = await Promise.all([
+        readFile(path.join(firstOutput, file)),
+        readFile(path.join(isolatedOutput, file)),
+      ]);
+
+      expect(
+        createHash('sha256').update(isolated).digest('hex'),
+        file,
+      ).toBe(createHash('sha256').update(normal).digest('hex'));
+    }
+  } finally {
+    await rm(isolationRoot, { recursive: true, force: true });
+  }
+}, 30_000);
+
+test('card pixels are derived from the configured bundled font', async () => {
+  const fontTestRoot = await mkdtemp(
+    path.join(tmpdir(), 'msmonster-font-behavior-'),
+  );
+  const explicitDefaultOutput = path.join(fontTestRoot, 'explicit-default');
+  const alternateOutput = path.join(fontTestRoot, 'alternate');
+  const fontDirectory = path.join(
+    projectRoot,
+    'node_modules/@fontsource/inter/files',
+  );
+
+  try {
+    await generateBrandAssets(explicitDefaultOutput, {
+      cardFontPath: path.join(fontDirectory, 'inter-latin-700-normal.woff2'),
+    });
+    await generateBrandAssets(alternateOutput, {
+      cardFontPath: path.join(fontDirectory, 'inter-latin-400-normal.woff2'),
+    });
+
+    for (const file of [
+      'assets/social/corporate.jpg',
+      'assets/social/it-maintenance.jpg',
+      'assets/social/aroma-solutions.jpg',
+    ]) {
+      const [defaultCard, explicitDefaultCard, alternateCard] = await Promise.all([
+        readFile(path.join(firstOutput, file)),
+        readFile(path.join(explicitDefaultOutput, file)),
+        readFile(path.join(alternateOutput, file)),
+      ]);
+      const defaultHash = createHash('sha256').update(defaultCard).digest('hex');
+
+      expect(
+        createHash('sha256').update(explicitDefaultCard).digest('hex'),
+        `${file} explicit default`,
+      ).toBe(defaultHash);
+      expect(
+        createHash('sha256').update(alternateCard).digest('hex'),
+        `${file} alternate font`,
+      ).not.toBe(defaultHash);
+    }
+  } finally {
+    await rm(fontTestRoot, { recursive: true, force: true });
+  }
+}, 30_000);
 
 test('the complete generated asset set is byte-for-byte deterministic', async () => {
   for (const file of expectedFiles) {
