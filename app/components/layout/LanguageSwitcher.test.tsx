@@ -1,7 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { getContent } from '../../content';
 import LanguageSwitcher from './LanguageSwitcher';
+
+const malayNav = getContent('ms').nav;
+const originalLanguageSelectionLabel = malayNav.languageSelectionLabel;
+
+afterEach(() => {
+  malayNav.languageSelectionLabel = originalLanguageSelectionLabel;
+});
 
 describe.each([
   {
@@ -46,4 +54,18 @@ describe.each([
     );
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
+});
+
+it('reads the language-selection label from canonical Malay content', () => {
+  malayNav.languageSelectionLabel = 'Pilihan bahasa daripada kandungan';
+
+  const { container } = render(
+    <MemoryRouter initialEntries={['/ms']}>
+      <LanguageSwitcher />
+    </MemoryRouter>,
+  );
+
+  expect(
+    container.querySelector('[aria-label="Pilihan bahasa daripada kandungan"]'),
+  ).toBeInTheDocument();
 });

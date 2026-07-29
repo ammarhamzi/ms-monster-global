@@ -12,6 +12,10 @@ export const msContent = {
   nav: {
     primaryLabel: 'Navigasi utama',
     breadcrumbLabel: 'Jejak navigasi',
+    skipToContent: 'Langkau ke kandungan utama',
+    openMenuLabel: 'Buka menu navigasi',
+    closeMenuLabel: 'Tutup menu navigasi',
+    languageSelectionLabel: 'Pilihan bahasa',
     home: 'Laman utama',
     about: 'Tentang',
     services: 'Perkhidmatan',

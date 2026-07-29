@@ -25,10 +25,6 @@ export default function Navbar() {
   const { nav } = getContent(locale);
   const [isOpen, setIsOpen] = React.useState(false);
   const menuButtonRef = React.useRef<HTMLButtonElement>(null);
-  const menuLabels =
-    locale === 'ms'
-      ? { open: 'Buka menu navigasi', close: 'Tutup menu navigasi' }
-      : { open: 'Open navigation menu', close: 'Close navigation menu' };
   const navItems = navigationKeys.map((key) => ({
     key,
     to: getRoute(locale, key).path,
@@ -102,7 +98,7 @@ export default function Navbar() {
                 ref={menuButtonRef}
                 type="button"
                 onClick={() => setIsOpen((open) => !open)}
-                aria-label={isOpen ? menuLabels.close : menuLabels.open}
+                aria-label={isOpen ? nav.closeMenuLabel : nav.openMenuLabel}
                 aria-expanded={isOpen}
                 aria-controls="mobile-navigation"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"

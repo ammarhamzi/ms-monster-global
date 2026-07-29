@@ -1,6 +1,10 @@
 export interface NavContent {
   primaryLabel: string;
   breadcrumbLabel: string;
+  skipToContent: string;
+  openMenuLabel: string;
+  closeMenuLabel: string;
+  languageSelectionLabel: string;
   home: string;
   about: string;
   services: string;

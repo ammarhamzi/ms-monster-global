@@ -12,6 +12,10 @@ export const enContent = {
   nav: {
     primaryLabel: 'Primary navigation',
     breadcrumbLabel: 'Breadcrumb',
+    skipToContent: 'Skip to main content',
+    openMenuLabel: 'Open navigation menu',
+    closeMenuLabel: 'Close navigation menu',
+    languageSelectionLabel: 'Language selection',
     home: 'Home',
     about: 'About',
     services: 'Services',

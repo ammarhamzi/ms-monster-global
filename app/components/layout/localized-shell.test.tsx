@@ -1,9 +1,20 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { getContent } from '../../content';
 import Footer from './Footer';
 import Navbar from './Navbar';
+
+const englishNav = getContent('en').nav;
+const originalMenuLabels = {
+  openMenuLabel: englishNav.openMenuLabel,
+  closeMenuLabel: englishNav.closeMenuLabel,
+};
+
+afterEach(() => {
+  Object.assign(englishNav, originalMenuLabels);
+});
 
 describe('localized route shell', () => {
   it('uses Malay labels, registry destinations, and current-link state on a Malay route', () => {
@@ -49,5 +60,25 @@ describe('localized route shell', () => {
     await user.click(contactLinks.at(-1)!);
 
     expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('reads mobile disclosure labels from canonical English content', async () => {
+    const user = userEvent.setup();
+    Object.assign(englishNav, {
+      openMenuLabel: 'Content-sourced open label',
+      closeMenuLabel: 'Content-sourced close label',
+    });
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Navbar />
+      </MemoryRouter>,
+    );
+
+    const menuButton = screen.getByRole('button', {
+      name: 'Content-sourced open label',
+    });
+    await user.click(menuButton);
+
+    expect(menuButton).toHaveAccessibleName('Content-sourced close label');
   });
 });
