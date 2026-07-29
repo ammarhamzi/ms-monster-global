@@ -21,6 +21,8 @@
       ]
     },
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "types": ["node", "vite/client", "vitest/globals"]
+  },
+  "include": ["src", "app", "scripts", "test", ".react-router/types"]
 }
