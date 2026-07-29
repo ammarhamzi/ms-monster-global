@@ -227,7 +227,7 @@ export const msContent = {
     assessmentEyebrow: 'Penilaian ruang',
     assessmentTitle: 'Mulakan dengan persekitaran dan pengalaman yang diingini.',
     assessmentDescription:
-      'Pertimbangkan jenis ruang, aliran pelanggan, keperluan liputan, pengudaraan, dan suasana yang anda mahu diingati.',
+      'Konsultasi bermula dengan jenis ruang, aliran pelanggan, keperluan liputan, pengudaraan, dan suasana yang anda mahu diingati.',
     spaces: [
       {
         title: 'Persekitaran lebih kecil',
@@ -308,7 +308,7 @@ export const msContent = {
     eyebrow: 'Pembangunan wangian tersuai',
     title: 'Bentuk identiti haruman mengikut pengalaman',
     introduction:
-      'Teroka arah wangian, semak pilihan bahan, bangunkan sampel, dan perhalus hasil untuk produk atau persekitaran yang dimaksudkan.',
+      'Teroka arah wangian, pilihan bahan, pembangunan sampel, dan pemurnian hasil untuk produk atau persekitaran yang dimaksudkan.',
     primaryLink: { label: 'Bincangkan ringkasan wangian' },
     directionsEyebrow: 'Arah wangian',
     directionsTitle: 'Mulakan dengan perasaan yang harus diingati.',

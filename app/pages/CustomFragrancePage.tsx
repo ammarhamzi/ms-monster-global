@@ -1,92 +1,150 @@
-import { useState } from 'react';
 import { ArrowRight, ChevronDown, Droplet, TestTube } from 'lucide-react';
 import { MotionConfig, motion } from 'motion/react';
-import { Link } from 'react-router';
-import { useLanguage } from '../context/LanguageContext';
-import { fragranceProcess, scentPalette } from '../data/aroma';
+import SectionHeading from '../components/content/SectionHeading';
+import type { Locale } from '../config/routes';
+import { getRoute } from '../config/routes';
+import { getContent } from '../content';
 import { essentialOils, extracts } from '../data/products';
 
-export default function CustomFragrancePage() {
-  const { t } = useLanguage();
-  const [showAllIngredients, setShowAllIngredients] = useState(false);
-  const visibleOils = showAllIngredients ? essentialOils : essentialOils.slice(0, 8);
-  const visibleExtracts = showAllIngredients ? extracts : extracts.slice(0, 8);
+const directionAssets = [
+  {
+    image: '/assets/scent-fresh.jpg',
+    mobileImage: '/assets/scent-fresh-mobile.jpg',
+    ingredients: ['Grapefruit', 'Lemon', 'Peppermint Oil'],
+  },
+  {
+    image: '/assets/scent-floral.jpg',
+    mobileImage: '/assets/scent-floral-mobile.jpg',
+    ingredients: ['Jasmine Absolute Oil', 'Rose Absolute Oil', 'Bois De Rose Oil'],
+  },
+  {
+    image: '/assets/scent-woody.jpg',
+    mobileImage: '/assets/scent-woody-mobile.jpg',
+    ingredients: ['Cedarwood Virginian Oil', 'Cypress Oil', 'Sandalwood Oil'],
+  },
+] as const;
+
+interface CustomFragrancePageProps {
+  locale: Locale;
+}
+
+export default function CustomFragrancePage({ locale }: CustomFragrancePageProps) {
+  const { fragrance, nav } = getContent(locale);
 
   return (
     <MotionConfig reducedMotion="user">
       <div className="min-h-screen bg-stone-50 pt-20">
-        <section className="bg-white">
+        <header className="bg-white">
           <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
             <picture>
               <source media="(max-width: 767px)" srcSet="/assets/perfume-development-mobile.jpg" />
               <img
                 src="/assets/perfume-development.jpg"
-                alt="Fragrance specialist blending aromatic oils and botanicals"
+                alt={fragrance.heroImageAlt}
                 fetchPriority="high"
                 className="h-80 w-full object-cover lg:h-full lg:min-h-[38rem]"
               />
             </picture>
             <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-14">
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Custom fragrance development</p>
+              <nav aria-label={nav.breadcrumbLabel} className="mb-10 text-sm text-slate-500">
+                <ol className="flex flex-wrap items-center gap-2">
+                  <li>
+                    <a
+                      href={getRoute(locale, 'home').path}
+                      className="rounded-sm hover:text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700"
+                    >
+                      {nav.home}
+                    </a>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page" className="font-semibold text-slate-800">
+                    {fragrance.breadcrumb}
+                  </li>
+                </ol>
+              </nav>
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">
+                {fragrance.eyebrow}
+              </p>
               <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-5xl">
-                Shape a scent identity around the experience.
+                {fragrance.title}
               </h1>
-              <p className="mt-5 text-lg leading-relaxed text-slate-600">{t.products.labDesc}</p>
-              <Link to="/contact" className="mt-8 inline-flex min-h-12 w-fit items-center gap-2 rounded-lg bg-emerald-950 px-6 text-sm font-bold text-white">
-                Discuss a fragrance brief <ArrowRight className="h-4 w-4" />
-              </Link>
+              <p className="mt-5 text-lg leading-relaxed text-slate-600">
+                {fragrance.introduction}
+              </p>
+              <a
+                href={getRoute(locale, 'contact').path}
+                className="mt-8 inline-flex min-h-12 w-fit items-center gap-2 rounded-lg bg-emerald-950 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-800"
+              >
+                {fragrance.primaryLink.label}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
             </div>
           </div>
-        </section>
+        </header>
 
-        <section id="scent-direction" className="border-y border-emerald-900/10 bg-white">
-          <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 md:py-20 lg:px-8">
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Scent directions</p>
-            <h2 className="mt-3 max-w-3xl text-[1.75rem] font-bold leading-tight tracking-tight text-slate-950 sm:text-3xl md:text-4xl">
-              Find a scent people will remember the space by.
-            </h2>
+        <section className="border-y border-emerald-900/10 bg-white py-14 sm:py-20">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow={fragrance.directionsEyebrow}
+              title={fragrance.directionsTitle}
+            />
             <div className="mt-10 grid gap-5 lg:grid-cols-3">
-              {scentPalette.map((palette, index) => (
-                <motion.article
-                  key={palette.direction}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.42, delay: index * 0.06 }}
-                  className="overflow-hidden border border-emerald-900/10 bg-stone-50"
-                >
-                  <picture>
-                    <source media="(max-width: 767px)" srcSet={palette.mobileImage} />
-                    <img src={palette.image} alt={palette.imageAlt} loading="lazy" className="h-56 w-full object-cover" />
-                  </picture>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-slate-950">{palette.direction}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{palette.description}</p>
-                    <p className="mt-4 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Ideal for: {palette.idealFor}</p>
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                      {palette.ingredients.map((ingredient) => (
-                        <li key={ingredient} className="border border-emerald-900/10 bg-white px-3 py-1.5 text-xs font-bold text-slate-700">
-                          {ingredient}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.article>
-              ))}
+              {fragrance.directions.map((direction, index) => {
+                const assets = directionAssets[index];
+
+                return (
+                  <motion.article
+                    key={direction.title}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.42, delay: index * 0.06 }}
+                    className="overflow-hidden border border-emerald-900/10 bg-stone-50"
+                  >
+                    <picture>
+                      <source media="(max-width: 767px)" srcSet={assets.mobileImage} />
+                      <img
+                        src={assets.image}
+                        alt={direction.imageAlt}
+                        loading="lazy"
+                        className="h-56 w-full object-cover"
+                      />
+                    </picture>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-slate-950">{direction.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {direction.description}
+                      </p>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
+                        {direction.idealForLabel}: {direction.idealFor}
+                      </p>
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {assets.ingredients.map((ingredient) => (
+                          <li
+                            key={ingredient}
+                            className="border border-emerald-900/10 bg-white px-3 py-1.5 text-xs font-bold text-slate-700"
+                          >
+                            {ingredient}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.article>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-14 sm:px-6 md:py-24 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Development process</p>
-              <h2 className="mt-3 text-3xl font-bold text-slate-950">From brief to finished direction.</h2>
-            </div>
+        <section className="py-14 sm:py-24">
+          <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:px-8">
+            <SectionHeading eyebrow={fragrance.processEyebrow} title={fragrance.processTitle} />
             <ol className="divide-y divide-emerald-900/10 border-y border-emerald-900/10">
-              {fragranceProcess.map((step, index) => (
+              {fragrance.process.map((step, index) => (
                 <li key={step} className="grid grid-cols-[3rem_1fr] gap-4 py-6">
-                  <span className="text-sm font-bold text-emerald-700">0{index + 1}</span>
+                  <span className="text-sm font-bold text-emerald-700">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                   <p className="text-base leading-relaxed text-slate-600">{step}</p>
                 </li>
               ))}
@@ -94,44 +152,45 @@ export default function CustomFragrancePage() {
           </div>
         </section>
 
-        <section className="border-y border-emerald-900/10 bg-white">
-          <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 md:py-20 lg:px-8">
+        <section className="border-y border-emerald-900/10 bg-white py-14 sm:py-20">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <div className="border border-emerald-900/10 bg-stone-50 p-5 sm:p-8">
-              <div className="flex flex-col justify-between gap-4 border-b border-emerald-900/10 pb-7 md:flex-row md:items-end">
-                <div className="max-w-3xl">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Fragrance laboratory</p>
-                  <h2 className="mt-3 text-3xl font-bold text-slate-950">{t.products.labTitle}</h2>
-                  <p className="mt-4 text-base leading-relaxed text-slate-600">{t.products.labDesc}</p>
+              <SectionHeading
+                eyebrow={fragrance.laboratoryEyebrow}
+                title={fragrance.laboratoryTitle}
+                description={fragrance.laboratoryDescription}
+              />
+              <details className="group mt-7 border-t border-emerald-900/10 pt-1">
+                <summary className="flex min-h-12 cursor-pointer list-none items-center gap-2 py-3 font-bold text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700">
+                  <span className="group-open:hidden">{fragrance.showAllLabel}</span>
+                  <span className="hidden group-open:inline">{fragrance.showLessLabel}</span>
+                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <div className="grid gap-5 pb-2 pt-5 md:grid-cols-2">
+                  <section className="border border-emerald-900/10 bg-white p-5 sm:p-6">
+                    <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-800">
+                      <Droplet className="h-5 w-5" aria-hidden="true" />
+                      {fragrance.essentialOilsTitle}
+                    </h3>
+                    <ul className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-600 sm:grid-cols-2">
+                      {essentialOils.map((oil) => (
+                        <li key={oil}>{oil}</li>
+                      ))}
+                    </ul>
+                  </section>
+                  <section className="border border-amber-900/10 bg-white p-5 sm:p-6">
+                    <h3 className="flex items-center gap-2 text-lg font-bold text-amber-800">
+                      <TestTube className="h-5 w-5" aria-hidden="true" />
+                      {fragrance.extractsTitle}
+                    </h3>
+                    <ul className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-600 sm:grid-cols-2">
+                      {extracts.map((extract) => (
+                        <li key={extract}>{extract}</li>
+                      ))}
+                    </ul>
+                  </section>
                 </div>
-                <p className="text-sm font-bold text-emerald-800">{essentialOils.length + extracts.length} ingredients available</p>
-              </div>
-              <div className="mt-7 grid gap-5 md:grid-cols-2">
-                <div className="border border-emerald-900/10 bg-white p-5 sm:p-6">
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-800">
-                    <Droplet className="h-5 w-5" /> Essential oils
-                  </h3>
-                  <ul className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-600 sm:grid-cols-2">
-                    {visibleOils.map((oil) => <li key={oil}>{oil}</li>)}
-                  </ul>
-                </div>
-                <div className="border border-amber-900/10 bg-white p-5 sm:p-6">
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-amber-800">
-                    <TestTube className="h-5 w-5" /> Extracts
-                  </h3>
-                  <ul className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-600 sm:grid-cols-2">
-                    {visibleExtracts.map((extract) => <li key={extract}>{extract}</li>)}
-                  </ul>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowAllIngredients((current) => !current)}
-                aria-expanded={showAllIngredients}
-                className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-800"
-              >
-                {showAllIngredients ? 'Show ingredient overview' : 'View full ingredient library'}
-                <ChevronDown className={`h-4 w-4 transition-transform ${showAllIngredients ? 'rotate-180' : ''}`} />
-              </button>
+              </details>
             </div>
           </div>
         </section>
@@ -139,15 +198,21 @@ export default function CustomFragrancePage() {
         <section className="bg-emerald-950 text-white">
           <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:px-6 md:grid-cols-[1.2fr_0.8fr] md:items-center md:py-20 lg:px-8">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-200">OEM / ODM scope</p>
-              <h2 className="mt-3 text-3xl font-bold">Fragrance development for brands, products, and spaces.</h2>
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-200">
+                {fragrance.scopeEyebrow}
+              </p>
+              <h2 className="mt-3 text-3xl font-bold">{fragrance.scopeTitle}</h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed text-emerald-100">
-                The development scope can support custom fragrance, product experience, ambient environments, packaging, labelling, and storage needs.
+                {fragrance.scopeDescription}
               </p>
             </div>
-            <Link to="/contact" className="inline-flex min-h-12 w-fit items-center gap-2 rounded-lg bg-white px-6 text-sm font-bold text-emerald-950 md:justify-self-end">
-              Start a development brief <ArrowRight className="h-4 w-4" />
-            </Link>
+            <a
+              href={getRoute(locale, 'contact').path}
+              className="inline-flex min-h-12 w-fit items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-bold text-emerald-950 transition-colors hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:justify-self-end"
+            >
+              {fragrance.scopeLink.label}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
           </div>
         </section>
       </div>

@@ -226,7 +226,7 @@ export const enContent = {
     assessmentEyebrow: 'Space assessment',
     assessmentTitle: 'Start with the setting and the intended experience.',
     assessmentDescription:
-      'Consider the space type, customer flow, coverage needs, ventilation, and the atmosphere you want people to remember.',
+      'Consultation begins with the space type, customer flow, coverage needs, ventilation, and the atmosphere you want people to remember.',
     spaces: [
       {
         title: 'Smaller environments',
@@ -307,7 +307,7 @@ export const enContent = {
     eyebrow: 'Custom fragrance development',
     title: 'Shape a scent identity around the experience',
     introduction:
-      'Explore a fragrance direction, review ingredient possibilities, develop samples, and refine the result for its intended product or environment.',
+      'Explore a fragrance direction, ingredient possibilities, sample development, and refinement for the intended product or environment.',
     primaryLink: { label: 'Discuss a fragrance brief' },
     directionsEyebrow: 'Scent directions',
     directionsTitle: 'Start with the feeling people should remember.',
