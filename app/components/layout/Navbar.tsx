@@ -62,8 +62,10 @@ export default function Navbar() {
               aria-label={`MS Monster Global — ${nav.home}`}
             >
               <img
-                src="/assets/logo-black.png"
+                src="/assets/brand/logo-dark.webp"
                 alt="MS Monster Global"
+                width={640}
+                height={111}
                 className="h-14 max-h-16 w-auto object-contain"
               />
             </NavLink>

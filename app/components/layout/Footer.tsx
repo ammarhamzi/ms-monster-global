@@ -44,8 +44,10 @@ export default function Footer() {
         <div className="mb-10 grid gap-10 sm:grid-cols-2 md:mb-12 lg:grid-cols-[1.2fr_0.7fr_1fr_1.2fr] lg:gap-12">
           <div>
             <img
-              src="/assets/logo-white.png"
+              src="/assets/brand/logo-light.webp"
               alt="MS Monster Global"
+              width={640}
+              height={111}
               className="mb-6 h-12 w-auto"
             />
             <p className="max-w-sm text-base leading-relaxed text-slate-400 md:text-sm">

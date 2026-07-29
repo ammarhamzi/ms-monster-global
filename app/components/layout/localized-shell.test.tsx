@@ -17,6 +17,32 @@ afterEach(() => {
 });
 
 describe('localized route shell', () => {
+  it('uses optimized wordmarks with intrinsic dimensions in both shell themes', () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Navbar />
+        <Footer />
+      </MemoryRouter>,
+    );
+
+    const navigation = screen.getByRole('navigation', {
+      name: 'Primary navigation',
+    });
+    const navLogo = within(navigation).getByRole('img', {
+      name: 'MS Monster Global',
+    });
+    const footerLogo = within(screen.getByRole('contentinfo')).getByRole('img', {
+      name: 'MS Monster Global',
+    });
+
+    expect(navLogo).toHaveAttribute('src', '/assets/brand/logo-dark.webp');
+    expect(footerLogo).toHaveAttribute('src', '/assets/brand/logo-light.webp');
+    expect(navLogo).toHaveAttribute('width', '640');
+    expect(navLogo).toHaveAttribute('height', '111');
+    expect(footerLogo).toHaveAttribute('width', '640');
+    expect(footerLogo).toHaveAttribute('height', '111');
+  });
+
   it('uses Malay labels, registry destinations, and current-link state on a Malay route', () => {
     render(
       <MemoryRouter initialEntries={['/ms/tentang']}>
