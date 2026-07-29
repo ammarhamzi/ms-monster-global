@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Menu, X, Globe } from 'lucide-react';
 import { MotionConfig, motion, AnimatePresence } from 'motion/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 export default function Navbar() {
   const { language, setLanguage, t } = useLanguage();
@@ -11,9 +11,9 @@ export default function Navbar() {
   const navItems = [
     { to: '/', label: t.nav.home, end: true },
     { to: '/about', label: t.nav.about },
-    { to: '/perfume', label: t.products.tabs.perfume },
-    { to: '/it', label: t.products.tabs.it },
-    { to: '/profile', label: t.nav.profile },
+    { to: '/commercial-aroma-solutions', label: t.products.tabs.perfume },
+    { to: '/it-maintenance', label: t.products.tabs.it },
+    { to: '/downloads', label: t.nav.profile },
     { to: '/contact', label: t.nav.contact },
   ];
 

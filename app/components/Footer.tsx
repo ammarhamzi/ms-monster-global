@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -9,9 +9,9 @@ export default function Footer() {
   const links = [
     { to: '/', label: t.nav.home },
     { to: '/about', label: t.nav.about },
-    { to: '/perfume', label: t.products.tabs.perfume },
-    { to: '/it', label: t.products.tabs.it },
-    { to: '/profile', label: t.nav.profile },
+    { to: '/commercial-aroma-solutions', label: t.products.tabs.perfume },
+    { to: '/it-maintenance', label: t.products.tabs.it },
+    { to: '/downloads', label: t.nav.profile },
     { to: '/contact', label: t.nav.contact },
   ];
 

@@ -1,16 +1,23 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { translations, Language } from '../i18n/translations';
+import type { Locale } from '../config/routes';
+import { translations } from '../i18n/translations';
 
 interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+  language: Locale;
+  setLanguage: (lang: Locale) => void;
   t: typeof translations.en;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+export const LanguageProvider = ({
+  children,
+  initialLanguage,
+}: {
+  children: ReactNode;
+  initialLanguage: Locale;
+}) => {
+  const [language, setLanguage] = useState<Locale>(initialLanguage);
 
   const t = translations[language];
 

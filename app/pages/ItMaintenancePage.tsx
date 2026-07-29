@@ -1,6 +1,6 @@
 import { MotionConfig, motion } from 'motion/react';
 import { Activity, ArrowRight, CloudCog, DatabaseBackup, HardDrive, Headset, Network, Server, Shield, Wrench } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useLanguage } from '../context/LanguageContext';
 
 const services = [
@@ -18,7 +18,7 @@ const heroReveal = (delay: number) => ({
   transition: { duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
-export default function ITServices() {
+export default function ItMaintenancePage() {
   const { t } = useLanguage();
 
   return (

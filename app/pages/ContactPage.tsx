@@ -19,7 +19,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-export default function Contact() {
+export default function ContactPage() {
   const { t } = useLanguage();
 
   return (

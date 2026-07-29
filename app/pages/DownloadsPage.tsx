@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Building2 } from 'lucide-react';
 
-export default function InvestorRelations() {
+export default function DownloadsPage() {
   const { t } = useLanguage();
 
   return (

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function HeroBackgroundPaths() {
   return (
     <div className="absolute inset-0 overflow-hidden bg-slate-50">

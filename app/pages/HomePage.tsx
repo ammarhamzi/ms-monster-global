@@ -3,7 +3,7 @@ import { MotionConfig, motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 import { ArrowRight, Building2, CloudCog, Droplet, MapPin, ShieldCheck, Sparkles, Wrench } from 'lucide-react';
 import HeroBackgroundPaths from '../components/HeroBackgroundPaths';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 const heroEase = [0.22, 1, 0.36, 1] as const;
 
@@ -13,7 +13,7 @@ const heroReveal = (delay: number) => ({
   transition: { duration: 0.68, delay, ease: heroEase },
 });
 
-export default function Home() {
+export default function HomePage() {
   const { t } = useLanguage();
 
   const divisions = [
@@ -59,14 +59,14 @@ export default function Home() {
             </motion.p>
             <motion.div {...heroReveal(0.5)} className="grid gap-3 sm:flex sm:flex-row sm:gap-4">
               <Link
-                to="/perfume"
+                to="/commercial-aroma-solutions"
                 className="inline-flex min-h-12 items-center justify-center rounded-lg border border-transparent bg-emerald-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] motion-safe:hover:-translate-y-0.5 hover:bg-emerald-700 active:scale-[0.98]"
               >
                 Explore perfume & aroma
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
-                to="/it"
+                to="/it-maintenance"
                 className="inline-flex min-h-12 items-center justify-center rounded-lg border border-blue-900 bg-blue-900 px-6 py-3 text-sm font-bold text-white shadow-sm transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] motion-safe:hover:-translate-y-0.5 hover:bg-blue-800 active:scale-[0.98]"
               >
                 Explore IT Services
@@ -90,7 +90,7 @@ export default function Home() {
             {divisions.map((division) => (
               <Link
                 key={division.title}
-                to={division.color === 'green' ? '/perfume' : '/it'}
+                to={division.color === 'green' ? '/commercial-aroma-solutions' : '/it-maintenance'}
                 className="rounded-2xl border border-gray-100 bg-gray-50 p-6 transition-all hover:border-slate-200 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:p-8 md:p-10"
               >
                 <div className={`w-16 h-16 rounded-xl flex items-center justify-center shadow-sm mb-6 border ${

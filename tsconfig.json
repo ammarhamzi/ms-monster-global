@@ -22,7 +22,8 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "types": ["node", "vite/client", "vitest/globals"]
+    "types": ["node", "vite/client", "vitest/globals"],
+    "rootDirs": [".", "./.react-router/types"]
   },
-  "include": ["src", "app", "scripts", "test", ".react-router/types"]
+  "include": ["app", "scripts", "test", ".react-router/types"]
 }

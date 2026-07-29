@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'motion/react';
 import { BriefcaseBusiness, Compass, Flag, MapPin, ShieldCheck, Target, Users } from 'lucide-react';
 
-export default function About() {
+export default function AboutPage() {
   const { t } = useLanguage();
 
   const principles = [
