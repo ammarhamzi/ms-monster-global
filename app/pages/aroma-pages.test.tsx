@@ -73,7 +73,23 @@ describe.each([
   });
 });
 
-describe.each(['en', 'ms'] as const)('diffuser catalogue in %s', (locale) => {
+describe('Malay custom fragrance ingredients', () => {
+  it('localizes ingredient chips and libraries while retaining technical names', () => {
+    const { container } = renderPage(<CustomFragrancePage locale="ms" />);
+
+    for (const label of ['Limau gedang', 'Minyak Pudina', 'Minyak Lada Hitam', 'Lobak merah']) {
+      expect(container).toHaveTextContent(label);
+    }
+    expect(container).toHaveTextContent('Bois de Rose');
+    expect(container).toHaveTextContent('Hoodia');
+    expect(container).not.toHaveTextContent(/\bGrapefruit\b|\bPeppermint Oil\b|\bBlack Pepper Oil\b|\bCarrot\b/);
+  });
+});
+
+describe.each([
+  ['en', 'Primary catalogue format', 'Wall-mounted'],
+  ['ms', 'Format katalog utama', 'Dipasang pada dinding'],
+] as const)('diffuser catalogue in %s', (locale, formatLabel, formatValue) => {
   it('pre-renders all 23 model headings without an interaction', () => {
     const { container } = renderPage(<AromaDiffusersPage locale={locale} />);
 
@@ -87,11 +103,19 @@ describe.each(['en', 'ms'] as const)('diffuser catalogue in %s', (locale) => {
     expect(modelHeadings.sort()).toEqual(diffusers.map((item) => item.model).sort());
   });
 
-  it('omits the unresolved MF130R capacity row', () => {
+  it('labels the singular mounting value as the primary grouping format', () => {
+    renderPage(<AromaDiffusersPage locale={locale} />);
+
+    const article = screen.getByRole('heading', { level: 3, name: 'MF130R' }).closest('article');
+    expect(article).toHaveTextContent(formatLabel);
+    expect(article).toHaveTextContent(formatValue);
+  });
+
+  it('omits both disputed MF130R capacity values', () => {
     renderPage(<AromaDiffusersPage locale={locale} />);
 
     expect(screen.getByRole('heading', { level: 3, name: 'MF130R' }).closest('article')).not
-      .toHaveTextContent('200 ml');
+      .toHaveTextContent(/\b(?:120|200)\s*ml\b/i);
   });
 
   it('does not publish a contradictory broad coverage promise', () => {

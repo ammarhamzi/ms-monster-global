@@ -298,7 +298,7 @@ export const msContent = {
     modelsLabel: 'model',
     coverageLabel: 'Liputan',
     capacityLabel: 'Kapasiti',
-    mountingLabel: 'Kaedah pemasangan',
+    mountingLabel: 'Format katalog utama',
     suitableForLabel: 'Sesuai untuk',
     confirmLink: { label: 'Sahkan kesesuaian' },
     facebookLink: { label: 'Ikuti Monster Perfume di Facebook' },

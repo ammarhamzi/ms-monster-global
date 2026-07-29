@@ -639,6 +639,36 @@ export const essentialOils = [
   'Wheat Germ Oil',
 ];
 
+export const essentialOilsMs = [
+  'Minyak Anise',
+  'Minyak Bois de Rose',
+  'Minyak Lada Hitam',
+  'Minyak Serai Wangi',
+  'Minyak Sipres',
+  'Minyak Daun Kayu Manis',
+  'Minyak Kayu Cedar Virginia',
+  'Minyak Absolut Melur',
+  'Minyak Serai',
+  'Minyak Kayu Cendana',
+  'Minyak Pokok Teh',
+  'Minyak Pudina',
+  'Minyak Absolut Mawar',
+  'Minyak Rosmari',
+  'Minyak Halia',
+  'Minyak Isirung Aprikot',
+  'Minyak Avokado',
+  'Minyak Kalendula',
+  'Minyak Primrose Petang',
+  'Minyak Kelapa Terfraksinasi',
+  'Minyak Biji Anggur',
+  'Minyak Jojoba',
+  'Minyak Macadamia',
+  'Minyak Isirung Pic',
+  'Minyak Badam Manis',
+  'Minyak Walnut',
+  'Minyak Germa Gandum',
+];
+
 export const extracts = [
   'Aloe vera',
   'Avocado',
@@ -656,5 +686,25 @@ export const extracts = [
   'Peach',
   'Rose',
   'Seaweed',
+  'Tomato',
+];
+
+export const extractsMs = [
+  'Aloe vera',
+  'Avokado',
+  'Lobak merah',
+  'Kopi',
+  'Biji kapas',
+  'Timun',
+  'Teh hijau',
+  'Limau gedang',
+  'Hoodia',
+  'Madu',
+  'Limau lemon',
+  'Daun pandan',
+  'Betik',
+  'Pic',
+  'Mawar',
+  'Rumpai laut',
   'Tomato',
 ];

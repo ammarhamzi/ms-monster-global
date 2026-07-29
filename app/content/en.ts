@@ -297,7 +297,7 @@ export const enContent = {
     modelsLabel: 'models',
     coverageLabel: 'Coverage',
     capacityLabel: 'Capacity',
-    mountingLabel: 'Mounting',
+    mountingLabel: 'Primary catalogue format',
     suitableForLabel: 'Suitable for',
     confirmLink: { label: 'Confirm suitability' },
     facebookLink: { label: 'Follow Monster Perfume on Facebook' },

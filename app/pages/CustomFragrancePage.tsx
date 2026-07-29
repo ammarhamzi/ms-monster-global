@@ -4,23 +4,32 @@ import SectionHeading from '../components/content/SectionHeading';
 import type { Locale } from '../config/routes';
 import { getRoute } from '../config/routes';
 import { getContent } from '../content';
-import { essentialOils, extracts } from '../data/products';
+import { essentialOils, essentialOilsMs, extracts, extractsMs } from '../data/products';
 
 const directionAssets = [
   {
     image: '/assets/scent-fresh.jpg',
     mobileImage: '/assets/scent-fresh-mobile.jpg',
-    ingredients: ['Grapefruit', 'Lemon', 'Peppermint Oil'],
+    ingredients: {
+      en: ['Grapefruit', 'Lemon', 'Peppermint Oil'],
+      ms: ['Limau gedang', 'Limau lemon', 'Minyak Pudina'],
+    },
   },
   {
     image: '/assets/scent-floral.jpg',
     mobileImage: '/assets/scent-floral-mobile.jpg',
-    ingredients: ['Jasmine Absolute Oil', 'Rose Absolute Oil', 'Bois De Rose Oil'],
+    ingredients: {
+      en: ['Jasmine Absolute Oil', 'Rose Absolute Oil', 'Bois De Rose Oil'],
+      ms: ['Minyak Absolut Melur', 'Minyak Absolut Mawar', 'Minyak Bois de Rose'],
+    },
   },
   {
     image: '/assets/scent-woody.jpg',
     mobileImage: '/assets/scent-woody-mobile.jpg',
-    ingredients: ['Cedarwood Virginian Oil', 'Cypress Oil', 'Sandalwood Oil'],
+    ingredients: {
+      en: ['Cedarwood Virginian Oil', 'Cypress Oil', 'Sandalwood Oil'],
+      ms: ['Minyak Kayu Cedar Virginia', 'Minyak Sipres', 'Minyak Kayu Cendana'],
+    },
   },
 ] as const;
 
@@ -119,7 +128,7 @@ export default function CustomFragrancePage({ locale }: CustomFragrancePageProps
                         {direction.idealForLabel}: {direction.idealFor}
                       </p>
                       <ul className="mt-4 flex flex-wrap gap-2">
-                        {assets.ingredients.map((ingredient) => (
+                        {assets.ingredients[locale].map((ingredient) => (
                           <li
                             key={ingredient}
                             className="border border-emerald-900/10 bg-white px-3 py-1.5 text-xs font-bold text-slate-700"
@@ -173,7 +182,7 @@ export default function CustomFragrancePage({ locale }: CustomFragrancePageProps
                       {fragrance.essentialOilsTitle}
                     </h3>
                     <ul className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-600 sm:grid-cols-2">
-                      {essentialOils.map((oil) => (
+                      {(locale === 'ms' ? essentialOilsMs : essentialOils).map((oil) => (
                         <li key={oil}>{oil}</li>
                       ))}
                     </ul>
@@ -184,7 +193,7 @@ export default function CustomFragrancePage({ locale }: CustomFragrancePageProps
                       {fragrance.extractsTitle}
                     </h3>
                     <ul className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-600 sm:grid-cols-2">
-                      {extracts.map((extract) => (
+                      {(locale === 'ms' ? extractsMs : extracts).map((extract) => (
                         <li key={extract}>{extract}</li>
                       ))}
                     </ul>
