@@ -163,10 +163,10 @@ export default function ContactPage({ locale }: ContactPageProps) {
             </div>
             <div className="grid gap-3">
               <a
-                href={getRoute(locale, 'aroma').path}
+                href={getRoute(locale, 'perfume').path}
                 className="inline-flex min-h-12 items-center justify-between gap-3 rounded-lg bg-white px-5 py-3 text-sm font-bold text-emerald-950 transition-colors hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
-                {contact.aromaLink.label}
+                {contact.perfumeLink.label}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <a

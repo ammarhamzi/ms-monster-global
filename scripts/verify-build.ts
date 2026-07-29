@@ -9,8 +9,19 @@ import {
   type RouteRecord,
 } from '../app/config/routes';
 import { SITE } from '../app/config/site';
+import { diffusers } from '../app/data/products';
 
-const LEGACY_PATHS = new Set(['/it', '/perfume', '/profile', '/products']);
+const LEGACY_PATHS = new Set([
+  '/it',
+  '/profile',
+  '/products',
+  '/commercial-aroma-solutions',
+  '/aroma-diffusers',
+  '/custom-fragrance-development',
+  '/ms/penyelesaian-aroma-komersial',
+  '/ms/diffuser-aroma',
+  '/ms/pembangunan-wangian-tersuai',
+]);
 
 const REQUIRED_STATIC_FILES = [
   '404.html',
@@ -319,6 +330,27 @@ async function inspectRoute(
   }
   if (!normalizedDocumentText(document)) {
     diagnostics.push(`${route.path}: body has no visible text`);
+  }
+
+  if (route.key === 'perfume') {
+    const headingCounts = new Map<string, number>();
+    document.querySelectorAll('h3').forEach((heading) => {
+      const text = heading.textContent?.trim() ?? '';
+      headingCounts.set(text, (headingCounts.get(text) ?? 0) + 1);
+    });
+
+    for (const diffuser of diffusers) {
+      const count = headingCounts.get(diffuser.model) ?? 0;
+      if (count === 0) {
+        diagnostics.push(
+          `${route.path}: diffuser catalogue is missing model "${diffuser.model}"`,
+        );
+      } else if (count !== 1) {
+        diagnostics.push(
+          `${route.path}: diffuser catalogue includes model "${diffuser.model}" ${count} times`,
+        );
+      }
+    }
   }
 
   await verifyLocalReferences(root, route, document, diagnostics);

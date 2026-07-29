@@ -5,9 +5,7 @@ export type PageKey =
   | 'home'
   | 'about'
   | 'it'
-  | 'aroma'
-  | 'diffusers'
-  | 'fragrance'
+  | 'perfume'
   | 'downloads'
   | 'contact';
 export type SocialCard = 'corporate' | 'it' | 'aroma';
@@ -28,9 +26,9 @@ export const ROUTES: RouteRecord[] = [
     key: 'home',
     locale: 'en',
     path: '/',
-    title: 'MS Monster Global | IT Maintenance & Aroma Solutions',
+    title: 'MS Monster Global | IT Maintenance, Perfume & Aroma',
     description:
-      'MS Monster Global provides dependable IT maintenance and commercial aroma solutions for Malaysian workplaces, retail spaces, and hospitality environments.',
+      'MS Monster Global provides dependable IT maintenance and Perfume & Aroma solutions for Malaysian workplaces, retail spaces, and hospitality environments.',
     socialCard: 'corporate',
   },
   {
@@ -38,9 +36,9 @@ export const ROUTES: RouteRecord[] = [
     key: 'home',
     locale: 'ms',
     path: '/ms',
-    title: 'MS Monster Global | Penyelenggaraan IT & Penyelesaian Aroma',
+    title: 'MS Monster Global | Penyelenggaraan IT, Perfume & Aroma',
     description:
-      'MS Monster Global menyediakan servis penyelenggaraan IT dan penyelesaian aroma komersial untuk tempat kerja, runcit dan hospitaliti di Malaysia.',
+      'MS Monster Global menyediakan penyelenggaraan IT serta Perfume & Aroma untuk tempat kerja, persekitaran runcit dan ruang hospitaliti di Malaysia.',
     socialCard: 'corporate',
   },
   {
@@ -50,7 +48,7 @@ export const ROUTES: RouteRecord[] = [
     path: '/about',
     title: 'About MS Monster Global Sdn Bhd | Nilai, Malaysia',
     description:
-      'Learn about MS Monster Global Sdn Bhd, a Nilai-based company serving Malaysian organisations with practical IT maintenance and commercial aroma services.',
+      'Learn about MS Monster Global Sdn Bhd, a Nilai-based company serving Malaysian organisations with practical IT maintenance and Perfume & Aroma solutions.',
     socialCard: 'corporate',
   },
   {
@@ -60,7 +58,7 @@ export const ROUTES: RouteRecord[] = [
     path: '/ms/tentang',
     title: 'Tentang MS Monster Global Sdn Bhd | Nilai, Malaysia',
     description:
-      'Ketahui tentang MS Monster Global Sdn Bhd, syarikat di Nilai yang menyediakan servis penyelenggaraan IT dan aroma komersial kepada organisasi Malaysia.',
+      'Ketahui tentang MS Monster Global Sdn Bhd, syarikat di Nilai yang menyediakan penyelenggaraan IT serta Perfume & Aroma kepada organisasi Malaysia.',
     socialCard: 'corporate',
   },
   {
@@ -84,63 +82,23 @@ export const ROUTES: RouteRecord[] = [
     socialCard: 'it',
   },
   {
-    id: 'aroma-en',
-    key: 'aroma',
+    id: 'perfume-en',
+    key: 'perfume',
     locale: 'en',
-    path: '/commercial-aroma-solutions',
-    title: 'Commercial Aroma Solutions Malaysia | MS Monster Global',
+    path: '/perfume',
+    title: 'Perfume & Aroma Solutions Malaysia | MS Monster Global',
     description:
-      'Create a welcoming atmosphere with commercial aroma solutions from MS Monster Global for Malaysian offices, retail environments, and hospitality spaces.',
+      'Explore Perfume & Aroma solutions from MS Monster Global, including space planning, 23 documented diffuser models, and custom fragrance development.',
     socialCard: 'aroma',
   },
   {
-    id: 'aroma-ms',
-    key: 'aroma',
+    id: 'perfume-ms',
+    key: 'perfume',
     locale: 'ms',
-    path: '/ms/penyelesaian-aroma-komersial',
-    title: 'Penyelesaian Aroma Komersial Malaysia | MS Monster Global',
+    path: '/ms/perfume',
+    title: 'Perfume & Aroma Malaysia | MS Monster Global',
     description:
-      'Cipta suasana yang mengalu-alukan dengan penyelesaian aroma komersial MS Monster Global untuk pejabat, runcit dan ruang hospitaliti di Malaysia.',
-    socialCard: 'aroma',
-  },
-  {
-    id: 'diffusers-en',
-    key: 'diffusers',
-    locale: 'en',
-    path: '/aroma-diffusers',
-    title: 'Commercial Aroma Diffusers Malaysia | MS Monster Global',
-    description:
-      'Explore commercial aroma diffusers from MS Monster Global for consistent scent delivery in Malaysian offices, stores, showrooms, and hospitality spaces.',
-    socialCard: 'aroma',
-  },
-  {
-    id: 'diffusers-ms',
-    key: 'diffusers',
-    locale: 'ms',
-    path: '/ms/diffuser-aroma',
-    title: 'Diffuser Aroma Komersial Malaysia | MS Monster Global',
-    description:
-      'Terokai diffuser aroma komersial MS Monster Global untuk penyebaran haruman konsisten di pejabat, kedai, bilik pameran dan ruang hospitaliti Malaysia.',
-    socialCard: 'aroma',
-  },
-  {
-    id: 'fragrance-en',
-    key: 'fragrance',
-    locale: 'en',
-    path: '/custom-fragrance-development',
-    title: 'Custom Fragrance Development Malaysia | MS Monster Global',
-    description:
-      'Develop a distinctive scent identity with custom fragrance development from MS Monster Global for Malaysian brands, spaces, campaigns, and guest experiences.',
-    socialCard: 'aroma',
-  },
-  {
-    id: 'fragrance-ms',
-    key: 'fragrance',
-    locale: 'ms',
-    path: '/ms/pembangunan-wangian-tersuai',
-    title: 'Pembangunan Wangian Tersuai Malaysia | MS Monster Global',
-    description:
-      'Bangunkan identiti haruman tersendiri melalui pembangunan wangian tersuai MS Monster Global untuk jenama, ruang, kempen dan pengalaman tetamu di Malaysia.',
+      'Terokai Perfume & Aroma MS Monster Global untuk perancangan ruang, sistem diffuser, 23 model terdokumen dan pembangunan wangian tersuai.',
     socialCard: 'aroma',
   },
   {
@@ -150,7 +108,7 @@ export const ROUTES: RouteRecord[] = [
     path: '/downloads',
     title: 'Company Profiles & Brochures | MS Monster Global',
     description:
-      'Download MS Monster Global company profiles and brochures for an overview of our IT maintenance, commercial aroma solutions, diffusers, and fragrance services.',
+      'Download MS Monster Global company profiles and brochures for an overview of IT maintenance, Perfume & Aroma, diffuser systems, and fragrance services.',
     socialCard: 'corporate',
   },
   {
@@ -160,7 +118,7 @@ export const ROUTES: RouteRecord[] = [
     path: '/ms/muat-turun',
     title: 'Profil Syarikat & Brosur | MS Monster Global',
     description:
-      'Muat turun profil syarikat dan brosur MS Monster Global untuk maklumat servis penyelenggaraan IT, aroma komersial, diffuser dan pembangunan wangian.',
+      'Muat turun profil syarikat dan brosur MS Monster Global untuk maklumat penyelenggaraan IT, Perfume & Aroma, sistem diffuser dan pembangunan wangian.',
     socialCard: 'corporate',
   },
   {
@@ -170,7 +128,7 @@ export const ROUTES: RouteRecord[] = [
     path: '/contact',
     title: 'Contact MS Monster Global | Nilai, Negeri Sembilan',
     description:
-      'Contact MS Monster Global in Nilai, Negeri Sembilan to discuss IT maintenance, commercial aroma solutions, diffusers, custom fragrance, or company information.',
+      'Contact MS Monster Global in Nilai, Negeri Sembilan to discuss IT maintenance, Perfume & Aroma, diffuser systems, custom fragrance, or company information.',
     socialCard: 'corporate',
   },
   {
@@ -180,7 +138,7 @@ export const ROUTES: RouteRecord[] = [
     path: '/ms/hubungi',
     title: 'Hubungi MS Monster Global | Nilai, Negeri Sembilan',
     description:
-      'Hubungi MS Monster Global di Nilai, Negeri Sembilan untuk berbincang tentang penyelenggaraan IT, aroma komersial, diffuser, wangian tersuai atau maklumat syarikat.',
+      'Hubungi MS Monster Global di Nilai untuk berbincang tentang penyelenggaraan IT, Perfume & Aroma, sistem diffuser, wangian tersuai atau maklumat syarikat.',
     socialCard: 'corporate',
   },
 ];

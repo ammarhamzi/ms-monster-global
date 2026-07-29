@@ -75,14 +75,14 @@ describe('structured data policy', () => {
   });
 
   it('adds services only to factual service routes', () => {
-    const service = buildSchema(getRoute('ms', 'fragrance'))['@graph'].find(
+    const service = buildSchema(getRoute('ms', 'perfume'))['@graph'].find(
       (node) => node['@type'] === 'Service',
     );
 
     expect(service).toMatchObject({
-      '@id': 'https://msmonsterglobal.com/ms/pembangunan-wangian-tersuai#service',
+      '@id': 'https://msmonsterglobal.com/ms/perfume#service',
       description:
-        'Bangunkan identiti haruman tersendiri melalui pembangunan wangian tersuai MS Monster Global untuk jenama, ruang, kempen dan pengalaman tetamu di Malaysia.',
+        'Terokai Perfume & Aroma MS Monster Global untuk perancangan ruang, sistem diffuser, 23 model terdokumen dan pembangunan wangian tersuai.',
       provider: { '@id': 'https://msmonsterglobal.com/#organization' },
     });
     expect(buildSchema(getRoute('en', 'about'))['@graph']).not.toEqual(

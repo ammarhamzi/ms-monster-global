@@ -4,6 +4,18 @@
 **Status:** Approved for implementation planning
 **Production origin:** `https://msmonsterglobal.com`
 
+## Product direction update — 2026-07-30
+
+The perfume offering remains one unified experience, matching the previous
+site structure. `/perfume` is the English canonical page and
+`/ms/perfume` is its Malay counterpart. The public navigation and primary
+page language use **Perfume & Aroma**, not **Commercial Aroma Solutions**.
+
+The service story, diffuser selection guidance, complete diffuser catalogue,
+and custom fragrance/OEM/ODM information belong on this single page. They
+must not appear as separate top-level public destinations. Former split URLs
+redirect permanently to the matching unified perfume page.
+
 ## 1. Objective
 
 Make the MS Monster Global website reliably crawlable, understandable, shareable, and polished while preserving its current professional corporate identity.
@@ -11,7 +23,7 @@ Make the MS Monster Global website reliably crawlable, understandable, shareable
 The first release will prioritize:
 
 1. Exact-name visibility for “MS Monster Global” and “MS Monster Global Sdn Bhd”.
-2. Relevant Malaysian commercial searches for IT maintenance, commercial aroma solutions, aroma diffusers, and custom fragrance development.
+2. Relevant Malaysian commercial searches for IT maintenance and the unified Perfume & Aroma offering, including diffuser and custom-fragrance intent.
 3. Clear business identity and enquiry paths for prospective customers.
 
 No implementation can guarantee a first-place ranking. The release will establish the technical, content, and entity foundation needed to compete for branded and qualified commercial searches.
@@ -52,9 +64,7 @@ English canonical routes:
 | `/` | MS Monster Global brand and division overview |
 | `/about` | Legal entity, business background, values, and verified history |
 | `/it-maintenance` | IT and AI infrastructure maintenance services |
-| `/commercial-aroma-solutions` | Commercial scent marketing and aroma-system services |
-| `/aroma-diffusers` | Crawlable commercial diffuser catalogue |
-| `/custom-fragrance-development` | Custom fragrance, OEM/ODM, and scent-development services |
+| `/perfume` | Perfume & Aroma services, complete diffuser catalogue, and custom-fragrance/OEM/ODM information |
 | `/downloads` | Company profiles, credentials, and product brochure |
 | `/contact` | Nilai contact information and enquiry paths |
 
@@ -65,9 +75,7 @@ Bahasa Melayu routes:
 | `/ms` | `/` |
 | `/ms/tentang` | `/about` |
 | `/ms/penyelenggaraan-it` | `/it-maintenance` |
-| `/ms/penyelesaian-aroma-komersial` | `/commercial-aroma-solutions` |
-| `/ms/diffuser-aroma` | `/aroma-diffusers` |
-| `/ms/pembangunan-wangian-tersuai` | `/custom-fragrance-development` |
+| `/ms/perfume` | `/perfume` |
 | `/ms/muat-turun` | `/downloads` |
 | `/ms/hubungi` | `/contact` |
 
@@ -78,11 +86,19 @@ Every language switch will navigate to the translated counterpart URL. Each gene
 Permanent redirects will preserve existing links:
 
 - `/it` → `/it-maintenance`
-- `/perfume` → `/commercial-aroma-solutions`
 - `/profile` → `/downloads`
-- `/products` → `/commercial-aroma-solutions`
+- `/commercial-aroma-solutions` → `/perfume`
+- `/aroma-diffusers` → `/perfume`
+- `/custom-fragrance-development` → `/perfume`
+- `/products` → `/perfume`
+- `/ms/penyelesaian-aroma-komersial` → `/ms/perfume`
+- `/ms/diffuser-aroma` → `/ms/perfume`
+- `/ms/pembangunan-wangian-tersuai` → `/ms/perfume`
 
 The `www` host will continue redirecting to the HTTPS apex origin. Netlify configuration will serve generated static routes directly, return permanent redirects for legacy routes, and return a branded `404.html` with HTTP 404 for unknown paths. There will be no broad homepage fallback that converts invalid URLs into soft 404s.
+
+`/perfume` and `/ms/perfume` are canonical direct-load documents and must
+return `200`, never an application or server redirect.
 
 ## 4. Search Metadata and Crawl Controls
 
@@ -181,12 +197,15 @@ The AMECO ownership claim and the cosmetics-licence timeline statement will be r
 
 ### 6.3 Service content
 
-The existing service material will be reorganized into focused pages:
+The existing service material will be organized into focused destinations:
 
 - IT maintenance: supported environments, preventive/predictive maintenance, hardware and software support, network monitoring, troubleshooting, backup and recovery, cloud support, and remote/on-site options without inventing coverage areas.
-- Commercial aroma solutions: consultation, space assessment, scent direction, diffuser matching, refill, tuning, and maintenance.
-- Aroma diffusers: all catalogue content rendered in the HTML. Collapsible presentation may remain, but the content cannot depend on client interaction to exist.
-- Custom fragrance development: documented fragrance development, ingredients, sampling, and OEM/ODM boundaries.
+- Perfume & Aroma: one bilingual page containing consultation, space assessment, scent direction, diffuser matching, refill, tuning, maintenance, all 23 documented diffuser models, ingredient exploration, sampling, and OEM/ODM boundaries.
+
+All catalogue content must be rendered in the unified page’s generated HTML.
+Collapsible presentation may remain, but content cannot depend on client
+interaction to exist. The former aroma, diffuser, and fragrance URLs are
+redirect-only and are not separate public destinations.
 
 Individual diffuser pages, thin city pages, and extra IT sub-service pages are outside the first release. They require verified specifications, unique evidence, and enough useful content to avoid doorway or duplicate pages.
 
@@ -223,7 +242,7 @@ The implementation will:
 - Remove duplicated images and overlays on the aroma page.
 - Right-size the oversized logo assets and add intrinsic dimensions to images.
 - Add modern image sources where they reduce payload without visible quality loss.
-- Split route code through the framework build and avoid loading the entire catalogue UI on every page.
+- Split route code through the framework build and load the catalogue UI only on the unified Perfume & Aroma route.
 - Keep meaningful alt text and improve any text that describes decorative rather than informative imagery.
 
 No analytics, tracking pixels, cookie banner, live chat, or contact-form backend will be added in this release.
@@ -235,7 +254,7 @@ Implementation should keep page behavior understandable and independently testab
 - `site-config`: canonical origin, entity facts, social profiles, locale definitions, and route mapping
 - `seo`: route metadata, canonical/hreflang helpers, JSON-LD nodes, and social-image selection
 - `layout`: document shell, navigation, footer, breadcrumbs, language switcher, and error page
-- `content`: locale-complete route copy and verified catalogue data
+- `content`: locale-complete route copy and verified catalogue data for the unified Perfume & Aroma experience
 - `downloads`: document list and accessible download cards
 - `media`: responsive image and share-image asset mapping
 

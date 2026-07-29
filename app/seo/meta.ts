@@ -18,14 +18,14 @@ const SOCIAL_CARD_PATHS: Record<SocialCard, string> = {
 
 const SOCIAL_CARD_ALT: Record<Locale, Record<SocialCard, string>> = {
   en: {
-    corporate: 'MS Monster Global IT maintenance and commercial aroma solutions',
+    corporate: 'MS Monster Global IT maintenance and Perfume & Aroma solutions',
     it: 'MS Monster Global IT maintenance services',
-    aroma: 'MS Monster Global commercial aroma solutions',
+    aroma: 'MS Monster Global Perfume & Aroma solutions',
   },
   ms: {
-    corporate: 'MS Monster Global penyelenggaraan IT dan penyelesaian aroma komersial',
+    corporate: 'MS Monster Global penyelenggaraan IT dan Perfume & Aroma',
     it: 'Servis penyelenggaraan IT MS Monster Global',
-    aroma: 'Penyelesaian aroma komersial MS Monster Global',
+    aroma: 'Perfume & Aroma MS Monster Global',
   },
 };
 

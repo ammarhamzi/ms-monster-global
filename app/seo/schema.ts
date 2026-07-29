@@ -49,11 +49,11 @@ const corporationNode: LdNode = {
       itemListElement: ['IT maintenance services'],
     },
     {
-      name: 'Aroma and scent solutions',
+      name: 'Perfume & Aroma solutions',
       itemListElement: [
-        'Commercial aroma solutions',
-        'Aroma diffusers',
-        'Custom fragrance development',
+        'Space and scent assessment',
+        'Documented aroma diffuser catalogue',
+        'Custom fragrance and OEM/ODM development support',
       ],
     },
   ],
@@ -70,9 +70,7 @@ const websiteNode: LdNode = {
 
 const SERVICE_KEYS = new Set<RouteRecord['key']>([
   'it',
-  'aroma',
-  'diffusers',
-  'fragrance',
+  'perfume',
 ]);
 
 function serviceNodeFor(route: RouteRecord): LdNode | undefined {

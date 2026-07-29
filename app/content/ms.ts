@@ -19,9 +19,7 @@ export const msContent = {
     home: 'Laman utama',
     about: 'Tentang',
     services: 'Perkhidmatan',
-    aroma: 'Penyelesaian aroma komersial',
-    diffusers: 'Diffuser aroma',
-    fragrance: 'Wangian tersuai',
+    perfume: 'Perfume & Aroma',
     it: 'Penyelenggaraan IT',
     downloads: 'Muat turun',
     contact: 'Hubungi',
@@ -30,8 +28,8 @@ export const msContent = {
     eyebrow: SITE.legalName,
     title: 'Penyelesaian aroma dan penyelenggaraan teknologi untuk kesinambungan operasi.',
     introduction:
-      'MS Monster Global membantu organisasi membentuk ruang yang terancang melalui penyelesaian aroma komersial dan menyelenggara teknologi yang menyokong operasi harian.',
-    aromaLink: { label: 'Teroka penyelesaian aroma' },
+      'MS Monster Global membantu organisasi membentuk ruang yang terancang melalui Perfume & Aroma dan menyelenggara teknologi yang menyokong operasi harian.',
+    perfumeLink: { label: 'Teroka Perfume & Aroma' },
     itLink: { label: 'Teroka penyelenggaraan IT' },
     overviewEyebrow: 'Dua bahagian khusus',
     overviewTitle: 'Sokongan praktikal untuk ruang dan sistem.',
@@ -39,8 +37,8 @@ export const msContent = {
       'Pilih bahagian yang sepadan dengan keperluan anda. Setiap laluan menerangkan skop yang tersedia dan menyediakan cara terus untuk membincangkan langkah seterusnya.',
     divisions: [
       {
-        key: 'aroma',
-        title: 'Penyelesaian aroma komersial',
+        key: 'perfume',
+        title: 'Perfume & Aroma',
         description:
           'Rancang arah haruman, pilih diffuser yang sesuai, dan kekalkan pengalaman aroma yang konsisten untuk persekitaran komersial.',
         items: [
@@ -48,7 +46,7 @@ export const msContent = {
           'Pemilihan diffuser komersial',
           'Pembangunan wangian tersuai',
         ],
-        link: { label: 'Lihat penyelesaian aroma' },
+        link: { label: 'Lihat Perfume & Aroma' },
         imageAlt: 'Diffuser aroma komersial dan minyak wangian di ruang dalaman terancang',
       },
       {
@@ -72,7 +70,7 @@ export const msContent = {
     operationsItems: [
       `${SITE.legalName}, berdaftar sebagai ${SITE.registrationNumber}`,
       `Berpangkalan di ${SITE.address.addressLocality}, ${SITE.address.addressRegion}`,
-      'Laluan khusus untuk keperluan teknologi dan aroma komersial',
+      'Laluan khusus untuk keperluan teknologi dan Perfume & Aroma',
       'Profil syarikat dan maklumat produk tersedia sebagai muat turun PDF',
     ],
     contactCta: {
@@ -88,7 +86,7 @@ export const msContent = {
     eyebrow: SITE.legalName,
     title: 'Tentang MS Monster Global',
     introduction:
-      `${SITE.legalName} ialah syarikat berpangkalan di Malaysia dengan dua bahagian perniagaan: servis penyelenggaraan IT dan AI yang praktikal, serta penyelesaian aroma komersial untuk persekitaran perniagaan.`,
+      `${SITE.legalName} ialah syarikat berpangkalan di Malaysia dengan dua bahagian perniagaan: servis penyelenggaraan IT dan AI yang praktikal, serta Perfume & Aroma untuk persekitaran perniagaan.`,
     incorporation:
       `${SITE.legalName} diperbadankan pada 16 November 2022. Aktiviti terdahulu merupakan akar perniagaan sebelum penubuhan Sdn Bhd.`,
     incorporationEyebrow: 'Entiti undang-undang semasa',
@@ -103,7 +101,7 @@ export const msContent = {
       {
         title: 'Visi',
         description:
-          'Menjadikan penyelesaian aroma komersial lebih mudah dicapai dan menjadi rakan penyelenggaraan teknologi yang dipercayai untuk kesinambungan serta pertumbuhan perniagaan.',
+          'Menjadikan Perfume & Aroma lebih mudah dicapai dan menjadi rakan penyelenggaraan teknologi yang dipercayai untuk kesinambungan serta pertumbuhan perniagaan.',
       },
       {
         title: 'Misi',
@@ -139,12 +137,12 @@ export const msContent = {
     divisionsTitle: 'Dua bahagian perkhidmatan khusus',
     divisions: [
       {
-        key: 'aroma',
-        title: 'Penyelesaian aroma komersial',
+        key: 'perfume',
+        title: 'Perfume & Aroma',
         description:
           'Konsultasi aroma, pemadanan diffuser, bekalan wangian, pembangunan haruman tersuai, isian semula, pelarasan, dan sokongan penyelenggaraan.',
         items: ['Perancangan aroma', 'Sistem diffuser', 'Wangian tersuai'],
-        link: { label: 'Teroka perkhidmatan aroma' },
+        link: { label: 'Teroka Perfume & Aroma' },
         imageAlt: 'Diffuser aroma komersial dan minyak wangian di ruang dalaman',
       },
       {
@@ -161,7 +159,7 @@ export const msContent = {
       eyebrow: 'Bincangkan keperluan anda',
       title: 'Pilih bahagian yang sepadan dengan projek anda.',
       description:
-        'Hubungi pasukan di Nilai tentang penyelenggaraan IT, penyelesaian aroma komersial, dokumen syarikat, atau maklumat produk.',
+        'Hubungi pasukan di Nilai tentang penyelenggaraan IT, Perfume & Aroma, dokumen syarikat, atau maklumat produk.',
       link: { label: 'Hubungi pasukan kami' },
     },
   },
@@ -222,14 +220,14 @@ export const msContent = {
     },
     heroImageAlt: 'Juruteknik bekerja di antara rak pelayan perusahaan dalam pusat data',
   },
-  aroma: {
-    breadcrumb: 'Penyelesaian aroma komersial',
+  perfume: {
+    breadcrumb: 'Perfume & Aroma',
     eyebrow: 'Monster Perfume',
-    title: 'Penyelesaian Aroma Komersial',
+    title: 'Perfume & Aroma',
     introduction:
       'Rancang pengalaman aroma mengikut sifat sesuatu ruang, kemudian padankannya dengan pendekatan diffuser, isian semula, pelarasan, dan penyelenggaraan yang praktikal.',
     primaryLink: { label: 'Minta cadangan' },
-    secondaryLink: { label: 'Teroka sistem diffuser' },
+    secondaryLink: { label: 'Lihat semua model diffuser' },
     assessmentEyebrow: 'Penilaian ruang',
     assessmentTitle: 'Mulakan dengan persekitaran dan pengalaman yang diingini.',
     assessmentDescription:
@@ -420,7 +418,7 @@ export const msContent = {
     eyebrow: SITE.legalName,
     title: 'Hubungi MS Monster Global',
     introduction:
-      'Hubungi pasukan di Nilai tentang penyelenggaraan teknologi, penyelesaian aroma komersial, produk diffuser, wangian tersuai, atau maklumat syarikat.',
+      'Hubungi pasukan di Nilai tentang penyelenggaraan teknologi, Perfume & Aroma, produk diffuser, wangian tersuai, atau maklumat syarikat.',
     channelsEyebrow: 'Hubungan terus',
     channelsTitle: 'Pilih saluran yang sesuai dengan pertanyaan anda.',
     address: {
@@ -452,12 +450,12 @@ export const msContent = {
     enquiriesTitle: 'Mulakan dengan bahagian yang berkaitan.',
     enquiriesDescription:
       'Semak skop perkhidmatan terlebih dahulu, kemudian kongsikan keperluan persekitaran, produk, atau operasi dengan pasukan kami.',
-    aromaLink: { label: 'Semak penyelesaian aroma' },
+    perfumeLink: { label: 'Semak Perfume & Aroma' },
     itLink: { label: 'Semak penyelenggaraan IT' },
   },
   footer: {
     summary:
-      'Penyelenggaraan IT dan penyelesaian aroma komersial yang praktikal untuk persekitaran perniagaan.',
+      'Penyelenggaraan IT dan Perfume & Aroma yang praktikal untuk persekitaran perniagaan.',
     companyTitle: 'Syarikat',
     servicesTitle: 'Perkhidmatan',
     contactTitle: 'Hubungi',

@@ -14,7 +14,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 const navigationKeys: PageKey[] = [
   'home',
   'about',
-  'aroma',
+  'perfume',
   'it',
   'downloads',
   'contact',

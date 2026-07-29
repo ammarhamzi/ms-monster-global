@@ -1,6 +1,10 @@
 # MS Monster Global Corporate Portal
 
-Corporate website for MS Monster Global Sdn Bhd, covering AMECO consumer products, perfume and aroma solutions, IT and AI maintenance services, company profile downloads, and contact information.
+Corporate website for MS Monster Global Sdn Bhd, covering unified Perfume & Aroma solutions, IT and AI maintenance services, company profile downloads, and contact information.
+
+Canonical bilingual service routes include `/perfume` and `/ms/perfume`.
+Former split aroma, diffuser, and custom-fragrance URLs redirect permanently
+to the matching unified page.
 
 ## Run Locally
 

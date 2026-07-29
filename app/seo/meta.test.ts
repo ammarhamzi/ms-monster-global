@@ -83,13 +83,13 @@ describe('route metadata', () => {
     ).toEqual(alternates);
   });
 
-  it('localizes the document and selects social cards from the route registry', () => {
-    const meta = buildMeta(getRoute('ms', 'aroma'));
+  it('localizes the unified perfume document and selects its social card', () => {
+    const meta = buildMeta(getRoute('ms', 'perfume'));
 
     expect(meta).toContainEqual({
       name: 'description',
       content:
-        'Cipta suasana yang mengalu-alukan dengan penyelesaian aroma komersial MS Monster Global untuk pejabat, runcit dan ruang hospitaliti di Malaysia.',
+        'Terokai Perfume & Aroma MS Monster Global untuk perancangan ruang, sistem diffuser, 23 model terdokumen dan pembangunan wangian tersuai.',
     });
     expect(meta).toContainEqual({
       name: 'robots',
@@ -101,16 +101,16 @@ describe('route metadata', () => {
         { property: 'og:locale:alternate', content: 'en_MY' },
         {
           property: 'og:title',
-          content: 'Penyelesaian Aroma Komersial Malaysia | MS Monster Global',
+          content: 'Perfume & Aroma Malaysia | MS Monster Global',
         },
         {
           property: 'og:description',
           content:
-            'Cipta suasana yang mengalu-alukan dengan penyelesaian aroma komersial MS Monster Global untuk pejabat, runcit dan ruang hospitaliti di Malaysia.',
+            'Terokai Perfume & Aroma MS Monster Global untuk perancangan ruang, sistem diffuser, 23 model terdokumen dan pembangunan wangian tersuai.',
         },
         {
           property: 'og:url',
-          content: 'https://msmonsterglobal.com/ms/penyelesaian-aroma-komersial',
+          content: 'https://msmonsterglobal.com/ms/perfume',
         },
         {
           property: 'og:image',
@@ -118,17 +118,17 @@ describe('route metadata', () => {
         },
         {
           property: 'og:image:alt',
-          content: 'Penyelesaian aroma komersial MS Monster Global',
+          content: 'Perfume & Aroma MS Monster Global',
         },
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'Penyelesaian Aroma Komersial Malaysia | MS Monster Global',
+          content: 'Perfume & Aroma Malaysia | MS Monster Global',
         },
         {
           name: 'twitter:description',
           content:
-            'Cipta suasana yang mengalu-alukan dengan penyelesaian aroma komersial MS Monster Global untuk pejabat, runcit dan ruang hospitaliti di Malaysia.',
+            'Terokai Perfume & Aroma MS Monster Global untuk perancangan ruang, sistem diffuser, 23 model terdokumen dan pembangunan wangian tersuai.',
         },
         {
           name: 'twitter:image',
@@ -136,7 +136,7 @@ describe('route metadata', () => {
         },
         {
           name: 'twitter:image:alt',
-          content: 'Penyelesaian aroma komersial MS Monster Global',
+          content: 'Perfume & Aroma MS Monster Global',
         },
       ]),
     );
@@ -179,7 +179,7 @@ describe('route metadata', () => {
       { property: 'og:image:height', content: '630' },
       {
         property: 'og:image:alt',
-        content: 'MS Monster Global IT maintenance and commercial aroma solutions',
+        content: 'MS Monster Global IT maintenance and Perfume & Aroma solutions',
       },
       { name: 'twitter:card', content: 'summary_large_image' },
       {
@@ -196,7 +196,7 @@ describe('route metadata', () => {
       },
       {
         name: 'twitter:image:alt',
-        content: 'MS Monster Global IT maintenance and commercial aroma solutions',
+        content: 'MS Monster Global IT maintenance and Perfume & Aroma solutions',
       },
     ]);
   });

@@ -11,11 +11,11 @@ import LanguageSwitcher from './components/layout/LanguageSwitcher';
 import Navbar from './components/layout/Navbar';
 import { getContent } from './content';
 import AboutPage from './pages/AboutPage';
-import AromaDiffusersPage from './pages/AromaDiffusersPage';
+import PerfumePage from './pages/PerfumePage';
 import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
 import ItMaintenancePage from './pages/ItMaintenancePage';
-import AromaRoute from './routes/aroma';
+import PerfumeRoute from './routes/perfume';
 
 function renderAt(pathname: string, element: ReactElement) {
   return render(
@@ -45,7 +45,7 @@ describe.each([
   ['home', '/', <HomePage locale="en" />],
   ['contact', '/contact', <ContactPage locale="en" />],
   ['IT maintenance', '/it-maintenance', <ItMaintenancePage locale="en" />],
-  ['diffuser catalogue', '/aroma-diffusers', <AromaDiffusersPage locale="en" />],
+  ['Perfume & Aroma', '/perfume', <PerfumePage locale="en" />],
 ] as const)('%s page semantics', (_name, pathname, page) => {
   it('has exactly one H1 and does not skip heading levels', () => {
     const { container } = renderAt(pathname, page);
@@ -155,7 +155,7 @@ describe('shell accessible names and states', () => {
     const desktopLabels = [
       'Home',
       'About',
-      'Commercial aroma solutions',
+      'Perfume & Aroma',
       'IT maintenance',
       'Downloads',
       'Contact',
@@ -261,17 +261,17 @@ describe('mobile navigation lifecycle', () => {
   });
 });
 
-describe('server-rendered aroma route localization', () => {
+describe('server-rendered perfume route localization', () => {
   it('wires the Malay URL locale to Malay copy and localized CTA destinations', () => {
     const markup = renderToStaticMarkup(
-      <MemoryRouter initialEntries={['/ms/penyelesaian-aroma-komersial']}>
-        <AromaRoute />
+      <MemoryRouter initialEntries={['/ms/perfume']}>
+        <PerfumeRoute />
       </MemoryRouter>,
     );
 
-    expect(markup).toContain('Penyelesaian Aroma Komersial');
+    expect(markup).toContain('Perfume &amp; Aroma');
     expect(markup).toContain('href="/ms/hubungi"');
-    expect(markup).toContain('href="/ms/diffuser-aroma"');
+    expect(markup).toContain('href="#diffuser-catalogue"');
     expect(markup).not.toContain('href="/contact"');
   });
 });

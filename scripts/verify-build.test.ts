@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ROUTES, absoluteUrl, getCounterpart } from '../app/config/routes';
+import { diffusers } from '../app/data/products';
 import { verifyBuild } from './verify-build';
 
 const temporaryDirectories: string[] = [];
@@ -55,6 +56,13 @@ function routeHtml(
   const ogImage = overrides.ogImage ?? socialImage;
   const twitterImage = overrides.twitterImage ?? socialImage;
 
+  const perfumeCatalogue =
+    route.key === 'perfume'
+      ? diffusers
+          .map((diffuser) => `<article><h3>${diffuser.model}</h3></article>`)
+          .join('')
+      : '';
+
   return `<!doctype html>
 <html lang="${route.locale}">
   <head>
@@ -69,7 +77,7 @@ function routeHtml(
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"${title}"}]}</script>
   </head>
   <body>
-    <main><h1>${title}</h1><p>Visible page content for ${route.path}.</p></main>
+    <main><h1>${title}</h1><p>Visible page content for ${route.path}.</p>${perfumeCatalogue}</main>
   </body>
 </html>`;
 }
@@ -136,8 +144,23 @@ describe('generated build verification', () => {
     const root = await writeFixture();
 
     await expect(verifyBuild(root)).resolves.toMatchObject({
-      routes: 16,
+      routes: 12,
     });
+  });
+
+  it('rejects a unified perfume page that omits a documented model from HTML', async () => {
+    const root = await writeFixture();
+    const perfumePath = join(root, 'perfume', 'index.html');
+    const perfumeHtml = await readFile(perfumePath, 'utf8');
+    await writeFile(
+      perfumePath,
+      perfumeHtml.replace('<article><h3>MF120A</h3></article>', ''),
+      'utf8',
+    );
+
+    await expect(verifyBuild(root)).rejects.toThrow(
+      '/perfume: diffuser catalogue is missing model "MF120A"',
+    );
   });
 
   it('rejects a route-like internal link that resolves only to an empty directory', async () => {

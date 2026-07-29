@@ -78,10 +78,10 @@ export default function DownloadsPage({ locale }: DownloadsPageProps) {
             </ul>
             <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-1">
               <a
-                href={getRoute(locale, 'aroma').path}
+                href={getRoute(locale, 'perfume').path}
                 className="inline-flex min-h-12 items-center justify-between gap-3 rounded-lg bg-emerald-800 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700"
               >
-                {nav.aroma}
+                {nav.perfume}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <a

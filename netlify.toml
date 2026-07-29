@@ -8,18 +8,43 @@ to = "/it-maintenance"
 status = 301
 
 [[redirects]]
-from = "/perfume"
-to = "/commercial-aroma-solutions"
-status = 301
-
-[[redirects]]
 from = "/profile"
 to = "/downloads"
 status = 301
 
 [[redirects]]
 from = "/products"
-to = "/commercial-aroma-solutions"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/commercial-aroma-solutions"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/aroma-diffusers"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/custom-fragrance-development"
+to = "/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/penyelesaian-aroma-komersial"
+to = "/ms/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/diffuser-aroma"
+to = "/ms/perfume"
+status = 301
+
+[[redirects]]
+from = "/ms/pembangunan-wangian-tersuai"
+to = "/ms/perfume"
 status = 301
 
 [[redirects]]

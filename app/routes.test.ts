@@ -12,6 +12,27 @@ describe('framework route tree', () => {
     }
   });
 
+  it('maps only the unified perfume records to the public perfume module', () => {
+    const publicEntries = routeConfig.filter((entry) => entry.id?.includes('-'));
+
+    expect(publicEntries).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'perfume-en', path: '/perfume' }),
+        expect.objectContaining({ id: 'perfume-ms', path: '/ms/perfume' }),
+      ]),
+    );
+    expect(publicEntries.map((entry) => entry.id)).not.toEqual(
+      expect.arrayContaining([
+        'aroma-en',
+        'aroma-ms',
+        'diffusers-en',
+        'diffusers-ms',
+        'fragrance-en',
+        'fragrance-ms',
+      ]),
+    );
+  });
+
   it('includes explicit and catch-all not-found routes', () => {
     expect(routeConfig).toContainEqual(
       expect.objectContaining({ id: 'not-found', path: '/404' }),

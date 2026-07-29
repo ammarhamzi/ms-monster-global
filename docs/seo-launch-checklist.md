@@ -9,7 +9,7 @@ Use this checklist after the production deployment. Record evidence, dates, and 
 - [ ] Verify Google Search Console ownership for the production property.
 - [ ] Verify Bing Webmaster Tools ownership for the production property.
 - [ ] Submit `https://msmonsterglobal.com/sitemap.xml` in both webmaster tools.
-- [ ] Request indexing for the English and Bahasa Melayu home, IT maintenance, commercial aroma, aroma diffuser, and custom fragrance routes.
+- [ ] Request indexing for the English and Bahasa Melayu home, IT maintenance, and unified Perfume & Aroma routes.
 
 ## Business identity and citations
 

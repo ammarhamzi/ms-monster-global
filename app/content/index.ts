@@ -16,7 +16,6 @@ export { findUnsupportedClaims } from './policy';
 
 export type {
   AboutContent,
-  AromaContent,
   ContactContent,
   ContactCtaContent,
   DiffusersContent,
@@ -28,5 +27,6 @@ export type {
   ItContent,
   NavContent,
   NotFoundContent,
+  PerfumeContent,
   SiteContent,
 } from './types';

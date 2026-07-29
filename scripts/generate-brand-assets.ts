@@ -372,7 +372,7 @@ async function corporateCard(
   const text = cardTextSvg(
     {
       title: 'MS Monster Global',
-      subtitle: 'IT Maintenance • Commercial Aroma Solutions',
+      subtitle: 'IT Maintenance • Perfume & Aroma',
       image: 'it',
     },
     cardFont,
@@ -465,7 +465,7 @@ export async function generateBrandAssets(
     ),
     socialCard(
       {
-        title: 'Commercial Aroma Solutions',
+        title: 'Perfume & Aroma',
         image: 'aroma',
       },
       sources,

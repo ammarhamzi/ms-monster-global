@@ -1,10 +1,14 @@
 import { Check, FlaskConical, MapPinned, Settings2, Sparkles } from 'lucide-react';
 import { MotionConfig, motion } from 'motion/react';
 import ContactCta from '../components/content/ContactCta';
-import Breadcrumbs from '../components/layout/Breadcrumbs';
 import SectionHeading from '../components/content/SectionHeading';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
+import DiffuserCatalogue from '../components/perfume/DiffuserCatalogue';
+import {
+  CustomFragranceDevelopment,
+  ScentDirections,
+} from '../components/perfume/FragranceSections';
 import type { Locale } from '../config/routes';
-import { getRoute } from '../config/routes';
 import { getContent } from '../content';
 
 const processIcons = [MapPinned, FlaskConical, Settings2, Sparkles] as const;
@@ -30,22 +34,21 @@ const heroReveal = (delay: number) => ({
   transition: { duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
-interface AromaSolutionsPageProps {
-  locale: Locale;
-}
-
-export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) {
-  const { aroma } = getContent(locale);
+export default function PerfumePage({ locale }: { locale: Locale }) {
+  const { perfume } = getContent(locale);
 
   return (
     <MotionConfig reducedMotion="user">
       <div className="min-h-screen bg-stone-50 pt-20">
         <header className="relative isolate overflow-hidden bg-emerald-950 text-white">
           <picture className="absolute inset-0 -z-20 block">
-            <source media="(max-width: 767px)" srcSet="/assets/perfume-aroma-hero-mobile.jpg" />
+            <source
+              media="(max-width: 767px)"
+              srcSet="/assets/perfume-aroma-hero-mobile.jpg"
+            />
             <img
               src="/assets/perfume-aroma-hero.jpg"
-              alt={aroma.heroImageAlt}
+              alt={perfume.heroImageAlt}
               width={1695}
               height={928}
               fetchPriority="high"
@@ -58,32 +61,44 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
           <div className="mx-auto flex min-h-[31rem] max-w-7xl flex-col px-5 py-10 sm:min-h-[34rem] sm:px-6 sm:py-12 lg:px-8">
             <Breadcrumbs
               locale={locale}
-              current={aroma.breadcrumb}
+              current={perfume.breadcrumb}
               className="text-sm text-emerald-100"
               tone="dark"
             />
             <div className="mt-auto max-w-3xl pt-16">
-              <motion.p {...heroReveal(0.04)} className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-200">
-                {aroma.eyebrow}
+              <motion.p
+                {...heroReveal(0.04)}
+                className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-200"
+              >
+                {perfume.eyebrow}
               </motion.p>
-              <motion.h1 {...heroReveal(0.14)} className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
-                {aroma.title}
+              <motion.h1
+                {...heroReveal(0.14)}
+                className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl"
+              >
+                {perfume.title}
               </motion.h1>
-              <motion.p {...heroReveal(0.24)} className="mt-5 max-w-2xl text-lg leading-relaxed text-emerald-100 md:text-xl">
-                {aroma.introduction}
+              <motion.p
+                {...heroReveal(0.24)}
+                className="mt-5 max-w-2xl text-lg leading-relaxed text-emerald-100 md:text-xl"
+              >
+                {perfume.introduction}
               </motion.p>
-              <motion.div {...heroReveal(0.34)} className="mt-8 flex flex-wrap gap-3">
+              <motion.div
+                {...heroReveal(0.34)}
+                className="mt-8 flex flex-wrap gap-3"
+              >
                 <a
-                  href={getRoute(locale, 'contact').path}
+                  href="#perfume-recommendation"
                   className="inline-flex min-h-12 items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-bold text-emerald-950 transition-colors hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
-                  {aroma.primaryLink.label}
+                  {perfume.primaryLink.label}
                 </a>
                 <a
-                  href={getRoute(locale, 'diffusers').path}
+                  href="#diffuser-catalogue"
                   className="inline-flex min-h-12 items-center justify-center rounded-lg border border-emerald-100/45 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
-                  {aroma.secondaryLink.label}
+                  {perfume.secondaryLink.label}
                 </a>
               </motion.div>
             </div>
@@ -93,12 +108,12 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
         <section className="border-b border-emerald-900/10 bg-stone-100 py-14 sm:py-24">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow={aroma.assessmentEyebrow}
-              title={aroma.assessmentTitle}
-              description={aroma.assessmentDescription}
+              eyebrow={perfume.assessmentEyebrow}
+              title={perfume.assessmentTitle}
+              description={perfume.assessmentDescription}
             />
             <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {aroma.spaces.map((space, index) => {
+              {perfume.spaces.map((space, index) => {
                 const image = spaceImages[index];
 
                 return (
@@ -111,7 +126,10 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
                     className="relative min-h-[25rem] overflow-hidden text-white"
                   >
                     <picture className="absolute inset-0 block">
-                      <source media="(max-width: 767px)" srcSet={image.mobileImage} />
+                      <source
+                        media="(max-width: 767px)"
+                        srcSet={image.mobileImage}
+                      />
                       <img
                         src={image.image}
                         alt={space.imageAlt}
@@ -140,23 +158,31 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
         <section className="py-14 sm:py-24">
           <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-8">
             <SectionHeading
-              eyebrow={aroma.processEyebrow}
-              title={aroma.processTitle}
-              description={aroma.processDescription}
+              eyebrow={perfume.processEyebrow}
+              title={perfume.processTitle}
+              description={perfume.processDescription}
             />
             <ol className="divide-y divide-emerald-900/10 border-y border-emerald-900/10">
-              {aroma.process.map((step, index) => {
+              {perfume.process.map((step, index) => {
                 const Icon = processIcons[index];
 
                 return (
-                  <li key={step.title} className="grid grid-cols-[3rem_1fr] gap-4 py-6">
+                  <li
+                    key={step.title}
+                    className="grid grid-cols-[3rem_1fr] gap-4 py-6"
+                  >
                     <span className="text-sm font-bold text-emerald-700">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <div className="flex gap-4">
-                      <Icon className="mt-0.5 h-6 w-6 shrink-0 text-emerald-700" aria-hidden="true" />
+                      <Icon
+                        className="mt-0.5 h-6 w-6 shrink-0 text-emerald-700"
+                        aria-hidden="true"
+                      />
                       <div>
-                        <h3 className="text-xl font-bold text-slate-950">{step.title}</h3>
+                        <h3 className="text-xl font-bold text-slate-950">
+                          {step.title}
+                        </h3>
                         <p className="mt-2 text-sm leading-relaxed text-slate-600">
                           {step.description}
                         </p>
@@ -172,10 +198,13 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
         <section className="border-y border-emerald-900/10 bg-white py-14 sm:py-20">
           <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:px-6 md:grid-cols-2 md:items-center lg:px-8">
             <picture>
-              <source media="(max-width: 767px)" srcSet="/assets/perfume-service-refill-mobile.jpg" />
+              <source
+                media="(max-width: 767px)"
+                srcSet="/assets/perfume-service-refill-mobile.jpg"
+              />
               <img
                 src="/assets/perfume-service-refill.jpg"
-                alt={aroma.programmeImageAlt}
+                alt={perfume.programmeImageAlt}
                 width={1536}
                 height={1024}
                 loading="lazy"
@@ -186,15 +215,18 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
             </picture>
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">
-                {aroma.programmeEyebrow}
+                {perfume.programmeEyebrow}
               </p>
               <h2 className="mt-3 text-3xl font-bold text-slate-950">
-                {aroma.programmeTitle}
+                {perfume.programmeTitle}
               </h2>
               <ul className="mt-7 space-y-4">
-                {aroma.programmeItems.map((item) => (
+                {perfume.programmeItems.map((item) => (
                   <li key={item} className="flex gap-3 text-slate-600">
-                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
+                    <Check
+                      className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700"
+                      aria-hidden="true"
+                    />
                     {item}
                   </li>
                 ))}
@@ -203,7 +235,13 @@ export default function AromaSolutionsPage({ locale }: AromaSolutionsPageProps) 
           </div>
         </section>
 
-        <ContactCta locale={locale} content={aroma.contactCta} />
+        <ScentDirections locale={locale} />
+        <DiffuserCatalogue locale={locale} />
+        <CustomFragranceDevelopment locale={locale} />
+
+        <div id="perfume-recommendation" className="scroll-mt-24">
+          <ContactCta locale={locale} content={perfume.contactCta} />
+        </div>
       </div>
     </MotionConfig>
   );

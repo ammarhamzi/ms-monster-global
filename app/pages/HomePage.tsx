@@ -16,7 +16,7 @@ const heroReveal = (delay: number) => ({
 });
 
 const divisionImages = {
-  aroma: {
+  perfume: {
     image: '/assets/perfume-aroma-hero.jpg',
     mobileImage: '/assets/perfume-aroma-hero-mobile.jpg',
     width: 1695,
@@ -69,10 +69,10 @@ export default function HomePage({ locale }: HomePageProps) {
                 className="mt-8 grid gap-3 sm:flex sm:flex-wrap sm:gap-4"
               >
                 <a
-                  href={getRoute(locale, 'aroma').path}
+                  href={getRoute(locale, 'perfume').path}
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-emerald-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.25,1,0.5,1)] motion-safe:hover:-translate-y-0.5 hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-800"
                 >
-                  {home.aromaLink.label}
+                  {home.perfumeLink.label}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
                 <a
@@ -97,7 +97,7 @@ export default function HomePage({ locale }: HomePageProps) {
             <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">
               {home.divisions.map((division, index) => {
                 const images = divisionImages[division.key];
-                const routeKey = division.key === 'aroma' ? 'aroma' : 'it';
+                const routeKey = division.key;
 
                 return (
                   <motion.article
@@ -130,7 +130,7 @@ export default function HomePage({ locale }: HomePageProps) {
                           <li key={item} className="flex gap-3 text-sm font-medium text-slate-700">
                             <ShieldCheck
                               className={`mt-0.5 h-4 w-4 shrink-0 ${
-                                division.key === 'aroma' ? 'text-emerald-700' : 'text-blue-700'
+                                division.key === 'perfume' ? 'text-emerald-700' : 'text-blue-700'
                               }`}
                               aria-hidden="true"
                             />
@@ -141,7 +141,7 @@ export default function HomePage({ locale }: HomePageProps) {
                       <a
                         href={getRoute(locale, routeKey).path}
                         className={`mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
-                          division.key === 'aroma'
+                          division.key === 'perfume'
                             ? 'text-emerald-800 focus-visible:outline-emerald-700'
                             : 'text-blue-800 focus-visible:outline-blue-700'
                         }`}

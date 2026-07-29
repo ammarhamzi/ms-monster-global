@@ -4,7 +4,7 @@
 
 **Goal:** Ship a pre-rendered, bilingual MS Monster Global website with reliable indexing, factual service content, branded browser/share assets, and a verified whole-site quality pass.
 
-**Architecture:** Adopt React Router 7 framework mode with `ssr: false` and build-time pre-rendering to `build/client`. Eight route modules are reused across explicit English and Bahasa Melayu URLs, while route metadata, entity facts, locale mapping, schema, sitemap generation, and language switching all consume one typed registry. Existing React/Tailwind page work is retained and split into focused corporate, IT, aroma, diffuser, and fragrance surfaces.
+**Architecture:** Adopt React Router 7 framework mode with `ssr: false` and build-time pre-rendering to `build/client`. Six route modules are reused across explicit English and Bahasa Melayu URLs, while route metadata, entity facts, locale mapping, schema, sitemap generation, and language switching all consume one typed registry. Existing React/Tailwind page work is retained across corporate, IT, downloads, contact, and one unified Perfume & Aroma surface.
 
 **Tech Stack:** React 19, React Router 7.18.1 framework mode, Vite 6, Tailwind CSS 4, TypeScript 5.8, Vitest 4, Testing Library, Sharp, Netlify static hosting, Lighthouse.
 
@@ -14,8 +14,8 @@
 - Stay on React Router `7.18.1`; do not upgrade this project to React Router 8.
 - Use `ssr: false` and pre-render every approved English and Bahasa Melayu route.
 - Build output is `build/client`; no runtime application server is introduced.
-- Public English routes are `/`, `/about`, `/it-maintenance`, `/commercial-aroma-solutions`, `/aroma-diffusers`, `/custom-fragrance-development`, `/downloads`, and `/contact`.
-- Public Malay routes are `/ms`, `/ms/tentang`, `/ms/penyelenggaraan-it`, `/ms/penyelesaian-aroma-komersial`, `/ms/diffuser-aroma`, `/ms/pembangunan-wangian-tersuai`, `/ms/muat-turun`, and `/ms/hubungi`.
+- Public English routes are `/`, `/about`, `/it-maintenance`, `/perfume`, `/downloads`, and `/contact`.
+- Public Malay routes are `/ms`, `/ms/tentang`, `/ms/penyelenggaraan-it`, `/ms/perfume`, `/ms/muat-turun`, and `/ms/hubungi`.
 - Preserve the current professional corporate identity, blue/green division system, authentic supplied imagery, visible focus states, reduced-motion support, and 44px minimum touch targets.
 - Use `Corporation`, `WebSite`, `Service`, and `BreadcrumbList` schema only. Do not add `LocalBusiness`, Product rich-result schema, ratings, prices, opening hours, geocoordinates, or national coverage.
 - Do not publish AMECO ownership, a cosmetics licence, 24/7 support, guaranteed response times, client counts, accreditations, testimonials, or other unsupported claims.
@@ -60,8 +60,9 @@ Routing, metadata, bilingual content, brand assets, and build verification share
 - `app/components/layout/*`: site shell, navigation, footer, breadcrumbs, and language switcher.
 - `app/components/content/*`: reusable section heading, CTA, and service-list primitives.
 - `app/components/downloads/DownloadCard.tsx`: accessible PDF link card.
-- `app/pages/*Page.tsx`: eight focused page components accepting a `locale`.
-- `app/routes/*.tsx`: eight thin route modules plus not-found.
+- `app/pages/*Page.tsx`: six focused page components accepting a `locale`.
+- `app/routes/*.tsx`: six thin route modules plus not-found.
+- `app/components/perfume/*`: the crawlable diffuser catalogue and custom-fragrance sections composed by `PerfumePage`.
 
 ### Brand assets
 
@@ -79,6 +80,13 @@ Routing, metadata, bilingual content, brand assets, and build verification share
 - `README.md`: current build, test, preview, and deployment instructions.
 
 ---
+
+> **Historical baseline:** Tasks 1–10 below document the implementation that
+> preceded the 2026-07-30 product-direction update. Their split aroma,
+> diffuser, and fragrance route examples and 16-route counts are superseded
+> by Task 11 and by the Global Constraints above. Task 11 is the current
+> source of truth for public routing and the Perfume & Aroma information
+> architecture.
 
 ### Task 1: Add the test harness and canonical route registry
 
@@ -1571,3 +1579,130 @@ git commit -m "test(seo): verify generated site output"
 - [ ] **Step 10: Request final code review**
 
 Invoke `superpowers:requesting-code-review`, address every valid P0/P1 finding, rerun the complete verification suite, then use `superpowers:finishing-a-development-branch` to present integration options.
+
+---
+
+### Task 11: Restore the unified Perfume & Aroma experience
+
+**Product direction:** This task supersedes the earlier split-route decision.
+The user wants the perfume page and catalogue together, as on the previous
+site, and wants the public term “Perfume & Aroma” instead of “Commercial
+Aroma Solutions”.
+
+**Files:**
+- Modify: `app/config/routes.ts`
+- Modify: `app/routes.ts`
+- Create or rename: `app/pages/PerfumePage.tsx`
+- Modify or remove: split aroma/diffuser/fragrance route and page modules
+- Modify: `app/content/en.ts`
+- Modify: `app/content/ms.ts`
+- Modify: `app/content/types.ts`
+- Modify: `app/components/layout/*`
+- Modify: `app/pages/HomePage.tsx`
+- Modify: `app/pages/DownloadsPage.tsx`
+- Modify: `app/pages/ContactPage.tsx`
+- Modify: `app/seo/*`
+- Modify: `netlify.toml`
+- Modify: `scripts/generate-public-files.ts`
+- Modify: `scripts/verify-build.ts`
+- Modify: `scripts/verify-build.test.ts`
+- Modify: affected tests and documentation
+
+**Interfaces:**
+- Produces: one bilingual perfume destination containing the full service,
+  diffuser-catalogue, and custom-fragrance experience.
+- Preserves: prerendering, localized alternates, structured data, crawl
+  controls, accessibility, performance, and deterministic social cards.
+
+- [ ] **Step 1: Write failing route and integration tests**
+
+Assert:
+
+- English `perfume` route is `/perfume`
+- Malay counterpart is `/ms/perfume`
+- the two perfume URLs are canonical, prerendered, indexable, and reciprocal
+  language alternates
+- no split aroma, diffuser, or fragrance route remains canonical/indexable
+- the unified page has exactly one H1
+- the unified page renders the service process, all 23 documented diffuser
+  models, sampling boundaries, and OEM/ODM information in both languages
+- public navigation exposes one “Perfume & Aroma” destination and no separate
+  catalogue destination
+- all internal perfume CTAs use the unified route or an in-page anchor
+
+- [ ] **Step 2: Verify RED**
+
+Run focused tests and record the expected failures against the split routes
+and separate pages.
+
+- [ ] **Step 3: Implement the unified page**
+
+Build one polished `/perfume` page that retains the previous site’s hierarchy:
+
+1. Perfume & Aroma hero
+2. scent/service recommendation and space guidance
+3. aroma process and scent directions
+4. complete crawlable diffuser catalogue (all 23 models in initial HTML)
+5. custom fragrance sampling and documented OEM/ODM boundaries
+6. one contact/recommendation CTA
+
+Use one H1 and logical H2/H3 structure. Keep both English and Malay complete.
+Reuse the approved imagery and existing factual catalogue data. Do not restore
+the previous conditional catalogue mounting or unsupported broad coverage
+claims.
+
+- [ ] **Step 4: Consolidate routes, metadata, schema, and crawl files**
+
+Canonical/indexable page count becomes 12: home, about, IT, perfume, downloads,
+and contact in English and Malay.
+
+Use:
+
+- `/perfume`
+- `/ms/perfume`
+- title: `Perfume & Aroma Solutions Malaysia | MS Monster Global`
+- Malay title: `Perfume & Aroma Malaysia | MS Monster Global`
+
+Redirect permanently:
+
+- `/commercial-aroma-solutions` → `/perfume`
+- `/aroma-diffusers` → `/perfume`
+- `/custom-fragrance-development` → `/perfume`
+- `/products` → `/perfume`
+- `/ms/penyelesaian-aroma-komersial` → `/ms/perfume`
+- `/ms/diffuser-aroma` → `/ms/perfume`
+- `/ms/pembangunan-wangian-tersuai` → `/ms/perfume`
+
+Update sitemap, alternates, breadcrumbs, schema, verifier expectations, social
+metadata, and all internal links. `/perfume` must be a direct-load `200`, not a
+redirect.
+
+- [ ] **Step 5: Verify behavior and production-equivalent routing**
+
+Run:
+
+```bash
+npm test
+npm run typecheck
+npm run build
+git diff --check
+```
+
+With Netlify CLI `27.0.1`, prove:
+
+- `/perfume` and `/ms/perfume` return `200` on direct requests
+- all 12 canonical URLs return `200`
+- all seven former split/product URLs return `301` to the correct unified page
+- `/definitely-not-found` returns the branded `404`
+- sitemap contains exactly the 12 canonical URLs
+
+Run mobile, tablet, and desktop visual checks on the unified page in both
+languages. Confirm no overflow, duplicate H1, mixed-language content, missing
+images, or catalogue content hidden from generated HTML.
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add app netlify.toml scripts docs package.json README.md
+git commit -m "feat(perfume): restore unified catalogue page"
+```

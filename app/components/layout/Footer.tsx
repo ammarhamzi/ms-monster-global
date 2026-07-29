@@ -9,7 +9,7 @@ import { SITE } from '../../config/site';
 import { getContent } from '../../content';
 
 const companyKeys: PageKey[] = ['home', 'about', 'downloads', 'contact'];
-const serviceKeys: PageKey[] = ['aroma', 'diffusers', 'fragrance', 'it'];
+const serviceKeys: PageKey[] = ['perfume', 'it'];
 
 export default function Footer() {
   const { pathname } = useLocation();

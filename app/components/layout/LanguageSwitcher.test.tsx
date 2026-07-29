@@ -20,10 +20,10 @@ describe.each([
     counterpartLocale: 'ms',
   },
   {
-    path: '/ms/diffuser-aroma',
+    path: '/ms/perfume',
     currentLabel: 'BM',
     counterpartLabel: 'EN',
-    counterpartPath: '/aroma-diffusers',
+    counterpartPath: '/perfume',
     counterpartLocale: 'en',
   },
 ] as const)('language switching from $path', ({

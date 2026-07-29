@@ -178,7 +178,7 @@ export default function AboutPage({ locale }: AboutPageProps) {
                 <article key={division.key} className="border border-slate-200 p-6 sm:p-8">
                   <ShieldCheck
                     className={`h-8 w-8 ${
-                      division.key === 'aroma' ? 'text-emerald-700' : 'text-blue-700'
+                      division.key === 'perfume' ? 'text-emerald-700' : 'text-blue-700'
                     }`}
                     aria-hidden="true"
                   />
@@ -199,7 +199,7 @@ export default function AboutPage({ locale }: AboutPageProps) {
                   <a
                     href={getRoute(locale, division.key).path}
                     className={`mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
-                      division.key === 'aroma'
+                      division.key === 'perfume'
                         ? 'text-emerald-800 focus-visible:outline-emerald-700'
                         : 'text-blue-800 focus-visible:outline-blue-700'
                     }`}

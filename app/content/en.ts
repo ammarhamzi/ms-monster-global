@@ -19,9 +19,7 @@ export const enContent = {
     home: 'Home',
     about: 'About',
     services: 'Services',
-    aroma: 'Commercial aroma solutions',
-    diffusers: 'Aroma diffusers',
-    fragrance: 'Custom fragrance',
+    perfume: 'Perfume & Aroma',
     it: 'IT maintenance',
     downloads: 'Downloads',
     contact: 'Contact',
@@ -30,8 +28,8 @@ export const enContent = {
     eyebrow: SITE.legalName,
     title: 'Scent solutions and technology maintenance for business continuity.',
     introduction:
-      'MS Monster Global helps organisations shape considered spaces through commercial aroma solutions and maintain the technology that supports daily operations.',
-    aromaLink: { label: 'Explore aroma solutions' },
+      'MS Monster Global helps organisations shape considered spaces through Perfume & Aroma solutions and maintain the technology that supports daily operations.',
+    perfumeLink: { label: 'Explore Perfume & Aroma' },
     itLink: { label: 'Explore IT maintenance' },
     overviewEyebrow: 'Two focused divisions',
     overviewTitle: 'Practical support for environments and systems.',
@@ -39,8 +37,8 @@ export const enContent = {
       'Choose the division that matches your requirement. Each path explains the available scope and gives you a direct way to discuss the next step.',
     divisions: [
       {
-        key: 'aroma',
-        title: 'Commercial aroma solutions',
+        key: 'perfume',
+        title: 'Perfume & Aroma',
         description:
           'Plan a scent direction, select an appropriate diffuser, and maintain a consistent aroma experience for a commercial environment.',
         items: [
@@ -48,7 +46,7 @@ export const enContent = {
           'Commercial diffuser selection',
           'Custom fragrance development',
         ],
-        link: { label: 'View aroma solutions' },
+        link: { label: 'View Perfume & Aroma' },
         imageAlt: 'Commercial aroma diffuser and fragrance oils in a refined interior',
       },
       {
@@ -72,7 +70,7 @@ export const enContent = {
     operationsItems: [
       `${SITE.legalName}, registered as ${SITE.registrationNumber}`,
       `Based in ${SITE.address.addressLocality}, ${SITE.address.addressRegion}`,
-      'Dedicated paths for technology and commercial aroma requirements',
+      'Dedicated paths for technology and Perfume & Aroma requirements',
       'Company profiles and product information available as PDF downloads',
     ],
     contactCta: {
@@ -88,7 +86,7 @@ export const enContent = {
     eyebrow: SITE.legalName,
     title: 'About MS Monster Global',
     introduction:
-      `${SITE.legalName} is a Malaysia-based company with two business divisions: practical IT and AI maintenance services, and commercial aroma solutions for business environments.`,
+      `${SITE.legalName} is a Malaysia-based company with two business divisions: practical IT and AI maintenance services, and Perfume & Aroma solutions for business environments.`,
     incorporation:
       `${SITE.legalName} was incorporated on 16 November 2022. Earlier activity belongs to the business roots that preceded the Sdn Bhd.`,
     incorporationEyebrow: 'Current legal entity',
@@ -103,7 +101,7 @@ export const enContent = {
       {
         title: 'Vision',
         description:
-          'To make commercial aroma solutions accessible and to be a trusted technology maintenance partner for business continuity and growth.',
+          'To make Perfume & Aroma solutions accessible and to be a trusted technology maintenance partner for business continuity and growth.',
       },
       {
         title: 'Mission',
@@ -139,12 +137,12 @@ export const enContent = {
     divisionsTitle: 'Two specialist service divisions',
     divisions: [
       {
-        key: 'aroma',
-        title: 'Commercial aroma solutions',
+        key: 'perfume',
+        title: 'Perfume & Aroma',
         description:
           'Aroma consultation, diffuser matching, fragrance supply, custom scent development, refill, tuning, and maintenance support.',
         items: ['Aroma planning', 'Diffuser systems', 'Custom fragrance'],
-        link: { label: 'Explore aroma services' },
+        link: { label: 'Explore Perfume & Aroma' },
         imageAlt: 'Commercial aroma diffuser and fragrance oils in an interior',
       },
       {
@@ -161,7 +159,7 @@ export const enContent = {
       eyebrow: 'Discuss your requirement',
       title: 'Choose the division that fits your next project.',
       description:
-        'Contact the Nilai team about IT maintenance, commercial aroma solutions, company documents, or product information.',
+        'Contact the Nilai team about IT maintenance, Perfume & Aroma, company documents, or product information.',
       link: { label: 'Contact the team' },
     },
   },
@@ -221,14 +219,14 @@ export const enContent = {
     },
     heroImageAlt: 'Technician working among enterprise server racks in a data centre',
   },
-  aroma: {
-    breadcrumb: 'Commercial aroma solutions',
+  perfume: {
+    breadcrumb: 'Perfume & Aroma',
     eyebrow: 'Monster Perfume',
-    title: 'Commercial Aroma Solutions',
+    title: 'Perfume & Aroma',
     introduction:
       'Plan an aroma experience around the character of a space, then match it with a practical diffuser, refill, tuning, and maintenance approach.',
     primaryLink: { label: 'Request a recommendation' },
-    secondaryLink: { label: 'Explore diffuser systems' },
+    secondaryLink: { label: 'Browse all diffuser models' },
     assessmentEyebrow: 'Space assessment',
     assessmentTitle: 'Start with the setting and the intended experience.',
     assessmentDescription:
@@ -419,7 +417,7 @@ export const enContent = {
     eyebrow: SITE.legalName,
     title: 'Contact MS Monster Global',
     introduction:
-      'Contact the team in Nilai about technology maintenance, commercial aroma solutions, diffuser products, custom fragrance, or company information.',
+      'Contact the team in Nilai about technology maintenance, Perfume & Aroma, diffuser products, custom fragrance, or company information.',
     channelsEyebrow: 'Direct contact',
     channelsTitle: 'Choose the channel that suits your enquiry.',
     address: {
@@ -451,12 +449,12 @@ export const enContent = {
     enquiriesTitle: 'Start with the relevant division.',
     enquiriesDescription:
       'Review the service scope first, then share the environment, product, or operating requirement with the team.',
-    aromaLink: { label: 'Review aroma solutions' },
+    perfumeLink: { label: 'Review Perfume & Aroma' },
     itLink: { label: 'Review IT maintenance' },
   },
   footer: {
     summary:
-      'Practical IT maintenance and commercial aroma solutions for business environments.',
+      'Practical IT maintenance and Perfume & Aroma solutions for business environments.',
     companyTitle: 'Company',
     servicesTitle: 'Services',
     contactTitle: 'Contact',

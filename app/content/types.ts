@@ -8,9 +8,7 @@ export interface NavContent {
   home: string;
   about: string;
   services: string;
-  aroma: string;
-  diffusers: string;
-  fragrance: string;
+  perfume: string;
   it: string;
   downloads: string;
   contact: string;
@@ -28,7 +26,7 @@ export interface ContactCtaContent {
 }
 
 export interface DivisionContent {
-  key: 'aroma' | 'it';
+  key: 'perfume' | 'it';
   title: string;
   description: string;
   items: string[];
@@ -40,7 +38,7 @@ export interface HomeContent {
   eyebrow: string;
   title: string;
   introduction: string;
-  aromaLink: LinkContent;
+  perfumeLink: LinkContent;
   itLink: LinkContent;
   overviewEyebrow: string;
   overviewTitle: string;
@@ -122,7 +120,7 @@ export interface SpaceContent {
   imageAlt: string;
 }
 
-export interface AromaContent {
+export interface PerfumeContent {
   breadcrumb: string;
   eyebrow: string;
   title: string;
@@ -243,7 +241,7 @@ export interface ContactContent {
   enquiriesEyebrow: string;
   enquiriesTitle: string;
   enquiriesDescription: string;
-  aromaLink: LinkContent;
+  perfumeLink: LinkContent;
   itLink: LinkContent;
 }
 
@@ -270,7 +268,7 @@ export interface SiteContent {
   home: HomeContent;
   about: AboutContent;
   it: ItContent;
-  aroma: AromaContent;
+  perfume: PerfumeContent;
   diffusers: DiffusersContent;
   fragrance: FragranceContent;
   downloads: DownloadsContent;

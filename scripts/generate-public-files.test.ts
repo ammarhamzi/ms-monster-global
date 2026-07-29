@@ -15,7 +15,7 @@ afterEach(async () => {
 });
 
 describe('public crawl-file generation', () => {
-  it('writes canonical robots and a 16-URL sitemap without the 404 route', async () => {
+  it('writes canonical robots and a 12-URL sitemap without the 404 route', async () => {
     const clientDirectory = await mkdtemp(join(tmpdir(), 'ms-monster-public-files-'));
     const source404 = '<!doctype html><html><body>branded 404</body></html>';
     temporaryDirectories.push(clientDirectory);
@@ -35,10 +35,16 @@ describe('public crawl-file generation', () => {
     expect(robots).toBe(
       'User-agent: *\nAllow: /\n\nSitemap: https://msmonsterglobal.com/sitemap.xml\n',
     );
-    expect(sitemap.match(/<url>/g)).toHaveLength(16);
+    expect(sitemap.match(/<url>/g)).toHaveLength(12);
     expect(sitemap).toContain(
       '<loc>https://msmonsterglobal.com/it-maintenance</loc>',
     );
+    expect(sitemap).toContain(
+      '<loc>https://msmonsterglobal.com/perfume</loc>',
+    );
+    expect(sitemap).not.toContain('/commercial-aroma-solutions');
+    expect(sitemap).not.toContain('/aroma-diffusers');
+    expect(sitemap).not.toContain('/custom-fragrance-development');
     expect(sitemap).not.toContain('/404');
     expect(deployed404).toBe(source404);
   });

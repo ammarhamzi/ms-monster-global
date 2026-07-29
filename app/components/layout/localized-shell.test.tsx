@@ -70,6 +70,32 @@ describe('localized route shell', () => {
     expect(footer.querySelector('a[href="/downloads"]')).not.toBeInTheDocument();
   });
 
+  it('exposes one Perfume & Aroma destination without split catalogue links', () => {
+    render(
+      <MemoryRouter initialEntries={['/perfume']}>
+        <Navbar />
+        <Footer />
+      </MemoryRouter>,
+    );
+
+    const navigation = screen.getByRole('navigation', {
+      name: 'Primary navigation',
+    });
+    expect(
+      within(navigation).getByRole('link', { name: 'Perfume & Aroma' }),
+    ).toHaveAttribute('href', '/perfume');
+
+    for (const obsoletePath of [
+      '/commercial-aroma-solutions',
+      '/aroma-diffusers',
+      '/custom-fragrance-development',
+    ]) {
+      expect(
+        document.querySelector(`a[href="${obsoletePath}"]`),
+      ).not.toBeInTheDocument();
+    }
+  });
+
   it('closes the mobile menu after a client-side navigation', async () => {
     const user = userEvent.setup();
     render(

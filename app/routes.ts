@@ -5,9 +5,7 @@ const moduleByKey = {
   home: './routes/home.tsx',
   about: './routes/about.tsx',
   it: './routes/it.tsx',
-  aroma: './routes/aroma.tsx',
-  diffusers: './routes/diffusers.tsx',
-  fragrance: './routes/fragrance.tsx',
+  perfume: './routes/perfume.tsx',
   downloads: './routes/downloads.tsx',
   contact: './routes/contact.tsx',
 } as const;

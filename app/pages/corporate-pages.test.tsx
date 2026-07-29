@@ -43,15 +43,15 @@ describe.each(['en', 'ms'] as const)('downloads in %s', (locale) => {
 describe.each([
   [
     'en',
-    'Commercial aroma solutions',
-    '/commercial-aroma-solutions',
+    'Perfume & Aroma',
+    '/perfume',
     'IT maintenance',
     '/it-maintenance',
   ],
   [
     'ms',
-    'Penyelesaian aroma komersial',
-    '/ms/penyelesaian-aroma-komersial',
+    'Perfume & Aroma',
+    '/ms/perfume',
     'Penyelenggaraan IT',
     '/ms/penyelenggaraan-it',
   ],
@@ -61,6 +61,40 @@ describe.each([
 
     expect(screen.getByRole('link', { name: aromaLabel })).toHaveAttribute('href', aromaPath);
     expect(screen.getByRole('link', { name: itLabel })).toHaveAttribute('href', itPath);
+  });
+});
+
+describe.each([
+  ['en', '/perfume'],
+  ['ms', '/ms/perfume'],
+] as const)('internal perfume CTAs in %s', (locale, perfumePath) => {
+  it('use only the unified route or in-page anchors', () => {
+    const pages = [
+      <HomePage locale={locale} />,
+      <AboutPage locale={locale} />,
+      <DownloadsPage locale={locale} />,
+      <ContactPage locale={locale} />,
+    ];
+
+    for (const page of pages) {
+      const { container, unmount } = render(page);
+      const perfumeLinks = [...container.querySelectorAll<HTMLAnchorElement>('a')].filter(
+        (link) => {
+          const href = link.getAttribute('href') ?? '';
+          return (
+            (href.startsWith('/') || href.startsWith('#')) &&
+            /perfume|aroma|wangian|haruman|diffuser/i.test(link.textContent ?? '')
+          );
+        },
+      );
+
+      for (const link of perfumeLinks) {
+        expect([perfumePath, '#diffuser-catalogue', '#custom-fragrance']).toContain(
+          link.getAttribute('href'),
+        );
+      }
+      unmount();
+    }
   });
 });
 
