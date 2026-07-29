@@ -32,7 +32,7 @@ export default function Footer() {
           to={route.path}
           end={key === 'home'}
           className={({ isActive }) =>
-            `flex min-h-11 items-center rounded-sm text-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+            `-mx-2 flex min-h-11 min-w-11 items-center rounded-sm px-2 text-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
               isActive ? 'font-semibold text-white' : 'text-slate-400'
             }`
           }

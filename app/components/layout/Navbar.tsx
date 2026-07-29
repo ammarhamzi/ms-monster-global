@@ -78,7 +78,7 @@ export default function Navbar() {
                   to={item.to}
                   end={item.key === 'home'}
                   className={({ isActive }) =>
-                    `inline-flex min-h-11 items-center rounded-sm whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700 ${
+                    `inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm px-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700 ${
                       isActive
                         ? 'text-emerald-700'
                         : 'text-slate-600 hover:text-slate-950'

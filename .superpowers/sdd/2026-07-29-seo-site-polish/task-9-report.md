@@ -159,3 +159,49 @@ The required Browser skill was initialized and its troubleshooting flow was foll
 ## Concerns
 
 - The in-app Browser backend was unavailable, so the mandated real Browser viewport and manual keyboard session could not be completed. This is the only remaining QA limitation.
+
+## Fix Round 1
+
+### Findings addressed
+
+- `Breadcrumbs`, desktop primary navigation links, and footer navigation links now enforce both 44px dimensions with `min-h-11` and `min-w-11`.
+- Each affected short-link surface also has horizontal padding. Breadcrumb and footer links use a matching negative inline margin so the visible text remains optically aligned while the interactive area expands.
+- `app/accessibility.test.tsx` now opens the rendered mobile menu, clicks the Contact route inside `#mobile-navigation`, proves the MemoryRouter pathname changes from `/` to `/contact`, and proves `aria-expanded` returns to `false`.
+- The earlier report statement that route-link closure had Testing Library coverage was premature. It is now backed by the explicit rendered-link interaction test added in this round.
+
+### RED and GREEN evidence
+
+RED:
+
+- Command: `npm test -- app/accessibility.test.tsx`
+- Result: 20 tests ran; 19 passed and 1 failed.
+- Expected failure: the new rendered-shell test found `min-h-11` but no `min-w-11` on the primary Home link.
+- The mobile route-link test passed against the existing behavior and closes the prior coverage gap without requiring a production interaction change.
+
+GREEN:
+
+- Command: `npm test -- app/accessibility.test.tsx app/components/layout/localized-shell.test.tsx`
+- Result: 2 files and 24 tests passed.
+- The rendered width guard verifies primary-nav Home, breadcrumb Home, and footer Home each expose both target guardrails.
+- The menu-link interaction verifies actual navigation and closure through real MemoryRouter state and `userEvent`.
+
+### Verification
+
+- `npm test`: 17 files, 108 tests passed.
+- `npm run typecheck`: exit 0.
+- `npm run build`: exit 0; all 17 prerendered routes regenerated.
+- Generated About-shell inspection: 3 short-link surfaces checked, 0 two-dimensional guard failures.
+- `npx --yes lighthouse@13.4.1 http://127.0.0.1:4173/about`: performance 95, accessibility 100, SEO 100; target-size 1, color-contrast 1, console-errors 1.
+- `git diff --check`: exit 0.
+- Focused static server stopped after Lighthouse.
+
+### Self-review
+
+- Production changes are limited to the three reviewed shared link classes.
+- The test verifies rendered class contracts and real router interaction; it does not grep source text or mock navigation.
+- Horizontal padding preserves readable link labels, while the minimum width protects short English and Malay labels.
+- No route content, media, schema, sitemap, or unrelated styling changed.
+
+### Concerns
+
+- No new implementation concern. The original in-app Browser availability limitation remains unchanged.

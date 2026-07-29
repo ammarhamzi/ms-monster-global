@@ -2,9 +2,10 @@ import type { ReactElement } from 'react';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { MemoryRouter, useNavigate } from 'react-router';
+import { MemoryRouter, useLocation, useNavigate } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import DownloadCard from './components/downloads/DownloadCard';
+import Breadcrumbs from './components/layout/Breadcrumbs';
 import Footer from './components/layout/Footer';
 import LanguageSwitcher from './components/layout/LanguageSwitcher';
 import Navbar from './components/layout/Navbar';
@@ -32,6 +33,12 @@ function PathnameControl() {
       Change pathname
     </button>
   );
+}
+
+function PathnameProbe() {
+  const { pathname } = useLocation();
+
+  return <output aria-label="Current pathname">{pathname}</output>;
 }
 
 describe.each([
@@ -112,6 +119,34 @@ describe('shell accessible names and states', () => {
     );
   });
 
+  it('renders short shell links with both 44px target guardrails', () => {
+    renderAt(
+      '/',
+      <>
+        <Navbar />
+        <Breadcrumbs locale="en" current="Current page" />
+        <Footer />
+      </>,
+    );
+
+    const shortLinks = [
+      within(
+        screen.getByRole('navigation', { name: 'Primary navigation' }),
+      ).getByRole('link', { name: 'Home' }),
+      within(
+        screen.getByRole('navigation', { name: 'Breadcrumb' }),
+      ).getByRole('link', { name: 'Home' }),
+      within(screen.getByRole('contentinfo')).getByRole('link', {
+        name: 'Home',
+      }),
+    ];
+
+    for (const link of shortLinks) {
+      expect(link).toHaveClass('min-h-11');
+      expect(link).toHaveClass('min-w-11');
+    }
+  });
+
   it('keeps visible labels in the accessible names of social and download links', () => {
     const document = getContent('en').downloads.documents[0];
     renderAt(
@@ -175,6 +210,31 @@ describe('mobile navigation lifecycle', () => {
     expect(
       screen.getByRole('button', { name: 'Open navigation menu' }),
     ).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('navigates and closes after clicking a rendered mobile route link', async () => {
+    const user = userEvent.setup();
+    renderAt(
+      '/',
+      <>
+        <Navbar />
+        <PathnameProbe />
+      </>,
+    );
+    const button = screen.getByRole('button', { name: 'Open navigation menu' });
+
+    await user.click(button);
+    const mobileNavigation = document.getElementById('mobile-navigation');
+    expect(mobileNavigation).not.toBeNull();
+
+    await user.click(
+      within(mobileNavigation!).getByRole('link', { name: 'Contact' }),
+    );
+
+    expect(screen.getByLabelText('Current pathname')).toHaveTextContent(
+      '/contact',
+    );
+    expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 });
 
