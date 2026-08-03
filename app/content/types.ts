@@ -116,8 +116,26 @@ export interface ProcessStepContent {
 
 export interface SpaceContent {
   title: string;
+  range: string;
   description: string;
+  actionLabel: string;
   imageAlt: string;
+}
+
+export interface PerfumeExperienceContent {
+  systemEyebrow: string;
+  systemTitle: string;
+  systemDescription: string;
+  selectorEyebrow: string;
+  selectorTitle: string;
+  selectorDescription: string;
+  featureEyebrow: string;
+  featureTitle: string;
+  featureDescription: string;
+  featurePoints: string[];
+  aboutEyebrow: string;
+  aboutTitle: string;
+  aboutDescription: string;
 }
 
 export interface PerfumeContent {
@@ -131,6 +149,7 @@ export interface PerfumeContent {
   assessmentTitle: string;
   assessmentDescription: string;
   spaces: SpaceContent[];
+  experience: PerfumeExperienceContent;
   processEyebrow: string;
   processTitle: string;
   processDescription: string;

@@ -234,20 +234,49 @@ export const enContent = {
     spaces: [
       {
         title: 'Smaller environments',
+        range: '10–200 m²',
         description: 'Private rooms, salons, cafés, and smaller retail settings.',
+        actionLabel: 'View suitable systems',
         imageAlt: 'Boutique interior with a discreet wall-mounted aroma diffuser',
       },
       {
         title: 'Commercial environments',
+        range: '200–600 m²',
         description: 'Boutiques, showrooms, restaurants, offices, and fitness studios.',
+        actionLabel: 'View suitable systems',
         imageAlt: 'Office reception with a commercial aroma diffuser',
       },
       {
         title: 'Shared and hospitality environments',
+        range: '500–2800 m²',
         description: 'Hotels, lobbies, event venues, and HVAC-connected environments.',
+        actionLabel: 'View suitable systems',
         imageAlt: 'Hotel lobby with an aroma diffuser integrated into the interior',
       },
     ],
+    experience: {
+      systemEyebrow: 'Fragrance oils + systems',
+      systemTitle: 'Choose the scent. Match the system.',
+      systemDescription:
+        'A practical route from fragrance direction to the right diffuser, coverage, and refill support for your space.',
+      selectorEyebrow: 'Find your scent system',
+      selectorTitle: 'Start with the setting. We will take it from there.',
+      selectorDescription:
+        'Choose the type of space you are working with. Each route opens a curated group of suitable diffuser models, then you can refine the recommendation with our team.',
+      featureEyebrow: 'Featured system',
+      featureTitle: 'Scent that looks considered, and works hard behind the scenes.',
+      featureDescription:
+        'Systems are selected around the atmosphere you want, the area you need to cover, and how discreetly the equipment should live in the space.',
+      featurePoints: [
+        'Fragrance oils and equipment considered as one system',
+        'Formats for portable, desktop, wall-mounted, standing, hanging, and HVAC-ready use',
+        'Practical support for refill, tuning, and consistency',
+      ],
+      aboutEyebrow: 'About Monster Perfume',
+      aboutTitle: 'Scent made for the way a space is lived in.',
+      aboutDescription:
+        'Begin with the atmosphere people should remember, then shape a fragrance direction and diffuser system around the real environment.',
+    },
     processEyebrow: 'Aroma programme',
     processTitle: 'A complete process from brief to upkeep.',
     processDescription:

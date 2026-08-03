@@ -235,20 +235,49 @@ export const msContent = {
     spaces: [
       {
         title: 'Persekitaran lebih kecil',
+        range: '10–200 m²',
         description: 'Bilik persendirian, salon, kafe, dan ruang runcit yang lebih kecil.',
+        actionLabel: 'Lihat sistem yang sesuai',
         imageAlt: 'Ruang butik dengan diffuser aroma terpasang pada dinding',
       },
       {
         title: 'Persekitaran komersial',
+        range: '200–600 m²',
         description: 'Butik, bilik pameran, restoran, pejabat, dan studio kecergasan.',
+        actionLabel: 'Lihat sistem yang sesuai',
         imageAlt: 'Ruang sambut tetamu pejabat dengan diffuser aroma komersial',
       },
       {
         title: 'Persekitaran berkongsi dan hospitaliti',
+        range: '500–2800 m²',
         description: 'Hotel, ruang legar, tempat acara, dan persekitaran yang disambungkan kepada HVAC.',
+        actionLabel: 'Lihat sistem yang sesuai',
         imageAlt: 'Ruang legar hotel dengan diffuser aroma yang disepadukan dalam ruang dalaman',
       },
     ],
+    experience: {
+      systemEyebrow: 'Minyak wangian + sistem',
+      systemTitle: 'Pilih wangian. Padankan sistem.',
+      systemDescription:
+        'Laluan praktikal daripada arah wangian kepada diffuser, liputan, dan sokongan isian semula yang sesuai untuk ruang anda.',
+      selectorEyebrow: 'Cari sistem wangian anda',
+      selectorTitle: 'Mulakan dengan persekitaran. Kami akan bantu seterusnya.',
+      selectorDescription:
+        'Pilih jenis ruang yang anda usahakan. Setiap pilihan membuka kumpulan model diffuser yang sesuai sebelum cadangan diperhalus bersama pasukan kami.',
+      featureEyebrow: 'Sistem pilihan',
+      featureTitle: 'Haruman yang kelihatan terancang dan berfungsi di sebalik tabir.',
+      featureDescription:
+        'Sistem dipilih mengikut suasana yang diingini, keluasan liputan, dan cara peralatan perlu disepadukan secara kemas dalam ruang.',
+      featurePoints: [
+        'Minyak wangian dan peralatan dipertimbangkan sebagai satu sistem',
+        'Format mudah alih, atas meja, dinding, berdiri, gantung, dan sedia HVAC',
+        'Sokongan praktikal untuk isian semula, pelarasan, dan konsistensi',
+      ],
+      aboutEyebrow: 'Tentang Monster Perfume',
+      aboutTitle: 'Haruman yang dibentuk untuk cara sesuatu ruang digunakan.',
+      aboutDescription:
+        'Mulakan dengan suasana yang patut diingati, kemudian bentuk arah wangian dan sistem diffuser mengikut persekitaran sebenar.',
+    },
     processEyebrow: 'Program aroma',
     processTitle: 'Proses lengkap daripada ringkasan hingga penjagaan.',
     processDescription:
